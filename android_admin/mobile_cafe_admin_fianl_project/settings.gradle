@@ -1,0 +1,2 @@
+rootProject.name = "mobile_cafe_admin_fianl_project"
+include ':app'
