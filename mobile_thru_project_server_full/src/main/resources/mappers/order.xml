@@ -92,4 +92,8 @@
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)
 		order by o.o_id desc, d.d_id desc
 </select>
+
+	<select id="getAllOrder" resultType="map">
+	select * from t_order
+	</select>
 </mapper>

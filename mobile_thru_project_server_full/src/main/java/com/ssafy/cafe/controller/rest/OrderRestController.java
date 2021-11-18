@@ -43,4 +43,10 @@ public class OrderRestController {
     public List<Map<String, Object>> getLastMonthOrder(String id) {
         return oService.getLastMonthOrder(id);
     }
+    
+    @GetMapping("/orderList")
+    @ApiOperation(value = "모든 주문내역을 반환한다.", response = List.class)
+    public List<Map> getAllOrder() {
+    	return oService.getAllOrder();
+    }
 }

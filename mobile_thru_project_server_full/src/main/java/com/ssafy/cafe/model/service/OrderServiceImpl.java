@@ -81,5 +81,11 @@ public class OrderServiceImpl implements OrderService {
     public List<Map<String, Object>> getLastMonthOrder(String id) {
         return oDao.getLastMonthOrder(id);
     }
+    
+    @Override
+    public List<Map> getAllOrder() {
+        // TODO Auto-generated method stub
+        return oDao.getAllOrder();
+    }
 
 }
