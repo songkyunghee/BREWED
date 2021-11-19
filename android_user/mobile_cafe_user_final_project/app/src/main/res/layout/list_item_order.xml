@@ -36,6 +36,7 @@
         android:text="아메리카노 외 3잔"
         android:textSize="15dp"
         android:gravity="center"
+        android:textColor="#000016"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuPrice"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="25,000원"
         android:textSize="15dp"
+        android:textColor="@color/coffee_deep_blue"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuDate"
@@ -50,16 +52,18 @@
         android:layout_height="wrap_content"
         android:text="2021.05.06"
         android:textSize="15dp"
+        android:textColor="@color/coffee_deep_blue"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textCompleted"
-        android:background="@drawable/button_go_order"
+        android:background="@drawable/button_regular"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/white"
         android:text="픽업완료"
-        style="@style/Text.Regular"/>
+        />
 </LinearLayout>
