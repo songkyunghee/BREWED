@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_page_1"
+        android:enabled="true"
+        android:title="주문내역"
+        android:icon="@drawable/order_list"/>
+    <item
+        android:id="@+id/navigation_page_2"
+        android:enabled="true"
+        android:title="주문완료"
+        android:icon="@drawable/order_com"/>
+</menu>
