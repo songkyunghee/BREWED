@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/menuBtn"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="100dp"
+        android:backgroundTint="@color/coffee_menu_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/menuImage"
+            android:layout_gravity="center"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/coffee1" />
+    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/orderBtn"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="100dp"
+            android:backgroundTint="@color/coffee_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/orderIcon"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/order"
+                app:tint="@color/white" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/makeBtn"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="100dp"
+            android:backgroundTint="@color/coffee_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/makeIcon"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/make"
+                app:tint="@color/white"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/comBtn"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="100dp"
+            android:backgroundTint="@color/coffee_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/comIcon"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/com"
+                app:tint="@color/white"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+
+</LinearLayout>
