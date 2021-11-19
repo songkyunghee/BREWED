@@ -1,11 +1,18 @@
 package com.ssafy.smartstore.src.main.fragment
 
 import android.content.Context
+import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +21,7 @@ import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
 import com.ssafy.smartstore.src.main.adapter.NoticeAdapter
 import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
+import com.ssafy.smartstore.src.main.activity.QRActivity
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
 
@@ -25,10 +33,31 @@ class HomeFragment : Fragment(){
     private lateinit var mainActivity: MainActivity
     private lateinit var list : List<LatestOrderResponse>
 
+    // 가속도 센서
+    private lateinit var AccelometerSensor: Sensor
+    private lateinit var sensorManager: SensorManager
+    private lateinit var sensorEventListener: SensorEventListener
+
     private lateinit var binding:FragmentHomeBinding
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 가속도 센서 Listener 등록
+        sensorManager.registerListener(
+            sensorEventListener,
+            AccelometerSensor,
+            SensorManager.SENSOR_DELAY_UI
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // 가속도 센서 Listener 삭제
+        sensorManager.unregisterListener(sensorEventListener)
     }
 
     override fun onCreateView(
@@ -42,15 +71,38 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        AccelometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorEventListener = AccelometerListener()
+
         var orderList = OrderService().getAllOrderList()
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")
         }
+
         initUserName()
         initAdapter()
         var id = getUserData()
         initData(id)
     }
+
+    private inner class AccelometerListener : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent) {
+//            Log.e(TAG, "${event.values[0]}   onSensorChanged: x: " + String.format("%.4f", event.values[0])
+//            + "     y: " + String.format("%.4f", event.values[1]) + "    z: " + String.format("%.4f",event.values[2]))
+            if(event.values[0] > 10.0000 && event.values[1] > 10.0000) {
+                startActivity(Intent(requireContext(), QRActivity::class.java))
+                //Toast.makeText(requireContext(), "흔들었다.", Toast.LENGTH_SHORT).show()
+            } else if(event.values[0] < -10.0000 && event.values[1] > -10.0000) {
+                startActivity(Intent(requireContext(), QRActivity::class.java))
+                //Toast.makeText(requireContext(), "흔들었다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+    }
+
 
     fun initAdapter() {
         noticeAdapter = NoticeAdapter()
