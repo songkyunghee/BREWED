@@ -26,6 +26,8 @@ public class OrderRestController {
     @ApiOperation(value="order 객체를 저장하고 추가된 Order의 id를 반환한다.", response = Integer.class )
     @Transactional
     public Integer makeOrder(@RequestBody Order order) {
+    	System.out.println("하히후헤호");
+    	System.out.println(order);
         oService.makeOrder(order);
         return order.getId();
     }

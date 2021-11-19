@@ -7,21 +7,24 @@ import java.util.List;
 public class Order {
     private Integer id;
     private String userId;
+    private Integer storeId;
     private String orderTable;
     private Date orderTime;
 
     private Character completed;
-    private List<OrderDetail> details ;
+    private List<OrderDetail> details;
     
-    public Order(Integer id, String userId, String orderTable, Date orderTime, Character complited) {
+    public Order(Integer id, String userId, Integer storeId, String orderTable, Date orderTime, Character complited) {
         this.id = id;
+        this.storeId = storeId;
         this.userId = userId;
         this.orderTable = orderTable;
         this.orderTime = orderTime;
         this.completed = complited;
     }
 
-    public Order(String userId, String orderTable, Date orderTime, Character complited) {
+    public Order(String userId, Integer storeId, String orderTable, Date orderTime, Character complited) {
+    	this.storeId = storeId;
         this.userId = userId;
         this.orderTable = orderTable;
         this.orderTime = orderTime;
@@ -37,6 +40,15 @@ public class Order {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getUserId() {
@@ -81,7 +93,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", orderTable=" + orderTable + ", orderTime=" + orderTime
+		return "Order [id=" + id + ", userId=" + userId + ", storeId=" + storeId + ", orderTable=" + orderTable + ", orderTime=" + orderTime
 				+ ", completed=" + completed + ", details=" + details + "]";
 	}
     

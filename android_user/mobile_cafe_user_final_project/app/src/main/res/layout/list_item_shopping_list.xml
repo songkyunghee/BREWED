@@ -11,7 +11,7 @@
         android:layout_height="100dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
-        android:backgroundTint="@color/coffee_menu_back"
+        android:backgroundTint="@color/coffee_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <ImageView

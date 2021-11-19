@@ -7,12 +7,7 @@
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
 			select max(o_id) from t_order
 		</selectKey>
-		INSERT INTO t_order
-		(user_id,
-		order_table)
-		VALUES
-		(#{userId},
-		#{orderTable})
+		INSERT INTO t_order (user_id, s_id, order_table) VALUES (#{userId}, #{storeId}, #{orderTable})
 	</insert>
 
 	<update id="update" parameterType="Order">
@@ -47,7 +42,7 @@
 	</select>
 
 	<select id="selectWithDetail" resultMap="OrderWithDetail">
-		select o.o_id, o.user_id, o.order_table, o.order_time, o.completed,
+		select o.o_id, o.s_id, o.user_id, o.order_table, o.order_time, o.completed,
 		d.d_id, d.order_id, d.product_id, d.quantity
 		from t_order o join
 		t_order_detail d on o.o_id = d.order_id
@@ -57,6 +52,7 @@
 
 	<resultMap type="Order" id="OrderBasic">
 		<id column="o_id" property="id" />
+		<result column="s_id" property="storeId" />
 		<result column="user_id" property="userId" />
 		<result column="order_table" property="orderTable" />
 		<result column="order_time" property="orderTime" />
@@ -74,7 +70,7 @@
 
 	<select id="selectOrderTotalInfo" resultType="map"
 		parameterType="int">
-		select o.o_id, o.order_table, o.order_time , d.quantity, p.name, p.price as
+		select o.o_id, o.s_id, o.order_table, o.order_time , d.quantity, p.name, p.price as
 		unitprice, p.img, s.quantity as stamp, d.quantity*p.price as
 		totalprice
 		from t_order o join t_order_detail d on o.o_id = d.order_id
@@ -86,7 +82,7 @@
 
 	<!-- 관통 프로젝트 6단계에서 추가됨 -->
 	<select id="getLastMonthOrder" parameterType="string" resultType="map">
-	select o.o_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img
+	select o.o_id, o.s_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img
 		from t_order o join t_order_detail d on d.order_id=o.o_id
                join t_product p on d.product_id = p.id
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)

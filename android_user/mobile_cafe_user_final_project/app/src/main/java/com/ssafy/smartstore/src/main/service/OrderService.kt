@@ -17,13 +17,17 @@ class OrderService{
 
     // makeOrder
     fun makeOrder(body: Order): Int{
+        Log.d(TAG, "makeOrder: $body")
         var result:Int = 0
         RetrofitUtil.orderService.makeOrder(body).enqueue(object:Callback<Int>{
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 val res = response.body()
+                Log.d(TAG, "onResponse: $res")
+                Log.d(TAG, "onResponse: ${response.code()}")
                 if(response.isSuccessful){
                     if (res != null) {
                         result =  res
+                        Log.d(TAG, "onResponse: success $res")
                     }
                 }
             }

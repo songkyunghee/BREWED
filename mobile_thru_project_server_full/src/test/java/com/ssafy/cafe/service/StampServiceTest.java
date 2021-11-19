@@ -19,7 +19,7 @@ class StampServiceTest extends AbstractServiceTest{
         User testUser = new User("test", "test", "test", 0);
         userService.join(testUser);
         
-        Order order = new Order(testUser.getId(), "table_test", new Date(), 'N');
+        Order order = new Order(testUser.getId(), 1, "table_test", new Date(), 'N');
         List<OrderDetail> details = new ArrayList<>();
         details.add(new OrderDetail(1, 1));
         details.add(new OrderDetail(2, 2));
@@ -28,7 +28,7 @@ class StampServiceTest extends AbstractServiceTest{
         
         orderService.makeOrder(order);
         
-        order = new Order(testUser.getId(), "table_test", new Date(), 'N');
+        order = new Order(testUser.getId(), 1, "table_test", new Date(), 'N');
         details = new ArrayList<>();
         details.add(new OrderDetail(1, 1));
         order.setDetails(details);

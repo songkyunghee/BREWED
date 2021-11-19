@@ -5,6 +5,7 @@ import java.util.*
 
 data class OrderDetailResponse(
     @SerializedName("o_id") val orderId: Int,
+    @SerializedName("s_id") val storeId: Int,
     @SerializedName("order_table") val orderTable: String,
     @SerializedName("order_time") val orderDate: Date,
     @SerializedName("completed") val orderCompleted: Char='N',

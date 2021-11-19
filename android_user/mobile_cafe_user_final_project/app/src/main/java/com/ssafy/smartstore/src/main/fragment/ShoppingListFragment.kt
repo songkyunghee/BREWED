@@ -224,7 +224,8 @@ class ShoppingListFragment : Fragment(){
                 details.add(OrderDetail(prodList[i].id, prodCntList[i]))
             }
         }
-        val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, order_table,  "N", details)
+        val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
+        Log.d(TAG, "completedOrder: $order")
         OrderService().makeOrder(order)
 
         prodList.clear()

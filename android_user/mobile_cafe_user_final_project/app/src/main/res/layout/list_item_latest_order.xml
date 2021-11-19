@@ -19,7 +19,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/coffee_menu_back">
+        android:backgroundTint="@color/coffee_blue">
         <ImageView
             android:id="@+id/menuImage"
             android:layout_gravity="center"
@@ -36,7 +36,7 @@
         android:text="아메리카노 외 3잔"
         android:textSize="15dp"
         android:gravity="center"
-        android:textColor="@color/coffee_deep_blue"
+        android:textColor="@color/white"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuPrice"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="25,000원"
         android:textSize="15dp"
-        android:textColor="@color/coffee_deep_blue"
+        android:textColor="@color/white"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuDate"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="2021.05.06"
         android:textSize="15dp"
-        android:textColor="@color/coffee_deep_blue"
+        android:textColor="@color/white"
         style="@style/Text.Regular"/>
     <ImageView
         android:id="@+id/btnGoOrder"
