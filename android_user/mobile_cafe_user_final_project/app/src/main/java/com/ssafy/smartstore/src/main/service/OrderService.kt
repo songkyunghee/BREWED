@@ -134,7 +134,6 @@ class OrderService{
             override fun onFailure(call: Call<List<OrderListResponse>>, t: Throwable) {
                 Log.d(TAG, t.message ?: "전체 주문 내역 받아오는 중 통신오류")
             }
-
         })
 
         return orderList
