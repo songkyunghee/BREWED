@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssafy.smartstore">
-
-    <!--  Beacon 사용을 위한 위치 데이터 허용  -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-    <!--  NFC 사용을 위한 허용  -->
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
-
-    <!--  서버와의 통신을 위한 Internet 허용  -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-
+    <!-- Beacon 사용을 위한 위치 데이터 허용 -->
     <application
-        android:name="com.ssafy.smartstore.config.ApplicationClass"
+        android:name=".config.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,8 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartstoreUI"
         android:usesCleartextTraffic="true">
-
-        <activity android:name="com.ssafy.smartstore.src.main.activity.LoginActivity"
+        <activity android:name=".src.main.activity.QRActivity"></activity>
+        <activity
+            android:name=".src.main.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="">
             <intent-filter>
@@ -41,10 +29,20 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.ssafy.smartstore.src.main.activity.MainActivity"
+        <activity
+            android:name=".src.main.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
     </application>
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- NFC 사용을 위한 허용 -->
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 서버와의 통신을 위한 Internet 허용 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
 </manifest>

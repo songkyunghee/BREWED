@@ -135,7 +135,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                     .replace(R.id.frame_layout_main, OrderFragment())
                     .commit()
                 hideBottomNav(false)
-
             }
         }
         transaction.commit()
