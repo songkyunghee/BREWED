@@ -136,18 +136,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                     .commit()
                 hideBottomNav(false)
             }
-            7 -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout_main, QRFragment())
-                    .commit()
-                hideBottomNav(false)
-            }
-            8 -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout_main, HomeFragment())
-                    .commit()
-                hideBottomNav(false)
-            }
         }
         transaction.commit()
     }
