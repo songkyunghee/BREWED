@@ -90,6 +90,19 @@
 </select>
 
 	<select id="getAllOrder" resultType="map">
-	select * from t_order
+		select * from t_order
 	</select>
+	
+	
+	<select id="getDateComOrderList" parameterType="HashMap" resultType="map">
+		select * from t_order
+		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed = 'Y'
+	</select>
+	
+	<select id="getDateNotComOrderList" parameterType="String" resultType="map">
+		select * from t_order
+		where s_id = #{storeId} and DATE(order_time) = DATE(#{orderTime}) and completed != 'Y'
+	</select>
+	
+	
 </mapper>

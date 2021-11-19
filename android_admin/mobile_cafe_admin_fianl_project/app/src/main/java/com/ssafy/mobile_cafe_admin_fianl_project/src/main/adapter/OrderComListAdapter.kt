@@ -11,6 +11,7 @@ import com.ssafy.mobile_cafe_admin_fianl_project.R
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Order
 
 class OrderComListAdapter(val context: Context, var orderComList: MutableList<Int>) : RecyclerView.Adapter<OrderComListAdapter.OrderComListHolder>(){
+    
 
     inner class OrderComListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val orderId = itemView.findViewById<TextView>(R.id.tv_order_id)

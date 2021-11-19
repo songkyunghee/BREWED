@@ -1,10 +1,13 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.ssafy.cafe.model.dao.OrderDao;
 import com.ssafy.cafe.model.dao.OrderDetailDao;
 import com.ssafy.cafe.model.dao.StampDao;
@@ -89,5 +92,12 @@ public class OrderServiceImpl implements OrderService {
         // TODO Auto-generated method stub
         return oDao.getAllOrder();
     }
+
+	@Override
+	public List<Map> selectDateComOrderList(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+
+		return oDao.getDateComOrderList(map);
+	}
 
 }

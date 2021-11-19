@@ -1,5 +1,6 @@
 package com.ssafy.cafe.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.ssafy.cafe.model.dto.Order;
@@ -30,4 +31,6 @@ public interface OrderDao {
     List<Map<String, Object>> getLastMonthOrder(String id);
     
     List<Map> getAllOrder();
+    
+    List<Map> getDateComOrderList(HashMap<String, String> map);
 }
