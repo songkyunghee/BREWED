@@ -17,7 +17,7 @@ class OrderServiceTest extends AbstractServiceTest {
     @Test
     @org.junit.jupiter.api.Order(1)
     void makeOrderTest() {
-        Order order = new Order(user.getId(), "table_test", new Date(), 'N');
+        Order order = new Order(user.getId(), 1, "table_test", new Date(), 'N');
         List<OrderDetail> details = new ArrayList<>();
         details.add(new OrderDetail(1, 1));
         details.add(new OrderDetail(2, 2));

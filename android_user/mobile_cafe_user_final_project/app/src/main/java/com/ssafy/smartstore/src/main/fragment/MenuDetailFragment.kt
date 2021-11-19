@@ -182,6 +182,7 @@ class MenuDetailFragment : Fragment() {
 
         override fun onSuccess(code: Int, responseData: Boolean) {
             if (responseData) {
+                initData()
                 Toast.makeText(context, "별점이 등록되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -202,7 +203,7 @@ class MenuDetailFragment : Fragment() {
 
     private fun showDialogRatingStar() {
         //F10
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
         val v1 = layoutInflater.inflate(R.layout.dialog_menu_comment, null)
         builder.setView(v1)
 
@@ -250,7 +251,7 @@ class MenuDetailFragment : Fragment() {
     }
 
     private fun showDialogEditComment(position: Int) {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
         val v1 = layoutInflater.inflate(R.layout.dialog_menu_editcomment,null)
         builder.setView(v1)
 
@@ -289,18 +290,7 @@ class MenuDetailFragment : Fragment() {
 
         override fun onSuccess(code: Int, responseData: Boolean) {
             if (responseData) {
-
-                val menuDetails = ProductService().getProductWithComments(productId)
-                menuDetails.observe(
-                    viewLifecycleOwner,
-                    { menuDetails ->
-                        menuDetails.let {
-                            commentAdapter = CommentAdapter(menuDetails)
-                            commentAdapter.notifyDataSetChanged()
-                        }
-                    }
-                )
-
+                initData()
                 Toast.makeText(context, "댓글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "댓글 삭제에 실패하였습니다.", Toast.LENGTH_SHORT).show()

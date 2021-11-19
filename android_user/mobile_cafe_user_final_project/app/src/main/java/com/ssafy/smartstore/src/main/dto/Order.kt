@@ -5,6 +5,7 @@ import java.util.*
 data class Order (
     var id: Int,
     var userId: String,
+    var storeId: Int,
     var orderTable: String,
     var orderTime: String,
     var complited: String,
@@ -15,7 +16,7 @@ data class Order (
     var topProductName:String = ""
     var topImg:String = ""
 
-    constructor(userId: String, orderTable: String, complited: String, details: ArrayList<OrderDetail>)
-            :this(0, userId, orderTable,"",complited, details)
-    constructor():this(0,"","","","", arrayListOf())
+    constructor(userId: String, storeId: Int, orderTable: String, complited: String, details: ArrayList<OrderDetail>)
+            :this(0, userId, storeId, orderTable,"",complited, details)
+    constructor():this(0,"",1, "","","", arrayListOf())
 }

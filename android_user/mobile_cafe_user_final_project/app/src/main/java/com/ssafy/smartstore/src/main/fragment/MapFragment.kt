@@ -2,6 +2,7 @@ package com.ssafy.smartstore.src.main.fragment
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,10 +45,10 @@ class MapFragment : Fragment(){
         mainActivity.hideBottomNav(false)
     }
     private fun showDialogStore() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
         builder.apply {
+
             setView(R.layout.dialog_map_store)
-            setTitle("매장 상세")
             setCancelable(true)
             setPositiveButton("전화걸기") { dialog, _ ->
                 dialog.cancel()
@@ -56,6 +57,8 @@ class MapFragment : Fragment(){
                 dialog.cancel()
             }
         }
+
         builder.create().show()
+
     }
 }

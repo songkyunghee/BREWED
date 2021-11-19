@@ -9,13 +9,15 @@
 
     <TextView
         android:id="@+id/textNoticeContent"
+        style="@style/Text.Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="너무 맛있어요."
-        android:textSize="15dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
         android:layout_weight="1"
-        style="@style/Text.Regular"/>
+        android:text="너무 맛있어요."
+        android:textSize="15dp" />
     <!--  수정  -->
     <EditText
         android:id="@+id/et_comment_content"

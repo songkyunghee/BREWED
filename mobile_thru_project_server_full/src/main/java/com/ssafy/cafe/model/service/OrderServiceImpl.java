@@ -34,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void makeOrder(Order order) {
         // 주문 및 주문 상세 테이블 저장
+    	System.out.print("makeOrder :: ");
+    	System.out.println(order);
         oDao.insert(order);
         List<OrderDetail> details = order.getDetails();
         int quantitySum = 0;
