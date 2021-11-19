@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/coffee_light_white"
-    >
+    android:background="@color/black">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,7 +13,7 @@
         android:text="Map"
         android:layout_margin="30dp"
         android:textSize="30dp"
-        android:textColor="@color/coffee_point_red"
+        android:textColor="@color/coffee_blue"
         style="@style/Text.Title"/>
     <ImageView
         android:id="@+id/map"

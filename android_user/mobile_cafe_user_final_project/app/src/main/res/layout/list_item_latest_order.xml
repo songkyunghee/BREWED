@@ -36,6 +36,7 @@
         android:text="아메리카노 외 3잔"
         android:textSize="15dp"
         android:gravity="center"
+        android:textColor="@color/coffee_deep_blue"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuPrice"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="25,000원"
         android:textSize="15dp"
+        android:textColor="@color/coffee_deep_blue"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuDate"
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:text="2021.05.06"
         android:textSize="15dp"
+        android:textColor="@color/coffee_deep_blue"
         style="@style/Text.Regular"/>
     <ImageView
         android:id="@+id/btnGoOrder"
@@ -59,5 +62,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         style="@style/Text.Regular"
-        android:src="@drawable/shopping_cart"/>
+        android:src="@drawable/shopping_cart"
+        app:tint="@color/coffee_blue" />
 </LinearLayout>

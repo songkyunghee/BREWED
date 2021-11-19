@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/coffee_light_white"
+    android:background="@color/black"
     android:padding="30dp">
     <LinearLayout
         android:id="@+id/linear"
@@ -29,34 +29,34 @@
 
     <TextView
         android:id="@+id/menu"
+        style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MENU"
-        android:textSize="30dp"
-        android:textColor="@color/coffee_point_red"
-        style="@style/Text.Title"
         android:layout_below="@+id/linear"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:text="MENU"
+        android:textColor="@color/coffee_blue"
+        android:textSize="30dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_below="@+id/menu"
+        android:layout_weight="1"
         tools:layout_height="1500dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingBtn"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="end|bottom"
         android:src="@drawable/shopping_cart"
-        app:backgroundTint="@color/coffee_brown_light"
-        app:fabSize="normal"
+        app:backgroundTint="@color/coffee_blue"
         app:elevation="0dp"
+        app:fabSize="normal"
         app:useCompatPadding="false" />
 
 </RelativeLayout>
