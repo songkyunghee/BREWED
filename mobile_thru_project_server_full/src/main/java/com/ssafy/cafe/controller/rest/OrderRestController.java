@@ -1,5 +1,9 @@
 package com.ssafy.cafe.controller.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +55,34 @@ public class OrderRestController {
     public List<Map> getAllOrder() {
     	return oService.getAllOrder();
     }
+    
+    @GetMapping("/dateOrderComList/{date}/{completed}/{storeId}")
+    @ApiOperation(value = "{date}에 해당하는 완료된 주문 리스트를 목록 형태로 반환한다.", response = List.class)
+    public List<Map> getDateComOrderList(@PathVariable String date,
+    		@PathVariable String completed,
+    		@PathVariable String storeId) {
+    	System.out.print("order info : ");
+    	System.out.println(date);
+    	System.out.println(completed);
+    	System.out.println(storeId);
+    	
+    	
+    	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    	Date tempDate = null;
+    	
+    	try {
+			tempDate = dateFormatter.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	
+    	HashMap<String, String> parameterMap = new HashMap<String, String>();
+    	parameterMap.put("orderTime", date);
+    	parameterMap.put("completed", completed);
+    	parameterMap.put("storeId", storeId);
+    	
+    	
+    	return oService.selectDateComOrderList(parameterMap);
+    }
+    
 }

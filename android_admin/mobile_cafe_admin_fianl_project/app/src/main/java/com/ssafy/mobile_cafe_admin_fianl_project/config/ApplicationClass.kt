@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 private const val TAG = "ApplicationClass_싸피"
 class ApplicationClass : Application() {
     companion object{
-        const val SERVER_URL = "http://172.30.1.26:9999/"
+        const val SERVER_URL = "http://192.168.219.107:9999/"
 
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
         lateinit var retrofit: Retrofit
@@ -29,17 +29,17 @@ class ApplicationClass : Application() {
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
 
-//        val okHttpClient = OkHttpClient.Builder()
+        val okHttpClient = OkHttpClient.Builder()
 //            .addInterceptor(AddCookiesInterceptor())
 //            .addInterceptor(ReceivedCookiesInterceptor())
-//            .connectTimeout(30, TimeUnit.SECONDS).build()
+            .connectTimeout(30, TimeUnit.SECONDS).build()
 
-        // 앱이 처음 생성되는 순간, retrofit 인스턴스를 생성
-//        retrofit = Retrofit.Builder()
-//            .baseUrl(SERVER_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .client(okHttpClient)
-//            .build()
+//         앱이 처음 생성되는 순간, retrofit 인스턴스를 생성
+        retrofit = Retrofit.Builder()
+            .baseUrl(SERVER_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
 }

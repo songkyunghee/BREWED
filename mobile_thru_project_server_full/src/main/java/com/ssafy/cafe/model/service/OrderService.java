@@ -1,5 +1,6 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.ssafy.cafe.model.dto.Order;
@@ -55,4 +56,6 @@ public interface OrderService {
     List<Map<String, Object>> getLastMonthOrder(String id);
     
     List<Map> getAllOrder();
+    
+    List<Map> selectDateComOrderList(HashMap<String, String> map);
 }
