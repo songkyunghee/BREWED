@@ -46,10 +46,15 @@ class HomeFragment : Fragment(){
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")
         }
+
         initUserName()
         initAdapter()
         var id = getUserData()
         initData(id)
+
+        binding.qrbtn.setOnClickListener {
+            mainActivity.openFragment(7)
+        }
     }
 
     fun initAdapter() {
