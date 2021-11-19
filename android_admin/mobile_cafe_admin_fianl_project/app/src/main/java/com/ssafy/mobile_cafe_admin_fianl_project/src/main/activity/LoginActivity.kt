@@ -3,9 +3,7 @@ package com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.ssafy.mobile_cafe_admin_fianl_project.R
-import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment.LoginFragment
 
 
