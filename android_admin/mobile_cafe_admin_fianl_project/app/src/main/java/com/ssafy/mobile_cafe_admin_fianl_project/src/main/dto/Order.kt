@@ -11,13 +11,13 @@ data class Order (
     var storeId: Int,
     var orderTable: String,
     var orderTime: String,
-    var complited: String,
+    var completed: String,
     val details: ArrayList<OrderDetail> = ArrayList() ){
 
 
 
-    constructor(userId: String, storeId: Int, orderTable: String, complited: String, details: ArrayList<OrderDetail>)
-            :this(0, userId, storeId, orderTable, "", complited, details)
+    constructor(id: Int, userId: String, storeId: Int, orderTable: String, completed: String)
+            :this(id, userId, storeId, orderTable, "", completed, arrayListOf())
     @RequiresApi(Build.VERSION_CODES.O)
     constructor():this(0,"",0, "","", "", arrayListOf())
 }
