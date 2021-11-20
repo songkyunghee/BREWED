@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.cafe.model.dao.AdminDao;
+import com.ssafy.cafe.model.dto.Admin;
+import com.ssafy.cafe.model.dto.User;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -14,20 +16,20 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	AdminDao aDao;
 
-	@Override
-	public List<Map> getOrderList(Integer s_id) {
-		return aDao.getOrderList(s_id);
-	}
 
 	@Override
-	public List<Map> getDoneOrderList(Integer s_id) {
-		return aDao.getDoneOrderList(s_id);
+	public Admin login(String a_id, String a_pass) {
+		Admin admin = aDao.select(a_id);
+		System.out.println("sevice impl" + admin);
+        if (admin != null && admin.getaPass().equals(a_pass)) {
+        	
+            return admin;
+        } else {
+            return null;
+        }
 	}
-
-	@Override
-	public List<Map> getNotDoneOrderList(Integer s_id) {
-		return aDao.getNotDoneOrderList(s_id);
-	}
+	
+	
 	
 
 }
