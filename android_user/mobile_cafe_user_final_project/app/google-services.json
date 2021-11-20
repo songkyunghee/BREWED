@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "645609840212",
+    "project_id": "brewedcoffeeproject",
+    "storage_bucket": "brewedcoffeeproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645609840212:android:6f07dc3982071c52ae17c1",
+        "android_client_info": {
+          "package_name": "com.ssafy.smartstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645609840212-srv49lr1rhq15vun5aerf7k2c4o4s3kl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssafy.smartstore",
+            "certificate_hash": "abb4f3a8f09c5854afa9745f2242a110d09afd74"
+          }
+        },
+        {
+          "client_id": "645609840212-8eljnmn7lroaj1d0ns5arbtleq30pmi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq4mlGuDHI_-K14pzObCnZOFJ4BwoD20Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645609840212-8eljnmn7lroaj1d0ns5arbtleq30pmi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
