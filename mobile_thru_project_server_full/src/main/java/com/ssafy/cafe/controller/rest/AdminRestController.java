@@ -39,5 +39,7 @@ public class AdminRestController {
 	public List<Map> getNotDoneOrderList(@PathVariable Integer storeId) {
 		return aService.getNotDoneOrderList(storeId);
 	}
+	// 충돌테스트
+	// 1
 
 }
