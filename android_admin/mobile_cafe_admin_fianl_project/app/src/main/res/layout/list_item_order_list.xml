@@ -16,14 +16,15 @@
         android:layout_height="80dp"
         app:cardElevation="0dp"
         app:cardCornerRadius="100dp"
-        android:backgroundTint="@color/coffee_menu_back"
+        android:backgroundTint="@color/coffee_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/menuImage"
-            android:layout_gravity="center"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:src="@drawable/coffee1" />
     </androidx.cardview.widget.CardView>
@@ -40,7 +41,7 @@
             android:layout_height="80dp"
             app:cardElevation="0dp"
             app:cardCornerRadius="100dp"
-            android:backgroundTint="@color/coffee_blue"
+            android:backgroundTint="@color/coffee_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageView
@@ -65,7 +66,7 @@
             android:layout_height="80dp"
             app:cardElevation="0dp"
             app:cardCornerRadius="100dp"
-            android:backgroundTint="@color/coffee_blue"
+            android:backgroundTint="@color/coffee_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageView
@@ -90,7 +91,7 @@
             android:layout_height="80dp"
             app:cardElevation="0dp"
             app:cardCornerRadius="100dp"
-            android:backgroundTint="@color/coffee_blue"
+            android:backgroundTint="@color/coffee_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageView

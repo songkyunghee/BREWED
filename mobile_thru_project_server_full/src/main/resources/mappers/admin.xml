@@ -3,17 +3,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.ssafy.cafe.model.dao.AdminDao">
-	<select id="getOrderList" parameterType="int" resultType="map">
-		select * from t_order
-		where s_id = #{s_id};
-	</select>
-	<select id="getDoneOrderList" parameterType="int" resultType="map">
-		select * from t_order
-		where s_id = #{s_id} and completed = "Y";
+	
+	<select id="select" parameterType="String" resultType="Admin">
+		SELECT * FROM t_admin
+		WHERE a_id = #{aId}
 	</select>
 	
-	<select id="getNotDoneOrderList" parameterType="int" resultType="map">
-		select * from t_order
-		where s_id = #{s_id} and completed = "N";
-	</select>
 </mapper>

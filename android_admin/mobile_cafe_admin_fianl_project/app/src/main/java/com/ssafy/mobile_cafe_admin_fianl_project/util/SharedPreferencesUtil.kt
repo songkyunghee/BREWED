@@ -11,22 +11,22 @@ class SharedPreferencesUtil (context: Context) {
     var preferences: SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-//    fun addAdmin(admin: Admin){
-//        val editor = preferences.edit()
-//        editor.putString("id", admin.id)
-//        editor.putString("name", admin.name)
-//        editor.apply()
-//    }
-//
-//    fun getAdmin(): Admin{
-//        val id = preferences.getString("id", "")
-//        if (id != ""){
-//            val name = preferences.getString("name", "")
-//            return Admin(id!!, name!!, "",0)
-//        }else{
-//            return Admin()
-//        }
-//    }
+    fun addAdmin(admin: Admin){
+        val editor = preferences.edit()
+        editor.putString("id", admin.id)
+        editor.putString("name", admin.name)
+        editor.apply()
+    }
+
+    fun getAdmin(): Admin{
+        val id = preferences.getString("id", "")
+        if (id != ""){
+            val name = preferences.getString("name", "")
+            return Admin(id!!, 0, name!!, "")
+        }else{
+            return Admin()
+        }
+    }
 
     fun deleteAdmin(){
         //preference 지우기
