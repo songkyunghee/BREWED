@@ -33,4 +33,6 @@ public interface OrderDao {
     List<Map> getAllOrder();
     
     List<Map> getDateComOrderList(HashMap<String, String> map);
+    
+    List<Map> getDateNotComOrderList(HashMap<String, String> map);
 }

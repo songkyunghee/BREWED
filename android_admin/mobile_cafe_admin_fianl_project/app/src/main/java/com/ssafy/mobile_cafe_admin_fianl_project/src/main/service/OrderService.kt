@@ -21,11 +21,9 @@ class OrderService {
         request.enqueue(object: Callback<List<OrderListResponse>> {
             override fun onResponse(call: Call<List<OrderListResponse>>, response: Response<List<OrderListResponse>>) {
                 val res = response.body()
-                Log.d(TAG, "onResponse: $res")
                 if (response.code() == 200) {
                     if (res != null) {
                         res.forEach {
-                            Log.d(TAG, "onResponse: $it")
                             resData.add(it)
                         }
                     }
@@ -41,6 +39,36 @@ class OrderService {
             }
         })
 
-     return resData
+        return resData
+    }
+
+    // getDateComOrderList
+    fun getDateNotComOrderList(date: String, storeId: String, callback: RetrofitCallback<ArrayList<OrderListResponse>>): List<OrderListResponse> {
+        var resData = ArrayList<OrderListResponse>()
+
+        val request: Call<List<OrderListResponse>> = RetrofitUtil.orderService.getDateNotComOrderList(date,storeId)
+
+        request.enqueue(object: Callback<List<OrderListResponse>> {
+            override fun onResponse(call: Call<List<OrderListResponse>>, response: Response<List<OrderListResponse>>) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    if (res != null) {
+                        res.forEach {
+                            resData.add(it)
+                        }
+                    }
+                    callback.onSuccess(response.code(), resData)
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<List<OrderListResponse>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "통신오류")
+                callback.onError(t)
+            }
+        })
+
+        return resData
     }
 }

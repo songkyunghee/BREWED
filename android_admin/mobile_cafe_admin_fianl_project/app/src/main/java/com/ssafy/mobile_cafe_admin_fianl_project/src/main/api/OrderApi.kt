@@ -9,4 +9,7 @@ interface OrderApi {
     @GET("rest/order/dateOrderComList/{date}/{completed}/{storeId}")
     fun getDateComOrderList(@Path("date") date: String, @Path("completed") completed: String, @Path("storeId") storeId: String): Call<List<OrderListResponse>>
 
+    @GET("rest/order/dateOrderNotComList/{date}/{storeId}")
+    fun getDateNotComOrderList(@Path("date") date: String, @Path("storeId") storeId: String): Call<List<OrderListResponse>>
+
 }

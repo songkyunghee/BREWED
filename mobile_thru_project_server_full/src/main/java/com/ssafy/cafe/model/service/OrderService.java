@@ -58,4 +58,6 @@ public interface OrderService {
     List<Map> getAllOrder();
     
     List<Map> selectDateComOrderList(HashMap<String, String> map);
+    
+    List<Map> selectDateNotComOrderList(HashMap<String, String> map);
 }

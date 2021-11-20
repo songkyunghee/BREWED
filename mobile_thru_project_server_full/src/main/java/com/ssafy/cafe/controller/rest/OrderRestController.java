@@ -61,28 +61,23 @@ public class OrderRestController {
     public List<Map> getDateComOrderList(@PathVariable String date,
     		@PathVariable String completed,
     		@PathVariable String storeId) {
-    	System.out.print("order info : ");
-    	System.out.println(date);
-    	System.out.println(completed);
-    	System.out.println(storeId);
-    	
-    	
-    	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-    	Date tempDate = null;
-    	
-    	try {
-			tempDate = dateFormatter.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	
     	HashMap<String, String> parameterMap = new HashMap<String, String>();
     	parameterMap.put("orderTime", date);
     	parameterMap.put("completed", completed);
     	parameterMap.put("storeId", storeId);
     	
-    	
     	return oService.selectDateComOrderList(parameterMap);
+    }
+    
+    @GetMapping("/dateOrderNotComList/{date}/{storeId}")
+    @ApiOperation(value = "{date}에 해당하는 완료되지 않은 주문 리스트를 목록 형태로 반환한다.", response = List.class)
+    public List<Map> getDateNotComOrderList(@PathVariable String date,
+    		@PathVariable String storeId) {
+    	HashMap<String, String> parameterMap = new HashMap<String, String>();
+    	parameterMap.put("orderTime", date);
+    	parameterMap.put("storeId", storeId);
+    	
+    	return oService.selectDateNotComOrderList(parameterMap);
     }
     
 }

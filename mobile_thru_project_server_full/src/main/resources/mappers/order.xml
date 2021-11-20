@@ -87,7 +87,7 @@
                join t_product p on d.product_id = p.id
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)
 		order by o.o_id desc, d.d_id desc
-</select>
+	</select>
 
 	<select id="getAllOrder" resultType="map">
 		select * from t_order
@@ -99,9 +99,10 @@
 		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed = 'Y'
 	</select>
 	
-	<select id="getDateNotComOrderList" parameterType="String" resultType="map">
+	<select id="getDateNotComOrderList" parameterType="HashMap" resultType="map">
 		select * from t_order
-		where s_id = #{storeId} and DATE(order_time) = DATE(#{orderTime}) and completed != 'Y'
+		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed != 'Y'
+		order by order_time
 	</select>
 	
 	

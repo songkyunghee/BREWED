@@ -110,21 +110,20 @@ class OrderComFragment : Fragment() {
         override fun onSuccess(code: Int, responseData: ArrayList<OrderListResponse>) {
             Log.d(TAG, "onSuccess: $code, $responseData")
             if (!responseData.isEmpty()){
-                Toast.makeText(context, "조회에 성공하였습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "조회에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 responseData.forEach{
                     Log.d(TAG, "onSuccess: $it")
                 }
                 // setter를 통해 orderComListAdapter에 아이템 갱신 후 notify...
                 orderComListAdapter.notifyDataSetChanged()
             } else {
-                Toast.makeText(context, "조회에 실패하였습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "조회에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 
         override fun onFailure(code: Int) {
             Log.d(TAG, "onResponse: Error Code $code")
         }
-
     }
 
 }

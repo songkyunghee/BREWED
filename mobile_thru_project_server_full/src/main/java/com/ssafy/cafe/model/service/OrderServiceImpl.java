@@ -100,4 +100,11 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.getDateComOrderList(map);
 	}
 
+	@Override
+	public List<Map> selectDateNotComOrderList(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		
+		return oDao.getDateNotComOrderList(map);
+	}
+
 }
