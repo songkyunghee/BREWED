@@ -29,7 +29,6 @@ SET
 WHERE id = #{id}
 	</update>
 	
-	
 	<delete id="delete" parameterType="string">
 		DELETE FROM t_user
 		WHERE id = #{id}

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 private const val TAG = "ApplicationClass_싸피"
 class ApplicationClass : Application() {
     companion object{
-        const val SERVER_URL = "http://192.168.219.107:9999/"
+        const val SERVER_URL = "http://172.30.1.26:9999/"
 
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
         lateinit var retrofit: Retrofit

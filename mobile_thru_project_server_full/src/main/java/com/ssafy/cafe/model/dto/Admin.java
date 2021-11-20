@@ -1,49 +1,51 @@
 package com.ssafy.cafe.model.dto;
 
 public class Admin {
-	private String a_id;
-	private Integer s_id;
-	private String a_name;
-	private String a_pass;
+	private String aId;
+	private Integer sId;
+	private String aName;
+	private String aPass;
 	
-	public Admin(String a_id, Integer s_id, String a_name, String a_pass) {
+	public Admin(String aId, Integer sId, String aName, String aPass) {
 		super();
-		this.a_id = a_id;
-		this.s_id = s_id;
-		this.a_name = a_name;
-		this.a_pass = a_pass;
+		this.aId = aId;
+		this.sId = sId;
+		this.aName = aName;
+		this.aPass = aPass;
+	}
+	
+	public Admin() {}
+
+	public String getaId() {
+		return aId;
 	}
 
-	public String getA_id() {
-		return a_id;
+	public void setaId(String aId) {
+		this.aId = aId;
 	}
 
-	public void setA_id(String a_id) {
-		this.a_id = a_id;
+	public Integer getsId() {
+		return sId;
 	}
 
-	public Integer getS_id() {
-		return s_id;
+	public void setsId(Integer sId) {
+		this.sId = sId;
 	}
 
-	public void setS_id(Integer s_id) {
-		this.s_id = s_id;
+	public String getaName() {
+		return aName;
 	}
 
-	public String getA_name() {
-		return a_name;
+	public void setaName(String aName) {
+		this.aName = aName;
 	}
 
-	public void setA_name(String a_name) {
-		this.a_name = a_name;
+	public String getaPass() {
+		return aPass;
 	}
 
-	public String getA_pass() {
-		return a_pass;
-	}
-
-	public void setA_pass(String a_pass) {
-		this.a_pass = a_pass;
+	public void setaPass(String aPass) {
+		this.aPass = aPass;
 	}
 	
 	
