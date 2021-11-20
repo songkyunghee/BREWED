@@ -1,25 +1,49 @@
 package com.ssafy.smartstore.src.main.activity
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.smartstore.src.main.fragment.JoinFragment
 import com.ssafy.smartstore.src.main.fragment.LoginFragment
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.config.ApplicationClass.Companion.channel_id
 import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
 
 private const val TAG = "LoginActivity_싸피"
 class LoginActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        //test
+
+        Log.d(TAG, "onCreate: ")
+
+        // FCM 토큰 수신
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d(TAG, "FCM 토큰 얻기에 실패하였습니다.", task.exception)
+                return@OnCompleteListener
+            }
+            // token log
+            Log.d(TAG, "token: ${task.result?:"task.result is null"}")
+        })
+        createNotificationChannel(channel_id, "brewed")
+
+
 
         //writeTag(makeNdefMessage("T","1")!!, intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG))
         getNFCData(intent)
@@ -113,4 +137,15 @@ class LoginActivity : AppCompatActivity() {
 
         return NdefMessage(arrayOf(aaR,ndefR))
     }
+
+    // Notification 수신 채널 추가
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(id: String, name: String) {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(id, name, importance)
+
+        val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
 }
