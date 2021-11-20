@@ -39,5 +39,6 @@ public class AdminRestController {
 	public List<Map> getNotDoneOrderList(@PathVariable Integer storeId) {
 		return aService.getNotDoneOrderList(storeId);
 	}
+	//kyunghee
 
 }
