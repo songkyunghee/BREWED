@@ -14,6 +14,7 @@ import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.LoginActivity
 import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.src.main.dto.User
+import com.ssafy.smartstore.src.main.service.PushService
 import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.RetrofitCallback
 

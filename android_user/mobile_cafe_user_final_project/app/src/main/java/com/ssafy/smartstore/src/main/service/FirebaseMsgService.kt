@@ -2,11 +2,14 @@ package com.ssafy.smartstore.src.main.service
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass.Companion.channel_id
 import com.ssafy.smartstore.config.ApplicationClass.Companion.uploadToken
 import com.ssafy.smartstore.src.main.activity.LoginActivity
@@ -35,7 +38,10 @@ class FirebaseMsgService : FirebaseMessagingService() {
 
             val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, 0)
 
+            val mLargeIconForNoti = BitmapFactory.decodeResource(resources, R.drawable.brewed_logo)
+
             val builder = NotificationCompat.Builder(this, channel_id)
+                .setLargeIcon(mLargeIconForNoti)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle(messageTitle)
                 .setContentText(messageContent)
