@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="coffee_blue">#3333cc</color>
     <color name="coffee_menu_back">#F0E3DB</color>
+    <color name="coffee_grey">#A6A6B1</color>
+    <color name="coffee_able">#3EDA43</color>
+    <color name="coffee_disable">#9393B6</color>
 </resources>

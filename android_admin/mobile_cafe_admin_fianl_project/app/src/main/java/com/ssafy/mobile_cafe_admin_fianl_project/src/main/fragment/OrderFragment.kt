@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.mobile_cafe_admin_fianl_project.R
 import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderBinding
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.MainActivity
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderListAdapter
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Order
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderListResponse
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.OrderService
 import com.ssafy.mobile_cafe_admin_fianl_project.util.RetrofitCallback
@@ -24,8 +27,9 @@ import java.util.*
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
     private lateinit var mainActivity: MainActivity
-    private lateinit var orderListAdapter: OrderListAdapter
-    private val list = mutableListOf<Int>()
+    private lateinit var orderListAdapter : OrderListAdapter
+    private var list = mutableListOf<OrderListResponse>()
+    private var storeId = "1"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,53 +47,66 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.add(R.drawable.coffee1)
-        list.add(R.drawable.coffee1)
-        list.add(R.drawable.coffee1)
-        list.add(R.drawable.coffee1)
-
-        orderListAdapter = OrderListAdapter(requireContext(), list)
-
-        binding.recyclerViewOrder.apply {
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-            layoutManager = linearLayoutManager
-            adapter = orderListAdapter
-
-            adapter!!.stateRestorationPolicy =
-                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
+        orderListAdapter = OrderListAdapter(requireContext(), mutableListOf())
 
         var dateFormatter = SimpleDateFormat("yyyy-MM-dd")
         dateFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
         // 현재 날짜를 yyyy-MM-dd 형태의 String으로 받음
         var dateString = dateFormatter.format(System.currentTimeMillis())
-
-        OrderService().getDateNotComOrderList(dateString, "1", getNotComOrderListCallback())
+        initData(dateString)
 
     }
 
-    inner class getNotComOrderListCallback: RetrofitCallback<ArrayList<OrderListResponse>> {
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "통신오류")
-        }
+    private fun initData(date: String) {
+        val notComOrderList = OrderService().getDateNotComOrderList("2021-11-19", storeId)
 
-        override fun onSuccess(code: Int, responseData: ArrayList<OrderListResponse>) {
-            Toast.makeText(context, "조회에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-            if (!responseData.isEmpty()) {
-                responseData.forEach {
-                    Log.d(TAG, "onSuccess: $it")
+        notComOrderList.observe(
+            viewLifecycleOwner,
+            { notComOrderList ->
+                notComOrderList.let {
+                    orderListAdapter.notComOrderList = notComOrderList
+                    orderListAdapter.notifyDataSetChanged()
                 }
-            } else {
-                Toast.makeText(context, "조회에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+
+                binding.recyclerViewOrder.apply {
+                    val linearLayoutManager = LinearLayoutManager(context)
+                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                    layoutManager = linearLayoutManager
+                    adapter = orderListAdapter
+
+                    adapter!!.stateRestorationPolicy =
+                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                }
+
+
             }
-        }
+        )
 
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
+        orderListAdapter.clickListener = object : OrderListAdapter.OnItemClickListener {
+            override fun onOrderUpdateClick(view: View, position: Int, commentId: Int) {
+                var o = orderListAdapter.notComOrderList[position]
 
+                if(orderListAdapter.process == "N") {
+                    orderListAdapter.process = "M"
+                    var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
+                    OrderService().update(order)
+                    Log.d(TAG, "onOrderUpdateClick: ${orderListAdapter.process}")
+
+                }
+
+                if(orderListAdapter.process == "M") {
+                    orderListAdapter.process = "Y"
+                    var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+                    OrderService().update(order)
+
+                }
+
+                if(orderListAdapter.process == "Y") {
+
+                }
+            }
+
+        }
     }
-
 }
