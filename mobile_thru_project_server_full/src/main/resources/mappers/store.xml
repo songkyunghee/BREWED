@@ -12,4 +12,8 @@
         select s_id from t_store
         where s_beacon = #{sBeacon};
     </select>
+    
+    <select id="selectAllBanner" resultType="String">
+    	SELECT img as image FROM t_banner
+    </select>
 </mapper>

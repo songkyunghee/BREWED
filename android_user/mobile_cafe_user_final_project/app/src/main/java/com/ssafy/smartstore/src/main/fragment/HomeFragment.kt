@@ -14,16 +14,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
 import com.ssafy.smartstore.src.main.adapter.NoticeAdapter
 import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.src.main.activity.QRActivity
+import com.ssafy.smartstore.src.main.adapter.ViewPageAdapter
+import com.ssafy.smartstore.src.main.dto.BannerItem
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
+import com.ssafy.smartstore.util.HomeViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // Home 탭
 private const val TAG = "HomeFragment_싸피"
@@ -37,6 +48,11 @@ class HomeFragment : Fragment(){
     private lateinit var AccelometerSensor: Sensor
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorEventListener: SensorEventListener
+
+    // 롤링 배너
+    private lateinit var viewPagerAdapter: ViewPageAdapter
+    private lateinit var viewModel: HomeViewModel
+    private var isRunning = true
 
     private lateinit var binding:FragmentHomeBinding
     override fun onAttach(context: Context) {
@@ -52,12 +68,15 @@ class HomeFragment : Fragment(){
             AccelometerSensor,
             SensorManager.SENSOR_DELAY_UI
         )
+
+        isRunning = true
     }
 
     override fun onPause() {
         super.onPause()
         // 가속도 센서 Listener 삭제
         sensorManager.unregisterListener(sensorEventListener)
+        isRunning = false
     }
 
     override fun onCreateView(
@@ -76,6 +95,14 @@ class HomeFragment : Fragment(){
         AccelometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorEventListener = AccelometerListener()
 
+        viewModel = ViewModelProvider(mainActivity).get(HomeViewModel::class.java)
+        viewModel.setBannerItems(
+//            listOf(
+//                BannerItem(R.drawable.img1),
+//                BannerItem(R.drawable.img2)
+//            )
+        )
+
         var orderList = OrderService().getAllOrderList()
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")
@@ -85,7 +112,54 @@ class HomeFragment : Fragment(){
         initAdapter()
         var id = getUserData()
         initData(id)
+
+        // 롤링 배너
+        initViewPager()
+        subscribeObservers()
+        autoScrollViewPage()
     }
+
+    private fun initViewPager() {
+        binding.viewPager2.apply {
+            viewPagerAdapter = ViewPageAdapter()
+            adapter = viewPagerAdapter
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    isRunning = true
+
+                }
+            })
+        }
+    }
+
+    private fun subscribeObservers() {
+        viewModel.bannerItemList.observe(mainActivity, Observer{ bannerItemList ->
+            viewPagerAdapter.submitList(bannerItemList)
+
+        })
+
+        viewModel.currentPosition.observe(mainActivity, Observer { currentPosition ->
+            binding.viewPager2.currentItem = currentPosition
+        })
+    }
+
+    private fun autoScrollViewPage() {
+        lifecycleScope.launch{
+            whenResumed {
+                while(isRunning) {
+                    delay(3000)
+                    viewModel.getcurrentPosition()?.let {
+                        viewModel.setCurrentPosition((it.plus(1)) % 2)
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
 
     private inner class AccelometerListener : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
@@ -105,14 +179,14 @@ class HomeFragment : Fragment(){
 
 
     fun initAdapter() {
-        noticeAdapter = NoticeAdapter()
-        binding.recyclerViewNoticeOrder.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = noticeAdapter
-            //원래의 목록위치로 돌아오게함
-            adapter!!.stateRestorationPolicy =
-                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
+//        noticeAdapter = NoticeAdapter()
+//        binding.recyclerViewNoticeOrder.apply {
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//            adapter = noticeAdapter
+//            //원래의 목록위치로 돌아오게함
+//            adapter!!.stateRestorationPolicy =
+//                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//        }
 
 
 //        latestOrderAdapter = LatestOrderAdapter()
@@ -132,6 +206,9 @@ class HomeFragment : Fragment(){
     }
 
     private fun initData(id:String){
+
+
+
 
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")

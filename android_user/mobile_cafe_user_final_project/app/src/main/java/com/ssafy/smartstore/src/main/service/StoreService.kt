@@ -1,6 +1,9 @@
 package com.ssafy.smartstore.src.main.service
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.util.RetrofitCallback
 import com.ssafy.smartstore.util.RetrofitUtil
 import retrofit2.Call
@@ -38,6 +41,28 @@ class StoreService {
                 callback.onError(t)
             }
         })
+    }
+
+    fun getBannerList(): LiveData<List<String>> {
+        val responseLiveData: MutableLiveData<List<String>> = MutableLiveData()
+        val request: Call<MutableList<String>> = RetrofitUtil.storeService.getBannerList()
+        menuInfoRequest.enqueue(object : Callback<MutableList<Product>> {
+            override fun onResponse(call: Call<MutableList<Product>>, response: Response<MutableList<Product>>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        responseLiveData.value = res
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "통신오류")
+            }
+        })
+        return responseLiveData
     }
 
 }
