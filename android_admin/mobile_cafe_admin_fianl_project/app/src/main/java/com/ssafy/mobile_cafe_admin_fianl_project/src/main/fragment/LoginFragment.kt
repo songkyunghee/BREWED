@@ -60,8 +60,10 @@ class LoginFragment : Fragment() {
 
     inner class LoginCallback: RetrofitCallback<Admin> {
         override fun onSuccess(code: Int, responseData: Admin) {
-           if(responseData.id != null) {
+           if(responseData.aId != null) {
                Toast.makeText(context, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+
+               Log.d(TAG, "onSuccess: ${responseData}")
 
                ApplicationClass.sharedPreferencesUtil.addAdmin(responseData)
                loginActivity.openFragment(1)

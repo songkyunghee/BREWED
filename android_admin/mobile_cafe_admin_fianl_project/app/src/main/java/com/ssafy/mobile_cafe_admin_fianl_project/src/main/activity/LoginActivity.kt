@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: admin ${admin}")
 
         //로그인 상태 확인. id가 있다면 로그인 된 상태
-        if (admin.id != ""){
+        if (admin.aId != ""){
             openFragment(1)
         }
         else {

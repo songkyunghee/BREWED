@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         if (!adminToken.equals("none")) {
             var admin = sharedPreferencesUtil.getAdmin()
-            admin.token = adminToken
+            admin.aToken = adminToken
             Log.d(TAG, "onCreate: token 갱신...")
             AdminService().update(admin)
         }
