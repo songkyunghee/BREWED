@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.LoginActivity
 import com.ssafy.smartstore.config.ApplicationClass
+import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
 import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.PushService
 import com.ssafy.smartstore.src.main.service.UserService
@@ -68,6 +69,10 @@ class LoginFragment : Fragment(){
             if (user.id != null) {
                 Toast.makeText(context,"로그인 되었습니다.", Toast.LENGTH_SHORT).show()
                 // 로그인 시 user정보 sp에 저장
+                Log.d(TAG, "onSuccess: $userToken")
+                if (!userToken.equals("none")) {
+                    UserService().update(user)
+                }
                 ApplicationClass.sharedPreferencesUtil.addUser(user)
                 loginActivity.openFragment(1)
             }else{

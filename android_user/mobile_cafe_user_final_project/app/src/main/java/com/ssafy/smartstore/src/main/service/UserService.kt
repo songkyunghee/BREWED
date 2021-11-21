@@ -1,5 +1,6 @@
 package com.ssafy.smartstore.src.main.service
 
+import android.util.Log
 import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.util.RetrofitCallback
 import com.ssafy.smartstore.util.RetrofitUtil
@@ -61,6 +62,26 @@ class UserService {
             }
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 callback.onError(t)
+            }
+        })
+    }
+
+    // 유저 정보 갱신
+    fun update(user: User) {
+        RetrofitUtil.userService.update(user).enqueue(object : Callback<Int> {
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                val res = response.body()
+                Log.d(TAG, "update: $user")
+                Log.d(TAG, "update: ${response.code()}")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "onResponse: success")
+                } else {
+                    Log.d(TAG, "onResponse: Error Code : ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                Log.d(TAG, "onFailure: $t")
             }
         })
     }

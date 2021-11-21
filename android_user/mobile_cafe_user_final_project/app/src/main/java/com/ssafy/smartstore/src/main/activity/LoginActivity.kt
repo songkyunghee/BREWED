@@ -22,6 +22,8 @@ import com.ssafy.smartstore.src.main.fragment.LoginFragment
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass.Companion.channel_id
 import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
+import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
+import com.ssafy.smartstore.src.main.service.UserService
 
 private const val TAG = "LoginActivity_싸피"
 class LoginActivity : AppCompatActivity() {
@@ -39,7 +41,8 @@ class LoginActivity : AppCompatActivity() {
                 return@OnCompleteListener
             }
             // token log
-            Log.d(TAG, "token: ${task.result?:"task.result is null"}")
+            userToken = task.result ?: "none"
+            Log.d(TAG, "token: ${userToken}")
         })
         createNotificationChannel(channel_id, "brewed")
 

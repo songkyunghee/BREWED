@@ -10,4 +10,7 @@ public interface AdminDao {
 	
 	// id에 해당하는 관리자 정보를 반환한다.
 	Admin select(String a_id);
+	
+	// admin 정보를 갱신한다.
+	int update(Admin admin);
 }

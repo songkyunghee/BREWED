@@ -1,22 +1,19 @@
-package com.ssafy.smartstore.src.main.service
+package com.ssafy.mobile_cafe_admin_fianl_project.src.main.service
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ssafy.smartstore.R
-import com.ssafy.smartstore.config.ApplicationClass.Companion.channel_id
-import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
-import com.ssafy.smartstore.config.ApplicationClass.Companion.uploadToken
-import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
-import com.ssafy.smartstore.src.main.activity.LoginActivity
+import com.ssafy.mobile_cafe_admin_fianl_project.R
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.adminToken
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.channel_id
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.uploadToken
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.LoginActivity
 
-private const val TAG = "MsgService_싸피"
 class FirebaseMsgService : FirebaseMessagingService() {
 
     // 새로운 토큰 생성될 때 마다 해당 콜백 호출
@@ -25,7 +22,7 @@ class FirebaseMsgService : FirebaseMessagingService() {
         Log.d(TAG, "onNewToken: $token")
 
         // 새로운 토큰 수신 시 서버로 전송
-        userToken = token
+        adminToken = token
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

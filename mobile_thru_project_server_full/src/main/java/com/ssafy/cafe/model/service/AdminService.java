@@ -12,4 +12,7 @@ public interface AdminService {
 	
 	// 조회된 관리자 정보를 반환한다.
     public Admin login(String a_id, String a_pass);
+    
+    // 어드민 정보를 갱신한다.
+    public int update(Admin admin);
 }

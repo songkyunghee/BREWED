@@ -5,13 +5,15 @@ public class Admin {
 	private Integer sId;
 	private String aName;
 	private String aPass;
+	private String aToken;
 	
-	public Admin(String aId, Integer sId, String aName, String aPass) {
+	public Admin(String aId, Integer sId, String aName, String aPass, String aToken) {
 		super();
 		this.aId = aId;
 		this.sId = sId;
 		this.aName = aName;
 		this.aPass = aPass;
+		this.aToken = aToken;
 	}
 	
 	public Admin() {}
@@ -47,6 +49,16 @@ public class Admin {
 	public void setaPass(String aPass) {
 		this.aPass = aPass;
 	}
+
+	public String getaToken() {
+		return aToken;
+	}
+
+	public void setaToken(String aToken) {
+		this.aToken = aToken;
+	}
+	
+	
 	
 	
 }

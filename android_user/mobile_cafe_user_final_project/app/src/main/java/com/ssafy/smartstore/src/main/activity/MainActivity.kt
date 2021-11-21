@@ -25,8 +25,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ssafy.smartstore.*
 import com.ssafy.smartstore.R
-import com.ssafy.smartstore.config.ApplicationClass
+import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
+import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
 import com.ssafy.smartstore.src.main.fragment.*
+import com.ssafy.smartstore.src.main.service.UserService
 import org.altbeacon.beacon.*
 
 //test
@@ -53,6 +55,13 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (!userToken.equals("none")) {
+            var user = sharedPreferencesUtil.getUser()
+            user.token = userToken
+            Log.d(TAG, "onCreate: token 갱신...")
+            UserService().update(user)
+        }
 
         // 가장 첫 화면은 홈 화면의 Fragment로 지정
 
@@ -142,7 +151,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
     fun logout(){
         //preference 지우기
-        ApplicationClass.sharedPreferencesUtil.deleteUser()
+        sharedPreferencesUtil.deleteUser()
 
         //화면이동
         val intent = Intent(this, LoginActivity::class.java)
