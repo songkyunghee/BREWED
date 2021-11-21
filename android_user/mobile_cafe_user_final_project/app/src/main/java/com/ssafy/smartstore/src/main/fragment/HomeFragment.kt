@@ -32,6 +32,8 @@ import com.ssafy.smartstore.src.main.adapter.ViewPageAdapter
 import com.ssafy.smartstore.src.main.dto.BannerItem
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
+import com.ssafy.smartstore.src.main.service.ProductService
+import com.ssafy.smartstore.src.main.service.StoreService
 import com.ssafy.smartstore.util.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -96,11 +98,10 @@ class HomeFragment : Fragment(){
         sensorEventListener = AccelometerListener()
 
         viewModel = ViewModelProvider(mainActivity).get(HomeViewModel::class.java)
+        val bannerList = StoreService().getBannerList()
+        bannerList.observe()
         viewModel.setBannerItems(
-//            listOf(
-//                BannerItem(R.drawable.img1),
-//                BannerItem(R.drawable.img2)
-//            )
+            bannerList
         )
 
         var orderList = OrderService().getAllOrderList()

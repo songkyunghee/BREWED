@@ -41,7 +41,7 @@ class ViewPageAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(bannerItem: BannerItem) {
 
-            itemView.findViewById<ImageView>(R.id.iv_banner_image).setImageResource(bannerItem.image)
+            //itemView.findViewById<ImageView>(R.id.iv_banner_image).setImageResource(bannerItem.image)
         }
     }
 

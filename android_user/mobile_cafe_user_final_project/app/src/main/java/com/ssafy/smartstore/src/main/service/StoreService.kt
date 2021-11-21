@@ -45,10 +45,13 @@ class StoreService {
     fun getBannerList(): LiveData<List<String>> {
         val responseLiveData: MutableLiveData<List<String>> = MutableLiveData()
         val request: Call<MutableList<String>> = RetrofitUtil.storeService.getBannerList()
-        menuInfoRequest.enqueue(object : Callback<MutableList<Product>> {
-            override fun onResponse(call: Call<MutableList<Product>>, response: Response<MutableList<Product>>) {
+        request.enqueue(object : Callback<MutableList<String>> {
+            override fun onResponse(
+                call: Call<MutableList<String>>,
+                response: Response<MutableList<String>>
+            ) {
                 val res = response.body()
-                if(response.code() == 200){
+                if (response.code() == 200) {
                     if (res != null) {
                         responseLiveData.value = res
                     }
@@ -57,7 +60,7 @@ class StoreService {
                 }
             }
 
-            override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+            override fun onFailure(call: Call<MutableList<String>>, t: Throwable) {
                 Log.d(TAG, t.message ?: "통신오류")
             }
         })
