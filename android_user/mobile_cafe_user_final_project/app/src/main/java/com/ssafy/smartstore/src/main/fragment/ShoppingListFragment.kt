@@ -218,6 +218,7 @@ class ShoppingListFragment : Fragment(){
     }
 
     private fun yourStore(){
+
         if (storeId == "0") {
             showDialogForStoreId()
         } else {
