@@ -54,7 +54,9 @@ class StoreService {
                 if (response.code() == 200) {
                     if (res != null) {
                         responseLiveData.value = res
+                        Log.d(TAG, "onResponse: $res")
                     }
+                    Log.d(TAG, "banner onResponse: success")
                 } else {
                     Log.d(TAG, "onResponse: Error Code ${response.code()}")
                 }

@@ -99,9 +99,14 @@ class HomeFragment : Fragment(){
 
         viewModel = ViewModelProvider(mainActivity).get(HomeViewModel::class.java)
         val bannerList = StoreService().getBannerList()
-        bannerList.observe()
-        viewModel.setBannerItems(
-            bannerList
+        bannerList.observe(
+            viewLifecycleOwner,
+            { bannerList ->
+                bannerList.let {
+                    viewModel.setBannerItems(bannerList)
+                }
+
+            }
         )
 
         var orderList = OrderService().getAllOrderList()
@@ -151,7 +156,7 @@ class HomeFragment : Fragment(){
                 while(isRunning) {
                     delay(3000)
                     viewModel.getcurrentPosition()?.let {
-                        viewModel.setCurrentPosition((it.plus(1)) % 2)
+                        viewModel.setCurrentPosition((it.plus(1)) % 3)
                     }
                 }
             }

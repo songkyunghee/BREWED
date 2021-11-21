@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.ssafy.smartstore.src.main.dto.BannerItem
 
 class HomeViewModel : ViewModel() {
-    private val _bannerItemList: MutableLiveData<List<BannerItem>> = MutableLiveData()
+    private val _bannerItemList: MutableLiveData<List<String>> = MutableLiveData()
     private val _currentPosition: MutableLiveData<Int> = MutableLiveData()
 
-    val bannerItemList: LiveData<List<BannerItem>>
+    val bannerItemList: LiveData<List<String>>
         get() = _bannerItemList
 
     val currentPosition: LiveData<Int>
@@ -19,7 +19,7 @@ class HomeViewModel : ViewModel() {
         _currentPosition.value = 0
     }
 
-    fun setBannerItems(list: List<BannerItem>) {
+    fun setBannerItems(list: List<String>) {
         _bannerItemList.value = list
     }
 
