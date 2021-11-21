@@ -24,4 +24,8 @@ interface UserApi {
     @PUT("rest/user/update")
     fun update(@Body body: User): Call<Int>
 
+    // store Id에 해당하는 admin token 값을 반환한다.
+    @GET("rest/admin/{sId}")
+    fun selectAdminToken(@Path("sId") sId: String): Call<HashMap<String, String>>
+
 }

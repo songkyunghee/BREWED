@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Application
 import android.nfc.NfcAdapter
 import android.util.Log
+import com.google.gson.GsonBuilder
 import com.ssafy.smartstore.src.main.api.FirebaseTokenApi
 import com.ssafy.smartstore.src.main.intercepter.AddCookiesInterceptor
 import com.ssafy.smartstore.src.main.intercepter.ReceivedCookiesInterceptor

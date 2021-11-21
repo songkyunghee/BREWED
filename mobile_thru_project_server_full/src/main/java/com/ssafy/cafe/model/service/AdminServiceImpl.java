@@ -34,6 +34,12 @@ public class AdminServiceImpl implements AdminService {
 	public int update(Admin admin) {
 		return aDao.update(admin);
 	}
+
+
+	@Override
+	public Map selectAdmin(String s_id) {
+		return aDao.selectAdmin(s_id);
+	}
 	
 	
 	
