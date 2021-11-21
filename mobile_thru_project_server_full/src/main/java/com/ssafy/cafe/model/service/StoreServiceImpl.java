@@ -1,5 +1,6 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public Map getStoreId(String sBeacon) {
 	    return sDao.getStoreId(sBeacon);
+	}
+
+	@Override
+	public List<String> getBanner() {
+		return sDao.selectAllBanner();
 	}
 
 }

@@ -78,4 +78,16 @@ dependencies {
     // Google map API
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // ViewModelProvider
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    // Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+
+    // LifecyleScope
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01'
 }

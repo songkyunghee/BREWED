@@ -1,5 +1,6 @@
 package com.ssafy.cafe.controller.rest;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class StoreRestController {
 	@ApiOperation(value="beacon의 주소에 해당하는 스토어의 ID를 반환한다.", response=String.class)
 	public Map getStoreId(@PathVariable String beacon) {
 	    return sService.getStoreId(beacon);
+	}
+	
+	@GetMapping("/banner")
+	@ApiOperation(value="전체 배너 이미지를 반환한다.", response = String.class)
+	public List<String> getAllBanner() {
+		return sService.getBanner();
 	}
 
 }
