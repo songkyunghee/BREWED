@@ -1,6 +1,7 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ssafy.smartstore.R
-import com.ssafy.smartstore.config.ApplicationClass
-import com.ssafy.smartstore.src.main.response.OrderDetailResponse
-import com.ssafy.smartstore.util.CommonUtils
+import com.ssafy.mobile_cafe_admin_fianl_project.R
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderDetailResponse
+import com.ssafy.mobile_cafe_admin_fianl_project.util.CommonUtils
 
 
 class OrderDetailListAdapter(val context: Context, val orderDetail:List<OrderDetailResponse>) :RecyclerView.Adapter<OrderDetailListAdapter.OrderDetailListHolder>(){
@@ -24,6 +25,7 @@ class OrderDetailListAdapter(val context: Context, val orderDetail:List<OrderDet
         val textShoppingMenuMoneyAll = itemView.findViewById<TextView>(R.id.textShoppingMenuMoneyAll)
 
         fun bindInfo(data:OrderDetailResponse){
+            Log.d("Adapter_싸피", "bindInfo: $data")
             var type = if(data.productType == "coffee") "잔" else "개"
 
             Glide.with(itemView)

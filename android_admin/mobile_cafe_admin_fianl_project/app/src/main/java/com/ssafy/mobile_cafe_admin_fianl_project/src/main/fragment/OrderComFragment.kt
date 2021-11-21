@@ -78,6 +78,14 @@ class OrderComFragment : Fragment() {
                         Log.d(TAG, "onViewCreated: $comOrderList")
 
                         orderComListAdapter = OrderComListAdapter(requireContext(), comOrderList)
+                        orderComListAdapter.setItemClickListener(object : OrderComListAdapter.ItemClickListener{
+                            override fun onClick(view: View, position: Int, orderid:Int) {
+                                Log.d(TAG, "onClick:  주문 완료 목록")
+                                mainActivity.openFragment(1, "orderId", orderid)
+                                
+                                
+                            }
+                        })
                         binding.recyclerViewOrderDetailList.apply {
                             val linearLayoutManager = LinearLayoutManager(context)
                             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL

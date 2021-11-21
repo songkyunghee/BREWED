@@ -3,11 +3,13 @@ package com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ssafy.mobile_cafe_admin_fianl_project.R
 import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.adminToken
 import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment.OrderComFragment
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment.OrderDetailFragment
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment.OrderFragment
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.AdminService
 
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frame_layout_main, OrderFragment())
             .commit()
+
         bottomNavigation = findViewById(R.id.tab_layout_bottom_navigation)
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
@@ -53,6 +56,24 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.selectedItemId = item.itemId
             }
         }
+    }
+
+    fun openFragment(index:Int, key:String, value:Int){
+        moveFragment(index, key, value)
+    }
+
+    private fun moveFragment(index: Int, key: String, value: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        when(index) {
+            1 -> transaction.replace(R.id.frame_layout_main, OrderDetailFragment.newInstance(key, value))
+                .addToBackStack(null)
+        }
+        transaction.commit()
+    }
+
+    fun hideBottomNav(state : Boolean){
+        if(state) bottomNavigation.visibility =  View.GONE
+        else bottomNavigation.visibility = View.VISIBLE
     }
 
 }

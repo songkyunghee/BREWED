@@ -70,7 +70,7 @@
 
 	<select id="selectOrderTotalInfo" resultType="map"
 		parameterType="int">
-		select o.o_id, o.s_id, o.order_table, o.order_time , d.quantity, p.name, p.price as
+		select o.o_id, o.user_id, o.s_id, o.order_table, o.order_time , d.quantity, p.name, p.price as
 		unitprice, p.img, s.quantity as stamp, d.quantity*p.price as
 		totalprice
 		from t_order o join t_order_detail d on o.o_id = d.order_id

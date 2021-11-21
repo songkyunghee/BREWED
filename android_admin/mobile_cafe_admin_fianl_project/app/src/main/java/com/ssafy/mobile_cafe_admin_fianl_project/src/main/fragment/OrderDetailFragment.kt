@@ -9,34 +9,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.smartstore.src.main.activity.MainActivity
-import com.ssafy.smartstore.src.main.adapter.OrderDetailListAdapter
-import com.ssafy.smartstore.databinding.FragmentOrderDetailBinding
-import com.ssafy.smartstore.src.main.response.OrderDetailResponse
-import com.ssafy.smartstore.src.main.service.OrderService
-import com.ssafy.smartstore.util.CommonUtils
+import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderDetailBinding
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.MainActivity
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderDetailListAdapter
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderDetailResponse
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.OrderService
 import java.text.SimpleDateFormat
 import java.util.*
 
 // 주문상세화면, My탭  - 주문내역 선택시 팝업
-private const val TAG = "OrderDetailFragment_싸피"
 class OrderDetailFragment : Fragment(){
     private lateinit var orderDetailListAdapter: OrderDetailListAdapter
     private lateinit var mainActivity: MainActivity
-
     private var orderId = -1
 
-    private lateinit var binding:FragmentOrderDetailBinding
+    private lateinit var binding: FragmentOrderDetailBinding
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity.hideBottomNav(true)
 
         arguments?.let {
             orderId = it.getInt("orderId")
+            Log.d(TAG, "onCreate: $orderId")
         }
 
     }
@@ -59,6 +61,7 @@ class OrderDetailFragment : Fragment(){
 
     private fun initData(){
         val orderDetails = OrderService().getOrderDetails(orderId)
+        Log.d(TAG, "initData: $orderDetails")
         orderDetails.observe(
             viewLifecycleOwner,
             { orderDetails ->
@@ -90,11 +93,12 @@ class OrderDetailFragment : Fragment(){
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH시 mm분 ss초")
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-        binding.tvOrderStatus.text = CommonUtils.isOrderCompleted(orderDetails[0])
-        binding.tvOrderDate.text = dateFormat.format(orderDetails[0].orderDate)
+        binding.tvOrderUser.text = "아이디: ${orderDetails[0].userId}"
+        binding.tvOrderId.text = "주문번호: ${orderDetails[0].orderId}"
+        binding.tvOrderDate.text = "주문일시: ${dateFormat.format(orderDetails[0].orderDate)}"
         var totalPrice = 0
         orderDetails.forEach { totalPrice += it.totalPrice }
-        binding.tvTotalPrice.text = "$totalPrice 원"
+        binding.tvTotalPrice.text = "결제금액: $totalPrice 원"
     }
 
 
@@ -103,11 +107,12 @@ class OrderDetailFragment : Fragment(){
         mainActivity.hideBottomNav(false)
     }
 
-    companion
-    object {
+    companion object {
         @JvmStatic
         fun newInstance(key:String, value:Int) =
             OrderDetailFragment().apply {
+                Log.d(TAG, "newInstance: 주문 상세 페이지 $key $value")
+                
                 arguments = Bundle().apply {
                     putInt(key, value)
                 }

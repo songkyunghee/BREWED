@@ -270,7 +270,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                     // 한번만 띄우기 위한 조건
                     Log.d(
                         TAG,
-                        "distance: " + beacon.distance + " Major : " + beacon.id2 + ", Minor" + beacon.id3
+                        "distance: " + beacon.distance + " Major : " + beacon.id2 + ", Minor" + beacon.id3 + ", ${beacon.bluetoothAddress}"
                     )
                     runOnUiThread {
                         val mDialogView = LayoutInflater.from(this).inflate(R.layout.beacon_dialog, null)
