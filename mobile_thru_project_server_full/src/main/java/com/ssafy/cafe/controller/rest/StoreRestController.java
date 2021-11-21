@@ -26,5 +26,11 @@ public class StoreRestController {
 	public Map getStoreName(@PathVariable Integer storeId) {
 		return sService.getStoreName(storeId);
 	}
+	
+	@GetMapping("/beacon/{beacon}")
+	@ApiOperation(value="beacon의 주소에 해당하는 스토어의 ID를 반환한다.", response=String.class)
+	public Map getStoreId(@PathVariable String beacon) {
+	    return sService.getStoreId(beacon);
+	}
 
 }

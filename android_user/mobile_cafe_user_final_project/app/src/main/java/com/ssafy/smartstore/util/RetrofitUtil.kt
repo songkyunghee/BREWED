@@ -10,5 +10,6 @@ class RetrofitUtil {
         val productService = ApplicationClass.retrofit.create(ProductApi::class.java)
         val userService = ApplicationClass.retrofit.create(UserApi::class.java)
         val pushService = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
+        val storeService = ApplicationClass.retrofit.create(StoreApi::class.java)
     }
 }

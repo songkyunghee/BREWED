@@ -38,6 +38,9 @@ class ApplicationClass : Application() {
             Manifest.permission.ACCESS_FINE_LOCATION,
         )
 
+        // 현재 스토어 ID
+        var storeId = "0"
+
         // 주문 준비 완료 확인 시간 1분
         const val ORDER_COMPLETED_TIME = 60*1000
 
