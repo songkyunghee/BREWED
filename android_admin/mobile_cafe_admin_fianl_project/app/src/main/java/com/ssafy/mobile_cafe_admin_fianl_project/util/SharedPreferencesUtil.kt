@@ -2,10 +2,12 @@ package com.ssafy.mobile_cafe_admin_fianl_project.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Admin
 
+private const val TAG = "shared_싸피"
 class SharedPreferencesUtil (context: Context) {
-    val SHARED_PREFERENCES_NAME = "smartstore_preference"
+    val SHARED_PREFERENCES_NAME = "smartstore_admin_preference"
     val COOKIES_KEY_NAME = "cookies"
 
     var preferences: SharedPreferences =
@@ -13,8 +15,10 @@ class SharedPreferencesUtil (context: Context) {
 
     fun addAdmin(admin: Admin){
         val editor = preferences.edit()
-        editor.putString("id", admin.id)
-        editor.putString("name", admin.name)
+
+        Log.d(TAG, "addAdmin: $admin")
+        editor.putString("id", admin.aId)
+        editor.putString("name", admin.aName)
         editor.apply()
     }
 
