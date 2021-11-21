@@ -34,5 +34,8 @@ public interface UserService {
      * @return
      */
     public boolean isUsedId(String id);
+    
+    // user 정보를 갱신한다.
+    public int update(User user);
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,10 +47,12 @@ public class AdminRestController {
         return selected;
     }
 	
-	
-
-	// 충돌테스트
-	// 1
+	@PutMapping("/update")
+	@ApiOperation(value = "어드민 정보를 갱신한다.", response = Integer.class)
+	public int update(@RequestBody Admin admin) {
+		System.out.println(admin);
+		return aService.update(admin);
+	}
 
 
 }

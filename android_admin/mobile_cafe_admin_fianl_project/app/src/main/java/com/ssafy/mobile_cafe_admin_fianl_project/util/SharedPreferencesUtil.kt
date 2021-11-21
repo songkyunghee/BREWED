@@ -22,7 +22,7 @@ class SharedPreferencesUtil (context: Context) {
         val id = preferences.getString("id", "")
         if (id != ""){
             val name = preferences.getString("name", "")
-            return Admin(id!!, 0, name!!, "")
+            return Admin(id!!, 0, name!!, "", "")
         }else{
             return Admin()
         }

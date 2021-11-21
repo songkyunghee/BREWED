@@ -17,8 +17,7 @@ VALUES
 	<update id="update" parameterType="User">
 UPDATE t_user
 SET
-    name = #{name}, 
-    pass = #{pass}
+    token = #{token}
 WHERE id = #{id}
 	</update>
 	
@@ -39,5 +38,9 @@ WHERE id = #{id}
 	</select>
 	<select id="selectAll" resultType="User">
 		SELECT * FROM t_user
+	</select>
+	
+	<select id="selectUserToken" resultType="string">
+		SELECT token from t_user
 	</select>
 </mapper>

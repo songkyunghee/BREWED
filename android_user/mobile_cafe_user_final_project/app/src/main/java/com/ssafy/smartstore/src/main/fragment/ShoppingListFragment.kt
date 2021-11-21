@@ -28,6 +28,7 @@ import com.ssafy.smartstore.src.main.dto.OrderDetail
 import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.ProductService
+import com.ssafy.smartstore.src.main.service.PushService
 import com.ssafy.smartstore.util.CommonUtils.makeComma
 import com.ssafy.smartstore.util.RetrofitCallback
 import kotlin.collections.ArrayList
@@ -234,6 +235,8 @@ class ShoppingListFragment : Fragment(){
         ApplicationClass.shoppingSharedPreference.deleteList()
         mainActivity.openFragment(6)
         Toast.makeText(context,"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+
+
     }
 
     fun getNdefMessages(intent: Intent) {

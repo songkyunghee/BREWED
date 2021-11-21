@@ -9,4 +9,7 @@ interface AdminApi {
     // 관리자 로그인이 성공적으로 되었다면 loginAdminId라는 쿠키를 내려준다.
     @POST("rest/admin/login")
     fun login(@Body body: Admin): Call<Admin>
+
+    @PUT("rest/admin/update")
+    fun update(@Body body: Admin): Call<Int>
 }

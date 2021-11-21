@@ -9,13 +9,15 @@ public class User {
     private String name;
     private String pass;
     private Integer stamps;
+    private String token;
     private List<Stamp> stampList = new ArrayList<>();
 
-    public User(String id, String name, String pass, Integer stamps) {
+    public User(String id, String name, String pass, Integer stamps, String token) {
         this.id = id;
         this.name = name;
         this.pass = pass;
         this.stamps = stamps;
+        this.token = token;
     }
     
     public User() {}
@@ -58,6 +60,15 @@ public class User {
 
 	public void setStampList(List<Stamp> stampList) {
 		this.stampList = stampList;
+	}
+	
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override

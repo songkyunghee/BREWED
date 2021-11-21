@@ -1,5 +1,6 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.service
 
+import android.util.Log
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Admin
 import com.ssafy.mobile_cafe_admin_fianl_project.util.RetrofitCallback
 import com.ssafy.mobile_cafe_admin_fianl_project.util.RetrofitUtil
@@ -27,6 +28,25 @@ class AdminService {
                 callback.onError(t)
             }
 
+        })
+    }
+
+    fun update(admin: Admin) {
+        RetrofitUtil.adminService.update(admin).enqueue(object : Callback<Int> {
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                val res = response.body()
+                Log.d(TAG, "update: $admin")
+                Log.d(TAG, "update: ${response.code()}")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "onResponse: success")
+                } else {
+                    Log.d(TAG, "onResponse: Error Code : ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                Log.d(TAG, "onFailure: $t")
+            }
         })
     }
 
