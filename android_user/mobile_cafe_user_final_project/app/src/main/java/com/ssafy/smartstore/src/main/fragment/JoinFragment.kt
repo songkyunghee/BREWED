@@ -59,7 +59,7 @@ class JoinFragment : Fragment(){
     }
 
     private fun join(Id: String, Pass: String, Name: String) {
-        val user = User(Id, Name, Pass, 0)
+        val user = User(Id, Name, Pass, 0, "")
         UserService().rest(user, RestCallback())
     }
 

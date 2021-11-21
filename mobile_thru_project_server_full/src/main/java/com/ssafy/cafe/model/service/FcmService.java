@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.ssafy.cafe.model.dao.UserDao;
 import com.ssafy.cafe.model.dto.FcmMessage;
 import com.ssafy.cafe.model.dto.FcmMessage.Message;
 
@@ -87,6 +89,9 @@ public class FcmService {
     }
 	
 
+	@Autowired
+	UserDao uDao;
+	
 	// 클라이언트 토큰...
 	private List<String> clientTokens = new ArrayList<>();
 	
@@ -97,9 +102,12 @@ public class FcmService {
 	
 	// 등록된 모든 토큰으로 broadcasting
 	public int broadCastMessage(String title, String body) throws IOException {
-		
+		clientTokens = uDao.selectUserToken();
 		for (String token: clientTokens) {
-			sendMessageTo(token, title, body);
+			if (token != null) {
+				System.out.println(token);
+				sendMessageTo(token, title, body);
+			}
 		}
 		
 		return clientTokens.size();

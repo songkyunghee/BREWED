@@ -4,8 +4,9 @@ data class Admin(
     val id: String,
     val storeId: Int,
     val name: String,
-    val pass: String
+    val pass: String,
+    var token: String,
 ) {
-    constructor(): this("", 0, "", "")
-    constructor(id:String, pass:String):this(id, 0,"", pass)
+    constructor(): this("", 0, "", "","")
+    constructor(id:String, pass:String):this(id, 0,"", pass,"")
 }

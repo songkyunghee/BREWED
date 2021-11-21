@@ -9,4 +9,9 @@
 		WHERE a_id = #{aId}
 	</select>
 	
+	<update id="update" parameterType="Admin">
+		UPDATE t_admin
+		SET a_token = #{aToken}
+		WHERE a_id = #{aId}
+	</update>
 </mapper>

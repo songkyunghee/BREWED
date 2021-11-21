@@ -42,6 +42,7 @@ class ApplicationClass : Application() {
 
         // FCM
         const val channel_id = "brewed_channel"
+        var userToken = "none"
 
         fun uploadToken(token: String) {
 

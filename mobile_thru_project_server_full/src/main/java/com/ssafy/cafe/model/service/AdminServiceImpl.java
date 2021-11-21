@@ -28,6 +28,12 @@ public class AdminServiceImpl implements AdminService {
             return null;
         }
 	}
+
+
+	@Override
+	public int update(Admin admin) {
+		return aDao.update(admin);
+	}
 	
 	
 	
