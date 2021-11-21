@@ -20,6 +20,7 @@ import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderListAdapt
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Order
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderListResponse
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.OrderService
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.PushService
 import com.ssafy.mobile_cafe_admin_fianl_project.util.RetrofitCallback
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,6 +88,9 @@ class OrderFragment : Fragment() {
                             Log.d(TAG, "onOrderTakeClick: position = $position  $o")
                             var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
                             OrderService().update(order)
+
+                            PushService().sendMessageTo(o.token, "Brewed Coffee", "Brewed Coffee에서 주문을 접수했습니다.")
+
                             orderListAdapter.process = "M"
                     }
 
