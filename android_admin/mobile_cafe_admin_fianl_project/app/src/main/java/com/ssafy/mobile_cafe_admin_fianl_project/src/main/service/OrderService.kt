@@ -58,7 +58,7 @@ class OrderService {
                     if (res != null) {
                         responseLiveData.value = res
                     }
-                    Log.d(TAG, "onResponse: $res")
+                    Log.d(TAG, "not order onResponse: $res")
                 } else {
                     Log.d(TAG, "onResponse: Error Code ${response.code()}")
                 }

@@ -28,7 +28,6 @@ class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var orderListAdapter : OrderListAdapter
-    private var list = mutableListOf<OrderListResponse>()
     private var storeId = "1"
 
     override fun onAttach(context: Context) {
@@ -65,6 +64,11 @@ class OrderFragment : Fragment() {
             viewLifecycleOwner,
             { notComOrderList ->
                 notComOrderList.let {
+
+                    for(i in 0 until notComOrderList.size) {
+
+                    }
+
                     orderListAdapter.notComOrderList = notComOrderList
                     orderListAdapter.notifyDataSetChanged()
                 }
@@ -79,34 +83,30 @@ class OrderFragment : Fragment() {
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 }
 
+                orderListAdapter.clickListener = object : OrderListAdapter.OnItemClickListener {
+                    override fun onOrderTakeClick(view: View, position: Int, orderID: Int) {
+                        var o = orderListAdapter.notComOrderList[position]
 
+                            Log.d(TAG, "onOrderTakeClick: position = $position  $o")
+                            var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
+                            OrderService().update(order)
+                            orderListAdapter.process = "M"
+                    }
+
+                    override fun onOrderMakeClick(view: View, position: Int, orderID: Int) {
+                        var o = orderListAdapter.notComOrderList[position]
+                            Log.d(TAG, "onOrderTakeClick: position = $position $o")
+                            var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "P")
+                            OrderService().update(order)
+                    }
+
+                    override fun onOrderComClick(view: View, position: Int, orderID: Int) {
+
+                    }
+                }
             }
         )
 
-        orderListAdapter.clickListener = object : OrderListAdapter.OnItemClickListener {
-            override fun onOrderUpdateClick(view: View, position: Int, commentId: Int) {
-                var o = orderListAdapter.notComOrderList[position]
 
-                if(orderListAdapter.process == "N") {
-                    orderListAdapter.process = "M"
-                    var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
-                    OrderService().update(order)
-                    Log.d(TAG, "onOrderUpdateClick: ${orderListAdapter.process}")
-
-                }
-
-                if(orderListAdapter.process == "M") {
-                    orderListAdapter.process = "Y"
-                    var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
-                    OrderService().update(order)
-
-                }
-
-                if(orderListAdapter.process == "Y") {
-
-                }
-            }
-
-        }
     }
 }

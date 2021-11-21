@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,6 +79,14 @@ public class OrderRestController {
     	parameterMap.put("storeId", storeId);
     	
     	return oService.selectDateNotComOrderList(parameterMap);
+    }
+    
+    @PutMapping("/dateOrderNotComList")
+    @Transactional
+    @ApiOperation(value="order 객체를 수정한다.", response = Boolean.class)
+    public Boolean update(@RequestBody Order order) {
+    	oService.updateOrder(order);
+    	return true;
     }
     
 }
