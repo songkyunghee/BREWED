@@ -15,4 +15,7 @@ public interface AdminService {
     
     // 어드민 정보를 갱신한다.
     public int update(Admin admin);
+    
+    // store id에 해당하는 admin의 토큰 값을 반환한다.
+    public Map selectAdmin(String a_id);
 }

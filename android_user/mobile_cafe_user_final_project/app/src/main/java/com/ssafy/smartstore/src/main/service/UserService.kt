@@ -85,4 +85,32 @@ class UserService {
             }
         })
     }
+
+    // store id 값으로 관리자 token값 획득
+    fun selectAdminToken(storeId: String, callback: RetrofitCallback<String>) {
+        Log.d(TAG, "selectAdminToken start: ")
+        var adminTokenRequest: Call<HashMap<String, String>> = RetrofitUtil.userService.selectAdminToken(storeId)
+        var adminToken = "none"
+        adminTokenRequest.enqueue(object : Callback<HashMap<String, String>> {
+            override fun onResponse(call: Call<HashMap<String, String>>, response: Response<HashMap<String, String>>) {
+                val res = response.body()
+
+                if (response.code() == 200) {
+                    if (res != null) {
+                        adminToken = res.get("a_token") ?: ""
+                        callback.onSuccess(response.code(), adminToken)
+                        Log.d(TAG, "onResponse: $res")
+                    } else {
+                        callback.onFailure(response.code())
+                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<HashMap<String, String>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "주문 상세 내역 받아오는 중 통신오류")
+                callback.onError(t)
+            }
+        })
+    }
 }

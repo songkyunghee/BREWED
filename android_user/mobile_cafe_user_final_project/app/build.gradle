@@ -60,6 +60,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-messaging-ktx'
 
+
     // Beacon 사용위한 Dependency 추가
     // https://mvnrepository.com/artifact/org.altbeacon/android-beacon-library
     implementation group: 'org.altbeacon', name: 'android-beacon-library', version: '2.18'

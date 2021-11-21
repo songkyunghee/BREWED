@@ -14,4 +14,9 @@
 		SET a_token = #{aToken}
 		WHERE a_id = #{aId}
 	</update>
+	
+	<select id="selectAdmin" parameterType="String" resultType="Map">
+		SELECT a_token FROM t_admin
+		WHERE s_id = #{sId}
+	</select>
 </mapper>
