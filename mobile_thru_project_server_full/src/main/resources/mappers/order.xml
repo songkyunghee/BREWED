@@ -100,10 +100,11 @@
 	</select>
 	
 	<select id="getDateNotComOrderList" parameterType="HashMap" resultType="map">
-		select o.o_id, o.s_id, o.user_id, o.order_time, o.order_table, o.completed, p.img 
+		select o.o_id, o.s_id, o.user_id, o.order_time, o.order_table, o.completed, max(p.img) as img
 		from t_order o join t_order_detail d on d.order_id = o.o_id
 			join t_product p on d.product_id = p.id
 		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed != 'Y'
+		group by o.o_id
 		order by order_time
 	</select>
 	

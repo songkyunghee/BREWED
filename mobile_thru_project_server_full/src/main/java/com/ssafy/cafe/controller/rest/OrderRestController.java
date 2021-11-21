@@ -81,7 +81,7 @@ public class OrderRestController {
     	return oService.selectDateNotComOrderList(parameterMap);
     }
     
-    @PutMapping
+    @PutMapping("/dateOrderNotComList")
     @Transactional
     @ApiOperation(value="order 객체를 수정한다.", response = Boolean.class)
     public Boolean update(@RequestBody Order order) {
