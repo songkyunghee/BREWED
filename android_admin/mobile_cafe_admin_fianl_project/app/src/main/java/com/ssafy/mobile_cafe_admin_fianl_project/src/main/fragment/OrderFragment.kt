@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.mobile_cafe_admin_fianl_project.R
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.dateString
 import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderBinding
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.MainActivity
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderListAdapter
@@ -52,22 +53,18 @@ class OrderFragment : Fragment() {
         dateFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
         // 현재 날짜를 yyyy-MM-dd 형태의 String으로 받음
-        var dateString = dateFormatter.format(System.currentTimeMillis())
+        dateString = dateFormatter.format(System.currentTimeMillis())
         initData(dateString)
 
     }
 
     private fun initData(date: String) {
-        val notComOrderList = OrderService().getDateNotComOrderList("2021-11-21", storeId)
+        val notComOrderList = OrderService().getDateNotComOrderList(date, storeId)
 
         notComOrderList.observe(
             viewLifecycleOwner,
             { notComOrderList ->
                 notComOrderList.let {
-
-                    for(i in 0 until notComOrderList.size) {
-
-                    }
 
                     orderListAdapter.notComOrderList = notComOrderList
                     orderListAdapter.notifyDataSetChanged()
@@ -101,7 +98,10 @@ class OrderFragment : Fragment() {
                     }
 
                     override fun onOrderComClick(view: View, position: Int, orderID: Int) {
-
+                        var o = orderListAdapter.notComOrderList[position]
+                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
+                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+                        OrderService().update(order)
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.api
 
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Order
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderDetailResponse
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderListResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -15,4 +16,7 @@ interface OrderApi {
 
     @PUT("rest/order/dateOrderNotComList")
     fun update(@Body order: Order): Call<Boolean>
+
+    @GET("rest/order/{orderId}")
+    fun getOrderDetail(@Path("orderId") orderId: Int): Call<List<OrderDetailResponse>>
 }
