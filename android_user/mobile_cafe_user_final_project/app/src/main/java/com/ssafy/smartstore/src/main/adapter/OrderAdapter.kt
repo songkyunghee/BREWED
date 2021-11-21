@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.smartstore.R
@@ -39,7 +40,28 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
 
             textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
             textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
-            textCompleted.text = CommonUtils.isOrderCompleted(data)
+            var com = data.orderCompleted.toString()
+            if(com == "N") {
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_orange))
+                textCompleted.setTextColor(ContextCompat.getColor(context, R.color.black))
+                textCompleted.text = "접수 중"
+            }
+            else if(com == "M") {
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_yellow))
+                textCompleted.setTextColor(ContextCompat.getColor(context, R.color.black))
+                textCompleted.text = "진행 중"
+            } else if(com == "P") {
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
+                textCompleted.text = "제조완료"
+
+            } else if(com == "Y") {
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
+                textCompleted.text = "픽업완료"
+            } else {
+
+            }
             //클릭연결
             itemView.setOnClickListener{
                 Log.d(TAG, "bindInfo: ${data.orderId}")

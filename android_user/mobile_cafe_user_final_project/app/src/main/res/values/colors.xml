@@ -18,4 +18,6 @@
     <color name="coffee_menu_back">#F0E3DB</color>
     <color name="coffee_deep_blue">#000016</color>
     <color name="coffee_blue">#3333cc</color>
+    <color name="coffee_yellow">#F3DD1F</color>
+    <color name="coffee_orange">#FBAD38</color>
 </resources>

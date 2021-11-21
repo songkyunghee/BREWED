@@ -13,5 +13,6 @@ data class OrderListResponse(
     @SerializedName("quantity") var orderCnt: Int,
     @SerializedName("price") val productPrice: Int,
     @SerializedName("type") val type: String,
+    @SerializedName("token") val token: String,
     var totalPrice: Int = 0
 )
