@@ -82,7 +82,7 @@
 
 	<!-- 관통 프로젝트 6단계에서 추가됨 -->
 	<select id="getLastMonthOrder" parameterType="string" resultType="map">
-	select o.o_id, o.s_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img
+	select o.o_id, o.s_id, o.user_id, o.order_time, o.completed, d.quantity, p.name, p.type, p.price, p.img
 		from t_order o join t_order_detail d on d.order_id=o.o_id
                join t_product p on d.product_id = p.id
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)
@@ -102,9 +102,9 @@
 	</select>
 	
 	<select id="getDateNotComOrderList" parameterType="HashMap" resultType="map">
-		select o.o_id, o.s_id, o.user_id, o.order_time, o.order_table, o.completed, max(p.img) as img
+		select o.o_id, o.s_id, o.user_id, o.order_time, o.order_table, o.completed, max(p.img) as img, u.token
 		from t_order o join t_order_detail d on d.order_id = o.o_id
-			join t_product p on d.product_id = p.id
+			join t_product p on d.product_id = p.id join t_user u on o.user_id = u.id
 		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed != 'Y'
 		group by o.o_id
 		order by order_time

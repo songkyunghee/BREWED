@@ -1,6 +1,8 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,6 +22,7 @@ import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderListAdapt
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.dto.Order
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.response.OrderListResponse
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.OrderService
+import com.ssafy.mobile_cafe_admin_fianl_project.src.main.service.PushService
 import com.ssafy.mobile_cafe_admin_fianl_project.util.RetrofitCallback
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,6 +90,9 @@ class OrderFragment : Fragment() {
                             Log.d(TAG, "onOrderTakeClick: position = $position  $o")
                             var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
                             OrderService().update(order)
+
+                            PushService().sendMessageTo(o.token, "Brewed Coffee", "Brewed Coffee에서 주문을 접수했습니다.")
+
                             orderListAdapter.process = "M"
                     }
 
@@ -95,13 +101,38 @@ class OrderFragment : Fragment() {
                             Log.d(TAG, "onOrderTakeClick: position = $position $o")
                             var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "P")
                             OrderService().update(order)
+                            PushService().sendMessageTo(o.token, "Brewed Coffee", "메뉴가 나왔습니다. 픽업해주세요.")
                     }
 
                     override fun onOrderComClick(view: View, position: Int, orderID: Int) {
-                        var o = orderListAdapter.notComOrderList[position]
-                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
-                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
-                        OrderService().update(order)
+                        var builder = AlertDialog.Builder(mainActivity)
+                        builder.setTitle("")
+                        builder.setMessage("픽업 완료 처리를 하시겠습니까?")
+
+                        var listener = object : DialogInterface.OnClickListener{
+                            override fun onClick(dialog: DialogInterface?, w: Int) {
+                                when(w) {
+                                    DialogInterface.BUTTON_POSITIVE -> {
+                                        var o = orderListAdapter.notComOrderList[position]
+                                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
+                                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+                                        OrderService().update(order)
+                                    }
+                                    DialogInterface.BUTTON_NEGATIVE -> {
+
+                                    }
+                                }
+                            }
+
+                        }
+                        builder.setPositiveButton("확인", listener)
+                        builder.setNegativeButton("취소", listener)
+                        builder.show()
+
+//                        var o = orderListAdapter.notComOrderList[position]
+//                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
+//                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+//                        OrderService().update(order)
                     }
                 }
             }
