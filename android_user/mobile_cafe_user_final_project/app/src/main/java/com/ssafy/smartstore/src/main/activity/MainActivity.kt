@@ -8,6 +8,8 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.nfc.NfcAdapter
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -280,13 +282,16 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
                     runOnUiThread {
                         val mDialogView = LayoutInflater.from(this).inflate(R.layout.beacon_dialog, null)
+
                         val mBuilder = AlertDialog.Builder(this)
                             .setView(mDialogView)
                             .setTitle("")
 
+
+
                         if(! this@MainActivity.isFinishing){
                             val mAlertDialog = mBuilder.show()
-
+                            mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                             mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener{
                                 mAlertDialog.dismiss()
                             }
@@ -314,6 +319,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         }
 
         override fun onSuccess(code: Int, responseData: String) {
+            Log.d(TAG, "onSuccess: $responseData")
             storeId = responseData
             Log.d(TAG, "onSuccess Store Id: $storeId")
         }

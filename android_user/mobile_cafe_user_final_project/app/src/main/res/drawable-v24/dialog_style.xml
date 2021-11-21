@@ -9,7 +9,7 @@
         android:width="2dp"
         android:color="@color/coffee_light_gray" />
 
-    <corners android:radius="10dp"/>
+    <corners android:radius="20dp"/>
 
 
 </shape>
