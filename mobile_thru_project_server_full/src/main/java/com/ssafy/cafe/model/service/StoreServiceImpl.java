@@ -14,8 +14,13 @@ public class StoreServiceImpl implements StoreService {
 	StoreDao sDao;
 
 	@Override
-	public Map getStoreName(Integer s_id) {
-		return sDao.getStoreName(s_id);
+	public Map getStoreName(Integer sId) {
+	    return sDao.getStoreName(sId);
+	}
+
+	@Override
+	public Map getStoreId(String sBeacon) {
+	    return sDao.getStoreId(sBeacon);
 	}
 
 }

@@ -26,9 +26,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ssafy.smartstore.*
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
+import com.ssafy.smartstore.config.ApplicationClass.Companion.storeId
 import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
 import com.ssafy.smartstore.src.main.fragment.*
+import com.ssafy.smartstore.src.main.service.StoreService
 import com.ssafy.smartstore.src.main.service.UserService
+import com.ssafy.smartstore.util.RetrofitCallback
 import org.altbeacon.beacon.*
 
 //test
@@ -272,6 +275,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                         TAG,
                         "distance: " + beacon.distance + " Major : " + beacon.id2 + ", Minor" + beacon.id3 + ", ${beacon.bluetoothAddress}"
                     )
+                    // 스토어 id 갱신
+                    StoreService().getStoreId(beacon.bluetoothAddress,storeIdCallback())
+
                     runOnUiThread {
                         val mDialogView = LayoutInflater.from(this).inflate(R.layout.beacon_dialog, null)
                         val mBuilder = AlertDialog.Builder(this)
@@ -300,6 +306,25 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             e.printStackTrace()
         }
     }
+
+
+    inner class storeIdCallback: RetrofitCallback<String> {
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "스토어 정보 불러오는 중 통신오류")
+        }
+
+        override fun onSuccess(code: Int, responseData: String) {
+            storeId = responseData
+            Log.d(TAG, "onSuccess Store Id: $storeId")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onFailure: Error Code $code")
+        }
+
+    }
+
+
 
     // Sotre와 나의 거리가 1M이내라면
     private fun isYourBeacon(beacon: Beacon): Boolean {
