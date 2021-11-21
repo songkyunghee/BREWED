@@ -19,10 +19,13 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
     RecyclerView.Adapter<OrderListAdapter.OrderListHolder>() {
     lateinit var clickListener: OnItemClickListener
     var completed = ""
-    var process = "N"
+    var process: String = "N"
+
 
     interface OnItemClickListener {
-        fun onOrderUpdateClick(view: View, position: Int, commentId: Int)
+        fun onOrderTakeClick(view: View, position: Int, orderID: Int)
+        fun onOrderMakeClick(view: View, position: Int, orderID: Int)
+        fun onOrderComClick(view: View, position: Int, orderID: Int)
 
     }
     inner class OrderListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,8 +37,9 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
         var comIconBack = itemView.findViewById<CardView>(R.id.comBtn)
         var comIcon = itemView.findViewById<ImageView>(R.id.comIcon)
 
-        fun bindInfo(order: OrderListResponse) {
+        fun bindInfo(order: OrderListResponse, position: Int) {
             completed = order.completed
+            Log.d("Adpater_싸피", "bindInfo: completed = $completed position = $position")
             Glide.with(itemView)
                 .load("${ApplicationClass.MENU_IMGS_URL}${order.img}")
                 .into(menuImage)
@@ -43,6 +47,26 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
             if(completed == "N") {
                 orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
                 orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+                comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+            }
+            if(completed == "M") {
+                orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+                makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+            }
+            if(completed == "P") {
+                orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+                makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
+                makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+                comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
             }
         }
     }
@@ -54,57 +78,33 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
 
     override fun onBindViewHolder(holder: OrderListHolder, position: Int) {
         holder.apply {
-            bindInfo(notComOrderList[position])
+            bindInfo(notComOrderList[position], position)
+            var com = notComOrderList[position].completed
 
-            orderIconBack.setOnClickListener{
-                if(process == "N") {
-                    orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
-                    orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                    makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
-                    comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
-                    comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    clickListener.onOrderUpdateClick(it, position, notComOrderList[position].o_id)
-                    //process = "M"
-                }
-            }
 
             orderIcon.setOnClickListener{
-                if(process == "N") {
+                if(com == "N") {
                     orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
                     makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
                     comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    clickListener.onOrderUpdateClick(it, position, notComOrderList[position].o_id)
-                    //process = "M"
+                    clickListener.onOrderTakeClick(it, position, notComOrderList[position].o_id)
+                    com = "M"
                 }
             }
 
-            makeIconBack.setOnClickListener{
-                if(process == "M") {
-                    orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
-                    orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
-                    makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                    comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
-                    clickListener.onOrderUpdateClick(it, position, notComOrderList[position].o_id)
-                    //process = "N"
-                }
-            }
 
             makeIcon.setOnClickListener{
-                if(process == "M") {
+                if(com == "M") {
                     orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
                     comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
-                    clickListener.onOrderUpdateClick(it, position, notComOrderList[position].o_id)
-                    //process = "N"
+                    clickListener.onOrderMakeClick(it, position, notComOrderList[position].o_id)
                 }
             }
 
@@ -113,6 +113,7 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
     }
 
     override fun getItemCount(): Int {
+        Log.d("Adpater_싸피", "getItemCount: ${notComOrderList.size}")
         return notComOrderList.size
     }
 }
