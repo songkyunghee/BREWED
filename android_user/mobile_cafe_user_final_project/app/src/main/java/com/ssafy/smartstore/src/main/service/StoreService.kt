@@ -22,8 +22,7 @@ class StoreService {
 
                 if (response.code() == 200){
                     if (res != null) {
-                        var storeId = res.get("s_Id")
-                        callback.onSuccess(response.code(), storeId ?: "0")
+                        callback.onSuccess(response.code(), res.get("s_id") ?: "0")
                         Log.d(TAG, "onResponse: $res")
                     } else {
                         callback.onFailure(response.code())
