@@ -29,8 +29,10 @@ import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.PushService
+import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.CommonUtils.makeComma
 import com.ssafy.smartstore.util.RetrofitCallback
+import retrofit2.Retrofit
 import kotlin.collections.ArrayList
 
 //장바구니 Fragment
@@ -233,9 +235,26 @@ class ShoppingListFragment : Fragment(){
         prodCntList.clear()
         shoppingListRecyclerView.adapter = shoppingListAdapter
         ApplicationClass.shoppingSharedPreference.deleteList()
-        mainActivity.openFragment(6)
-        Toast.makeText(context,"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
 
+        UserService().selectAdminToken("1", AdminTokenCallback())
+        Log.d(TAG, "completedOrder: here come??")
+        mainActivity.openFragment(6)
+
+
+    }
+    inner class AdminTokenCallback: RetrofitCallback<String> {
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "어드민 토큰 정보 불러오는 중 통신오류")
+        }
+
+        override fun onSuccess(code: Int, responseData: String) {
+            Toast.makeText(context,"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+            PushService().sendMessageTo(responseData,"Brewed Coffee","주문이 접수되었습니다.\n주문을 확인해주세요.")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
 
     }
 

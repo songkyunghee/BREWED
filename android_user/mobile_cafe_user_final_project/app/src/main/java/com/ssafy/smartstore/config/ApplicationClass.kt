@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Application
 import android.nfc.NfcAdapter
 import android.util.Log
+import com.google.gson.GsonBuilder
 import com.ssafy.smartstore.src.main.api.FirebaseTokenApi
 import com.ssafy.smartstore.src.main.intercepter.AddCookiesInterceptor
 import com.ssafy.smartstore.src.main.intercepter.ReceivedCookiesInterceptor
@@ -23,7 +24,7 @@ class ApplicationClass : Application() {
     companion object{
         // ipconfig를 통해 ip확인하기
         // 핸드폰으로 접속은 같은 인터넷으로 연결 되어있어야함 (유,무선)
-        const val SERVER_URL = "http://172.30.1.26:9999/"
+        const val SERVER_URL = "http://192.168.219.107:9999/"
         const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
         const val IMGS_URL = "${SERVER_URL}imgs/"
 

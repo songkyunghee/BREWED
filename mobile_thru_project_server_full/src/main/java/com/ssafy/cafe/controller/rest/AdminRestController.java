@@ -53,6 +53,12 @@ public class AdminRestController {
 		System.out.println(admin);
 		return aService.update(admin);
 	}
+	
+	@GetMapping("/{sId}")
+	@ApiOperation(value = "store id에 해당하는 admin의 Token값을 조회한다.", response = String.class)
+	public Map selectAdminToken(@PathVariable String sId) {
+		return aService.selectAdmin(sId);
+	}
 
 
 }
