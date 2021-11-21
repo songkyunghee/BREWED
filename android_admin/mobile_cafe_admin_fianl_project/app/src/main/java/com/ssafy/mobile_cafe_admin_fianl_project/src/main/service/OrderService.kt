@@ -16,8 +16,8 @@ const val TAG = "OrderService_싸피"
 class OrderService {
 
     // getDateComOrderList
-    fun getDateComOrderList(date: String, completed: String, storeId: String, callback: RetrofitCallback<ArrayList<OrderListResponse>>): List<OrderListResponse> {
-        var resData = ArrayList<OrderListResponse>()
+    fun getDateComOrderList(date: String, completed: String, storeId: String): LiveData<MutableList<OrderListResponse>> {
+        val responseLiveData: MutableLiveData<MutableList<OrderListResponse>> = MutableLiveData()
 
         val request: Call<List<OrderListResponse>> = RetrofitUtil.orderService.getDateComOrderList(date,completed,storeId)
 
@@ -26,23 +26,39 @@ class OrderService {
                 val res = response.body()
                 if (response.code() == 200) {
                     if (res != null) {
-                        res.forEach {
-                            resData.add(it)
-                        }
+                        responseLiveData.value = makeList(res)
                     }
-                    callback.onSuccess(response.code(), resData)
+                    Log.d(TAG, "com order onResponse: $res")
                 } else {
-                    callback.onFailure(response.code())
+                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<List<OrderListResponse>>, t: Throwable) {
-                Log.d(TAG, t.message ?: "통신오류")
-                callback.onError(t)
+                Log.d(TAG, t.message ?: "날짜에 해당하는 완료된 주문 내역 받아오는 중 통신오류")
             }
         })
 
-        return resData
+        return responseLiveData
+    }
+
+
+    private fun makeList(orderList: List<OrderListResponse>): MutableList<OrderListResponse> {
+        val hm = HashMap<Int, OrderListResponse>()
+        orderList.forEach{ order ->
+            if(hm.containsKey(order.o_id)) {
+                val tmp = hm[order.o_id]!!
+                tmp.orderCnt += order.orderCnt
+                tmp.totalPrice += order.productPrice * order.orderCnt
+                hm[order.o_id] = tmp
+            } else {
+                order.totalPrice = order.productPrice * order.orderCnt
+                hm[order.o_id] = order
+            }
+        }
+
+        val list = ArrayList<OrderListResponse>(hm.values)
+        return list
     }
 
     // getDateComOrderList

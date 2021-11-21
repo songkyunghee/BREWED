@@ -41,7 +41,6 @@ class OrderComFragment : Fragment() {
     private lateinit var dateString: String
     private lateinit var mainActivity: MainActivity
     private lateinit var orderComListAdapter: OrderComListAdapter
-    private val list = mutableListOf<Int>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -72,58 +71,29 @@ class OrderComFragment : Fragment() {
                 val date = LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE)
 
                 // 스토어번호, 날짜, 진행상태를 비교로 사용하기 위해 Path Variable 생성 후 서버와 통신
-                OrderService().getDateComOrderList(dateString,"Y","1", getComOrderListCallback())
+                val comOrderList = OrderService().getDateComOrderList(dateString,"Y","1")
+                comOrderList.observe(
+                    viewLifecycleOwner,
+                    { comOrderList ->
+                        Log.d(TAG, "onViewCreated: $comOrderList")
+
+                        orderComListAdapter = OrderComListAdapter(requireContext(), comOrderList)
+                        binding.recyclerViewOrderDetailList.apply {
+                            val linearLayoutManager = LinearLayoutManager(context)
+                            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                            layoutManager = linearLayoutManager
+                            adapter = orderComListAdapter
+
+                            adapter!!.stateRestorationPolicy =
+                                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                        }
+
+                    }
+                )
 
             }
             DatePickerDialog(requireContext(), R.style.MyDatePickerDialogTheme, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
-        list.add(1)
-        list.add(2)
-        list.add(3)
-        list.add(4)
-
-
-
-        orderComListAdapter = OrderComListAdapter(requireContext(), list)
-
-        binding.recyclerViewOrderDetailList.apply {
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-            layoutManager = linearLayoutManager
-            adapter = orderComListAdapter
-
-            adapter!!.stateRestorationPolicy =
-                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
-
-
-
-
     }
-
-    inner class getComOrderListCallback: RetrofitCallback<ArrayList<OrderListResponse>> {
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "통신오류")
-        }
-
-        override fun onSuccess(code: Int, responseData: ArrayList<OrderListResponse>) {
-            Log.d(TAG, "onSuccess: $code, $responseData")
-            if (!responseData.isEmpty()){
-                Toast.makeText(context, "조회에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                responseData.forEach{
-                    Log.d(TAG, "onSuccess: $it")
-                }
-                // setter를 통해 orderComListAdapter에 아이템 갱신 후 notify...
-                orderComListAdapter.notifyDataSetChanged()
-            } else {
-                Toast.makeText(context, "조회에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onFailure(code: Int) {
-            Log.d(TAG, "onResponse: Error Code $code")
-        }
-    }
-
 }

@@ -58,16 +58,12 @@ class OrderFragment : Fragment() {
     }
 
     private fun initData(date: String) {
-        val notComOrderList = OrderService().getDateNotComOrderList("2021-11-21", storeId)
+        val notComOrderList = OrderService().getDateNotComOrderList("2021-11-19", storeId)
 
         notComOrderList.observe(
             viewLifecycleOwner,
             { notComOrderList ->
                 notComOrderList.let {
-
-                    for(i in 0 until notComOrderList.size) {
-
-                    }
 
                     orderListAdapter.notComOrderList = notComOrderList
                     orderListAdapter.notifyDataSetChanged()
@@ -101,7 +97,10 @@ class OrderFragment : Fragment() {
                     }
 
                     override fun onOrderComClick(view: View, position: Int, orderID: Int) {
-
+                        var o = orderListAdapter.notComOrderList[position]
+                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
+                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+                        OrderService().update(order)
                     }
                 }
             }

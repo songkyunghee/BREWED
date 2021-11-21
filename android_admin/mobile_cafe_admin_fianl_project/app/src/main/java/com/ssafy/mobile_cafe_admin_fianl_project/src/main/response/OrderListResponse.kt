@@ -9,5 +9,9 @@ data class OrderListResponse(
     @SerializedName("order_table") var order_table: String,
     @SerializedName("order_time") var order_time: String,
     @SerializedName("completed") var completed: String,
-    @SerializedName("img") var img: String
+    @SerializedName("img") var img: String,
+    @SerializedName("quantity") var orderCnt: Int,
+    @SerializedName("price") val productPrice: Int,
+    @SerializedName("type") val type: String,
+    var totalPrice: Int = 0
 )

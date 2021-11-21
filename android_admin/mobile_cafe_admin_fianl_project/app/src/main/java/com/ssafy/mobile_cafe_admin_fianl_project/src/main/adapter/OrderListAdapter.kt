@@ -105,6 +105,13 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
                     comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
                     comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
                     clickListener.onOrderMakeClick(it, position, notComOrderList[position].o_id)
+                    com = "P"
+                }
+            }
+
+            comIcon.setOnClickListener{
+                if(com == "P") {
+                    clickListener.onOrderComClick(it, position, notComOrderList[position].o_id)
                 }
             }
 

@@ -95,7 +95,9 @@
 	
 	
 	<select id="getDateComOrderList" parameterType="HashMap" resultType="map">
-		select * from t_order
+		select o.o_id, o.s_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price
+		from t_order o join t_order_detail d on d.order_id=o.o_id
+               join t_product p on d.product_id = p.id
 		where s_id = CONVERT(#{storeId}, SIGNED) and DATE(order_time) = DATE(#{orderTime}) and completed = 'Y'
 	</select>
 	
