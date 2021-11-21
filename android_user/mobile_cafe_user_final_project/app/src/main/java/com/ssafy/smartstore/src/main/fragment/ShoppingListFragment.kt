@@ -222,7 +222,7 @@ class ShoppingListFragment : Fragment(){
         if (storeId == "0") {
             showDialogForStoreId()
         } else {
-            completedOrder()
+            showDialogForStoreId()
         }
 
     }
