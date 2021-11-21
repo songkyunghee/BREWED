@@ -117,6 +117,7 @@ class OrderFragment : Fragment() {
                                         Log.d(TAG, "onOrderTakeClick: position = $position $o")
                                         var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
                                         OrderService().update(order)
+                                        orderListAdapter.notifyDataSetChanged()
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
 
