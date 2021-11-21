@@ -31,6 +31,9 @@ class ApplicationClass : Application() {
         const val channel_id = "brewed_admin_channel"
         var adminToken = "none"
 
+        // 완료 주문 조회할 날짜
+        var dateString = ""
+
         fun uploadToken(token: String) {
             // 새로운 토큰 수신 시 서버로 전송
             val brewedService = retrofit.create(FirebaseTokenApi::class.java)

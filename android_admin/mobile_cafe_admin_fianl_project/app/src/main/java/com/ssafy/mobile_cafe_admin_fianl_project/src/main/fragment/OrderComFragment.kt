@@ -18,6 +18,7 @@ import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.mobile_cafe_admin_fianl_project.R
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.dateString
 import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderBinding
 import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderComBinding
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.MainActivity
@@ -38,7 +39,6 @@ import java.util.*
 const val TAG = "OrderComFragment_싸피"
 class OrderComFragment : Fragment() {
     private lateinit var binding: FragmentOrderComBinding
-    private lateinit var dateString: String
     private lateinit var mainActivity: MainActivity
     private lateinit var orderComListAdapter: OrderComListAdapter
 
@@ -59,6 +59,36 @@ class OrderComFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvOrderDate.text = dateString
+
+        val comOrderList = OrderService().getDateComOrderList(dateString,"Y","1")
+        comOrderList.observe(
+            viewLifecycleOwner,
+            { comOrderList ->
+                Log.d(TAG, "onViewCreated: $comOrderList")
+
+                orderComListAdapter = OrderComListAdapter(requireContext(), comOrderList)
+                orderComListAdapter.setItemClickListener(object : OrderComListAdapter.ItemClickListener{
+                    override fun onClick(view: View, position: Int, orderid:Int) {
+                        Log.d(TAG, "onClick:  주문 완료 목록")
+                        mainActivity.openFragment(1, "orderId", orderid)
+
+
+                    }
+                })
+                binding.recyclerViewOrderDetailList.apply {
+                    val linearLayoutManager = LinearLayoutManager(context)
+                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                    layoutManager = linearLayoutManager
+                    adapter = orderComListAdapter
+
+                    adapter!!.stateRestorationPolicy =
+                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                }
+
+            }
+        )
+
 
         binding.datePickBtn.setOnClickListener{
             val cal = Calendar.getInstance()
@@ -77,7 +107,8 @@ class OrderComFragment : Fragment() {
                     { comOrderList ->
                         Log.d(TAG, "onViewCreated: $comOrderList")
 
-                        orderComListAdapter = OrderComListAdapter(requireContext(), comOrderList)
+                        orderComListAdapter.orderComList = comOrderList
+                        orderComListAdapter.notifyDataSetChanged()
                         orderComListAdapter.setItemClickListener(object : OrderComListAdapter.ItemClickListener{
                             override fun onClick(view: View, position: Int, orderid:Int) {
                                 Log.d(TAG, "onClick:  주문 완료 목록")

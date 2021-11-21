@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.mobile_cafe_admin_fianl_project.R
+import com.ssafy.mobile_cafe_admin_fianl_project.config.ApplicationClass.Companion.dateString
 import com.ssafy.mobile_cafe_admin_fianl_project.databinding.FragmentOrderBinding
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity.MainActivity
 import com.ssafy.mobile_cafe_admin_fianl_project.src.main.adapter.OrderListAdapter
@@ -52,13 +53,13 @@ class OrderFragment : Fragment() {
         dateFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
         // 현재 날짜를 yyyy-MM-dd 형태의 String으로 받음
-        var dateString = dateFormatter.format(System.currentTimeMillis())
+        dateString = dateFormatter.format(System.currentTimeMillis())
         initData(dateString)
 
     }
 
     private fun initData(date: String) {
-        val notComOrderList = OrderService().getDateNotComOrderList("2021-11-19", storeId)
+        val notComOrderList = OrderService().getDateNotComOrderList(date, storeId)
 
         notComOrderList.observe(
             viewLifecycleOwner,
