@@ -2,9 +2,7 @@ package com.ssafy.smartstore.src.main.fragment
 
 import android.app.AlertDialog
 import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.os.Bundle
@@ -23,6 +21,7 @@ import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.ShoppingListAdapter
 import com.ssafy.smartstore.config.ApplicationClass
+import com.ssafy.smartstore.config.ApplicationClass.Companion.storeId
 import com.ssafy.smartstore.src.main.dto.Order
 import com.ssafy.smartstore.src.main.dto.OrderDetail
 import com.ssafy.smartstore.src.main.dto.Product
@@ -120,7 +119,9 @@ class ShoppingListFragment : Fragment(){
             isShop = false
         }
         btnOrder.setOnClickListener {
-            if(isShop) showDialogForOrderInShop()
+            if(isShop) {
+                yourStore()
+            }
             else {
                 //거리가 200이상이라면
                 if(true) {
@@ -214,6 +215,35 @@ class ShoppingListFragment : Fragment(){
         builder.setNegativeButton("취소"
         ) { dialog, _ -> dialog.cancel() }
         builder.create().show()
+    }
+
+    private fun yourStore(){
+
+        if (storeId == "0") {
+            showDialogForStoreId()
+        } else {
+            completedOrder()
+        }
+
+    }
+    private fun showDialogForStoreId() {
+        var storeArray: Array<String> = arrayOf("브루드 1호점", "브루드 2호점")
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("매장 선택")
+        builder.setItems(storeArray, DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    0 -> {
+                        storeId = "1"
+                        showDialogForOrderInShop()
+                    }
+                    1 -> {
+                        storeId = "2"
+                        showDialogForOrderInShop()
+                    }
+                }
+            })
+        builder.create().show()
+
     }
 
     private fun completedOrder(){
