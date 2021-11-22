@@ -20,9 +20,10 @@
 		t_stamp
 		WHERE id = #{id}
 	</select>
-	<select id="selectAll" resultMap="StampBasic">
-		SELECT * FROM t_stamp order by
-		id desc
+	<select id="selectAll" resultType="string" parameterType="string">
+		SELECT stamps
+		FROM t_user
+        where id = #{userId}
 	</select>
 
 	<select id="selectByUserId" resultType="map"

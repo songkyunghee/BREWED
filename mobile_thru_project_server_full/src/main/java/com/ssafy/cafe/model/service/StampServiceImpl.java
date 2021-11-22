@@ -57,4 +57,13 @@ public class StampServiceImpl implements StampService{
 	public int deleteCoupon(int c_id) {
 		return sDao.deleteCoupon(c_id);
 	}
+
+	@Override
+	public String getStamp(String id) {
+		// TODO Auto-generated method stub
+		
+		return sDao.selectAll(id);
+	}
+	
+	
 }
