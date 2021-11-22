@@ -1,6 +1,7 @@
 package com.ssafy.smartstore.src.main.api
 
 import com.ssafy.smartstore.src.main.dto.User
+import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -9,9 +10,9 @@ interface UserApi {
     @POST("rest/user")
     fun insert(@Body body: User): Call<Boolean>
 
-    // 사용자의 정보와 함께 사용자의 주문 내역, 사용자 등급 정보를 반환한다.
+    // 사용자의 정보와 함께 사용자의 스탬프 정보, 쿠폰 정보를 반환한다.
     @POST("rest/user/info")
-    fun getInfo(@Query("id") id: String): Call<HashMap<String, Any>>
+    fun getInfo(@Body body: User): Call<MutableList<StampWithCouponResponse>>
 
     // request parameter로 전달된 id가 이미 사용중인지 반환한다.
     @GET("rest/user/isUsed")

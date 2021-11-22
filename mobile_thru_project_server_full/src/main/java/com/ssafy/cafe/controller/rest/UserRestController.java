@@ -82,14 +82,9 @@ public class UserRestController {
     @PostMapping("/info")
     @ApiOperation(value = "사용자의 쿠폰 정보와 스탬프 개수를 반환한다.", response = Map.class)
     public List<Map<String, Object>> getInfo(@RequestBody User user) {
-        User selected = uService.login(user.getId(), user.getPass());
-        if (selected == null) {
-            return null;
-        } else {
-        	  return sService.selectByUser(selected.getId());
+       
+        	  return sService.selectByUser(user.getId());
         	  
-        	
-        }
     }
     
     @PutMapping("/coupon/update")

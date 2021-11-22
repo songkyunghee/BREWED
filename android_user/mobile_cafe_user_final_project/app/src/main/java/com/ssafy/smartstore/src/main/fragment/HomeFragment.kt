@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +21,7 @@ import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
 import com.ssafy.smartstore.src.main.adapter.NoticeAdapter
@@ -26,9 +29,11 @@ import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.src.main.activity.QRActivity
 import com.ssafy.smartstore.src.main.adapter.ViewPageAdapter
+import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.StoreService
+import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.MainViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -110,7 +115,6 @@ class HomeFragment : Fragment(){
         }
 
         initUserName()
-        initAdapter()
         var id = getUserData()
         initData(id)
 
@@ -179,34 +183,33 @@ class HomeFragment : Fragment(){
     }
 
 
-    fun initAdapter() {
-//        noticeAdapter = NoticeAdapter()
-//        binding.recyclerViewNoticeOrder.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//            adapter = noticeAdapter
-//            //원래의 목록위치로 돌아오게함
-//            adapter!!.stateRestorationPolicy =
-//                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//        }
-
-
-//        latestOrderAdapter = LatestOrderAdapter()
-//        //메인화면에서 최근 목록 클릭시 장바구니로 이동
-//        latestOrderAdapter.setItemClickListener(object : LatestOrderAdapter.ItemClickListener{
-//            override fun onClick(view: View, position: Int) {
-//                mainActivity!!.openFragment(1)
-//            }
-//        })
-//        binding.recyclerViewLatestOrder.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            adapter = latestOrderAdapter
-//            //원래의 목록위치로 돌아오게함
-//            adapter!!.stateRestorationPolicy =
-//                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//        }
-    }
-
     private fun initData(id:String){
+        var imgCoffe = mutableListOf<ImageView>()
+        imgCoffe.add(binding.stamp1s)
+        imgCoffe.add(binding.stamp2s)
+        imgCoffe.add(binding.stamp3s)
+        imgCoffe.add(binding.stamp4s)
+        imgCoffe.add(binding.stamp5s)
+        imgCoffe.add(binding.stamp6s)
+        imgCoffe.add(binding.stamp7s)
+        imgCoffe.add(binding.stamp8s)
+        imgCoffe.add(binding.stamp9s)
+        imgCoffe.add(binding.stamp10s)
+
+        val userStampWithCouponInfo = UserService().getUserStampWithCoupon(User(id))
+        userStampWithCouponInfo.observe(
+            viewLifecycleOwner,
+            { userStampWithCouponInfo->
+                userStampWithCouponInfo.let {
+                    Log.d(TAG, "userStampWithCouponInfo: $it")
+
+                    for(i in 0 until userStampWithCouponInfo.get(0).quantity) {
+                        imgCoffe[i].setImageResource(R.drawable.stamp_check)
+                    }
+                }
+
+            }
+        )
 
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
@@ -231,21 +234,7 @@ class HomeFragment : Fragment(){
                     adapter!!.stateRestorationPolicy =
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 }
-//
-//                latestOrderAdapter = LatestOrderAdapter(mainActivity, list)
-//                latestOrderAdapter.setItemClickListener(object : LatestOrderAdapter.ItemClickListener{
-//                    override fun onClick(view: View, position: Int, orderid:Int) {
-//                        mainActivity.openFragment(2, "orderId", orderid)
-//                    }
-//                })
-//
-//                binding.recyclerViewLatestOrder.apply {
-//                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//                    adapter = orderAdapter
-//                    //원래의 목록위치로 돌아오게함
-//                    adapter!!.stateRestorationPolicy =
-//                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//                }
+
 
             }
         )
