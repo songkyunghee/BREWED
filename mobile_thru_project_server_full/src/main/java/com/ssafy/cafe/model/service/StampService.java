@@ -18,4 +18,6 @@ public interface StampService {
 	public int updateStamp(Stamp stamp);
 	
 	public int updateStampCoupon(Stamp stamp);
+	
+	public int deleteCoupon(int c_id);
 }

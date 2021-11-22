@@ -32,6 +32,7 @@
 		where u.id=#{userId} 
 		and u.id = s.user_id
 		and u.id = c.user_id
+		group by c_id
 		order by u.id desc
 	</select>
 

@@ -39,22 +39,22 @@ public class StampServiceImpl implements StampService{
 	public int updateStampCoupon(Stamp stamp) {
 		User user = uDao.select(stamp.getUserId());
 		List<Map<String, Object>> userInfo = sDao.selectByUserId(stamp.getUserId());
-		int stampNum = (int) userInfo.get(0).get("quantity");
+		int stampNum = (int) userInfo.get(0).get("quantity"); // 현재 스탬프 개수
 		int couponId = (int) userInfo.get(0).get("c_id");
-		int Num = stamp.getQuantity();
-		// Num / 10 쿠폰 개수
-		// Num % 10 스탬프 개수
-		// userInfo.size 쿠폰의 개수
-		int updateCouponNum = Num / 10;
-		int updateStampNum = Num % 10;
-		if(userInfo.size() < updateCouponNum) {
-			int diff = updateCouponNum - userInfo.size();
-			for(int i = 0; i < diff; i++) {
-				sDao.insertCoupon(new Coupon(0, 2000, stamp.getUserId()));
-			}
+		int n = user.getStamps() + stamp.getQuantity();
+		int couponCnt = n / 10;
+		int stampCnt = n % 10;
+		for(int i = 0; i < couponCnt; i++) {
+			sDao.insertCoupon(new Coupon(0, 2000, stamp.getUserId()));
 		}
-		sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), updateStampNum));
-		uDao.update(new User(user.getId(), user.getName(), user.getPass(), Num, user.getToken()));
+	
+		sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), stampCnt));
+		uDao.update(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
 		return 1;
+	}
+
+	@Override
+	public int deleteCoupon(int c_id) {
+		return sDao.deleteCoupon(c_id);
 	}
 }
