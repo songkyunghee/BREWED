@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/white"
     android:padding="30dp">
     <LinearLayout
         android:id="@+id/linear"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/linear"
         android:layout_marginBottom="20dp"
         android:text="MENU"
-        android:textColor="@color/coffee_blue"
+        android:textColor="@color/brewed_green"
         android:textSize="30dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +54,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="end|bottom"
         android:src="@drawable/shopping_cart"
-        app:backgroundTint="@color/coffee_blue"
+        app:backgroundTint="@color/brewed_green"
         app:elevation="0dp"
         app:fabSize="normal"
         app:useCompatPadding="false" />

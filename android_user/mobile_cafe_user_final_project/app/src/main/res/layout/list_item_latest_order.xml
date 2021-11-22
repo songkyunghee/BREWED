@@ -11,23 +11,15 @@
     android:paddingLeft="0dp"
     android:layout_marginRight="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
+
+    <ImageView
+        android:id="@+id/menuImage"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/coffee_blue">
-        <ImageView
-            android:id="@+id/menuImage"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/coffee1" />
-    </androidx.cardview.widget.CardView>
+        android:adjustViewBounds="true"
+        android:src="@drawable/coffee1" />
 
     <TextView
         android:id="@+id/textMenuNames"
@@ -36,7 +28,7 @@
         android:text="아메리카노 외 3잔"
         android:textSize="15dp"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuPrice"
@@ -44,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="25,000원"
         android:textSize="15dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         style="@style/Text.Regular"/>
     <TextView
         android:id="@+id/textMenuDate"
@@ -52,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="2021.05.06"
         android:textSize="15dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         style="@style/Text.Regular"/>
     <ImageView
         android:id="@+id/btnGoOrder"
@@ -63,5 +55,5 @@
         android:layout_weight="1"
         style="@style/Text.Regular"
         android:src="@drawable/shopping_cart"
-        app:tint="@color/coffee_blue" />
+        app:tint="@color/brewed_green" />
 </LinearLayout>

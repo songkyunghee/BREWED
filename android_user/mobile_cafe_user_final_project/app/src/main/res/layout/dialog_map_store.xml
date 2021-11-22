@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/white"
     android:layout_margin="10dp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:src="@drawable/logo"
             android:layout_marginBottom="30dp"
-            app:tint="@color/coffee_blue" />
+            app:tint="@color/brewed_green" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
             android:text="주문가능시간"
-            android:textColor="@color/coffee_blue"
+            android:textColor="@color/black"
             android:textSize="30dp"
             style="@style/Text.Title"/>
         <TextView

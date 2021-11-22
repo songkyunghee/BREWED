@@ -52,12 +52,12 @@ class OrderAdapter(val context: Context) :RecyclerView.Adapter<OrderAdapter.Orde
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.black))
                 textCompleted.text = "진행 중"
             } else if(com == "P") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "제조완료"
 
             } else if(com == "Y") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "픽업완료"
             } else {

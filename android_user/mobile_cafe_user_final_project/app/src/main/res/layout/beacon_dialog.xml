@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/coffee_blue" />
+        app:tint="@color/brewed_green" />
 
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="이용 알림"
         android:textStyle="bold"
-        android:textColor="@color/coffee_blue"
+        android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_marginStart="25dp"
         app:layout_constraintTop_toBottomOf="@id/ssay_img"
@@ -39,7 +39,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="100dp"
         android:text="1. 매장내 이용시 테이블의\nNFC를 태그하면 해당 테이블로\n음료를 가져다드립니다."
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginBottom="10dp"
         android:text="오늘의 커피"
-        android:textColor="@color/coffee_blue"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
@@ -75,7 +75,7 @@
             android:layout_height="100dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/coffee_blue"
+            android:backgroundTint="@color/brewed_green"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
             android:text="아메리카노"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -110,7 +110,7 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="40dp"
             android:text="4100원"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@id/menuTitle" />
@@ -124,7 +124,7 @@
         android:layout_margin="15dp"
         android:layout_marginBottom="10dp"
         android:text="확인"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
