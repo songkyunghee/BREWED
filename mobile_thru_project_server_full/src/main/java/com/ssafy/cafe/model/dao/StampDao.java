@@ -11,7 +11,7 @@ public interface StampDao {
 
     Stamp select(Integer stampId);
 
-    List<Stamp> selectAll();
+    String selectAll(String userId);
     
     List<Map<String, Object>> selectByUserId(String userId);
     

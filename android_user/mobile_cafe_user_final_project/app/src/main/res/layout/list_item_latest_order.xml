@@ -18,7 +18,7 @@
         android:src="@drawable/coffee1" />
 
     <TextView
-        android:id="@+id/textMenuNames"
+        android:id="@+id/odlistTvName"
         style="@style/Text.Regular"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/textMenuPrice"
+        android:id="@+id/odlistTvTotalPrice"
         style="@style/Text.Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/textMenuDate"
+        android:id="@+id/odlistTvDate"
         style="@style/Text.Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

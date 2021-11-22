@@ -1,5 +1,6 @@
 package com.ssafy.smartstore.src.main.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +16,22 @@ private const val TAG = "MenuAdapter_싸피"
 class MenuAdapter(var productList:List<Product>) :RecyclerView.Adapter<MenuAdapter.MenuHolder>(){
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val menuName = itemView.findViewById<TextView>(R.id.textMenuNames)
+        val menuName = itemView.findViewById<TextView>(R.id.odlistTvName)
+        val menuEnname = itemView.findViewById<TextView>(R.id.textmenuEnname)
+        val menuPrice = itemView.findViewById<TextView>(R.id.textmenuPrice)
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
 
+
         fun bindInfo(product : Product){
-            menuName.text = product.name
+            menuName.text = product.koname
             Glide.with(itemView)
                 .load("${ApplicationClass.MENU_IMGS_URL}${product.img}")
                 .into(menuImage)
+            menuEnname.text = product.name
+
+            Log.d(TAG, "bindInfo: $product")
+            
+            menuPrice.text = product.price.toString()
 
             itemView.setOnClickListener{
                 itemClickListner.onClick(it, layoutPosition, productList[layoutPosition].id)

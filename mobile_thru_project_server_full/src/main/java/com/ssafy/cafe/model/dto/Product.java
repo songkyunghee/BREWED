@@ -2,20 +2,23 @@ package com.ssafy.cafe.model.dto;
 
 public class Product {
     private Integer id;
+    private String koname;
     private String name;
     private String type;
     private Integer price;
     private String img;
     
-    public Product(Integer id, String name, String type, Integer price, String img) {
+    public Product(Integer id, String koname, String name, String type, Integer price, String img) {
         this.id = id;
+        this.koname = koname;
         this.name = name;
         this.type = type;
         this.price = price;
         this.img = img;
     }
     
-    public Product(String name, String type, Integer price, String img) {
+    public Product(String koname, String name, String type, Integer price, String img) {
+    	this.koname = koname;
         this.name = name;
         this.type = type;
         this.price = price;
@@ -29,6 +32,15 @@ public class Product {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+	public String getKoname() {
+		return koname;
+	}
+
+	public void setKoname(String koname) {
+		this.koname = koname;
 	}
 
 	public String getName() {

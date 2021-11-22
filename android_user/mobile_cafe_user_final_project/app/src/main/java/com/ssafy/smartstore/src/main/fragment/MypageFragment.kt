@@ -73,6 +73,12 @@ class MypageFragment : Fragment(){
                     orderAdapter.notifyDataSetChanged()
                 }
 
+                orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener{
+                    override fun onClick(view: View, position: Int, orderid:Int) {
+                        mainActivity.openFragment(2, "orderId", orderid)
+                    }
+                })
+
                 binding.recyclerViewOrder.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = orderAdapter
@@ -80,6 +86,8 @@ class MypageFragment : Fragment(){
                     adapter!!.stateRestorationPolicy =
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 }
+
+
                 binding.logout.setOnClickListener {
                     mainActivity.openFragment(5)
                 }

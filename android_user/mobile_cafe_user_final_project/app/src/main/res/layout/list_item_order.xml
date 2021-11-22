@@ -23,7 +23,7 @@
 
 
     <TextView
-        android:id="@+id/textMenuNames"
+        android:id="@+id/odlistTvName"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="아메리카노 외 3잔"
@@ -32,7 +32,7 @@
         android:textColor="@color/black"
         style="@style/Text.Regular"/>
     <TextView
-        android:id="@+id/textMenuPrice"
+        android:id="@+id/odlistTvTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="25,000원"
@@ -40,7 +40,7 @@
         android:textColor="@color/black"
         style="@style/Text.Regular"/>
     <TextView
-        android:id="@+id/textMenuDate"
+        android:id="@+id/odlistTvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2021.05.06"
