@@ -10,7 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.cafe.model.dto.Order;
+import com.ssafy.cafe.model.dto.Stamp;
 import com.ssafy.cafe.model.dto.User;
 import com.ssafy.cafe.model.service.OrderService;
 import com.ssafy.cafe.model.service.StampService;
@@ -77,20 +80,29 @@ public class UserRestController {
     }
 
     @PostMapping("/info")
-    @ApiOperation(value = "사용자의 정보와 함께 사용자의 주문 내역, 사용자 등급 정보를 반환한다.", response = Map.class)
-    public Map<String, Object> getInfo(@RequestBody User user) {
-        User selected = uService.login(user.getId(), user.getPass());
-        if (selected == null) {
-            return null;
-        } else {
-            Map<String, Object> info = new HashMap<>();
-            info.put("user", selected);
-            List<Order> orders = oService.getOrdreByUser(user.getId());
-            info.put("order", orders);
-            info.put("grade", getGrade(selected.getStamps()));
-            return info;
-        }
+    @ApiOperation(value = "사용자의 쿠폰 정보와 스탬프 개수를 반환한다.", response = Map.class)
+    public List<Map<String, Object>> getInfo(@RequestBody User user) {
+       
+        	  return sService.selectByUser(user.getId());
+        	  
     }
+    
+    @PutMapping("/coupon/update")
+    @ApiOperation(value = "사용자의 쿠폰 정보와 스탬프 정보를 수정한다.", response = Boolean.class)
+    public Boolean update(@RequestBody Stamp stamp) {
+    	sService.updateStampCoupon(stamp);
+    	return true;
+    }
+    
+    @DeleteMapping("/coupon/{id}")
+    @Transactional
+    @ApiOperation(value="id에 해당하는 쿠폰을 삭제한다.", response = Boolean.class)
+    public Boolean deleteCoupon(@PathVariable Integer id) {
+    	sService.deleteCoupon(id);
+    	return true;
+    }
+    
+    
 
     public Map<String, Object> getGrade(Integer stamp) {
         Map<String, Object> grade = new HashMap<>();

@@ -25,10 +25,15 @@
 		id desc
 	</select>
 
-	<select id="selectByUserId" resultMap="StampBasic"
+	<select id="selectByUserId" resultType="map"
 		parameterType="string">
-		SELECT * FROM t_stamp where user_id=#{userId} order by
-		id desc
+		SELECT u.id, s.order_id, s.quantity, c.c_id, c.c_value
+		FROM t_stamp s, t_coupon c, t_user u
+		where u.id=#{userId} 
+		and u.id = s.user_id
+		and u.id = c.user_id
+		group by c_id
+		order by u.id desc
 	</select>
 
 	<resultMap type="Stamp" id="StampBasic">
@@ -37,4 +42,19 @@
 		<result column="user_id" property="userId" />
 		<result column="quantity" property="quantity" />
 	</resultMap>
+	
+	<update id="updateStamp" parameterType="Stamp">
+	update t_stamp
+	set quantity = #{quantity}
+	where user_id = #{userId}
+	</update>
+	
+	<insert id="insertCoupon" parameterType="Coupon">
+	insert into t_coupon (c_value, user_id) values (#{cValue}, #{userId})
+	</insert>
+	
+	<delete id="deleteCoupon" parameterType="int">
+	delete from t_coupon
+	where c_id = #{cId}
+	</delete>
 </mapper>

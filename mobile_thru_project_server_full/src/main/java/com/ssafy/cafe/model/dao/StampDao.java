@@ -1,6 +1,9 @@
 package com.ssafy.cafe.model.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import com.ssafy.cafe.model.dto.Coupon;
 import com.ssafy.cafe.model.dto.Stamp;
 
 public interface StampDao {
@@ -10,5 +13,11 @@ public interface StampDao {
 
     List<Stamp> selectAll();
     
-    List<Stamp> selectByUserId(String userId);
+    List<Map<String, Object>> selectByUserId(String userId);
+    
+   int updateStamp(Stamp stamp);
+   
+   int insertCoupon(Coupon coupon);
+   
+   int deleteCoupon(int cId);
 }

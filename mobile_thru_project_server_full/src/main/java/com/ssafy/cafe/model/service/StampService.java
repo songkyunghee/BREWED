@@ -1,6 +1,8 @@
 package com.ssafy.cafe.model.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ssafy.cafe.model.dto.Stamp;
 
 
@@ -10,5 +12,12 @@ public interface StampService {
      * @param id
      * @return
      */
-    List<Stamp> selectByUser(String id);
+	List<Map<String, Object>> selectByUser(String id);
+	
+	// 사용자 쿠폰과 스탬프 정보를 갱신한다.
+	public int updateStamp(Stamp stamp);
+	
+	public int updateStampCoupon(Stamp stamp);
+	
+	public int deleteCoupon(int c_id);
 }

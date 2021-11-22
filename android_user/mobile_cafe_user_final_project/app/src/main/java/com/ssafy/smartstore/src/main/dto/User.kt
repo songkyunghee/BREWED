@@ -7,7 +7,8 @@ data class User (
     val stamps: Int,
     var token: String,
     val stampList: ArrayList<Stamp> = ArrayList()
-){
-    constructor():this("", "","",0,"")
-    constructor(id:String, pass:String):this(id, "",pass,0,"")
+) {
+    constructor() : this("", "", "", 0, "")
+    constructor(id: String, pass: String) : this(id, "", pass, 0, "")
+    constructor(id: String) : this(id, "", "", 0, "")
 }

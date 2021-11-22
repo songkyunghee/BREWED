@@ -1,7 +1,11 @@
 package com.ssafy.smartstore.src.main.service
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.ssafy.smartstore.src.main.dto.User
+import com.ssafy.smartstore.src.main.response.MenuDetailWithCommentResponse
+import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
 import com.ssafy.smartstore.util.RetrofitCallback
 import com.ssafy.smartstore.util.RetrofitUtil
 import retrofit2.Call
@@ -112,5 +116,29 @@ class UserService {
                 callback.onError(t)
             }
         })
+    }
+
+    fun getUserStampWithCoupon(user:User) : LiveData<MutableList<StampWithCouponResponse>> {
+        val responseLiveData : MutableLiveData<MutableList<StampWithCouponResponse>> = MutableLiveData()
+        val menuInfoRequest: Call<MutableList<StampWithCouponResponse>> = RetrofitUtil.userService.getInfo(user)
+
+        menuInfoRequest.enqueue(object : Callback<MutableList<StampWithCouponResponse>> {
+            override fun onResponse(call: Call<MutableList<StampWithCouponResponse>>, response: Response<MutableList<StampWithCouponResponse>>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        responseLiveData.value = res
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<StampWithCouponResponse>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "사용자 정보 받아오는 중 통신오류")
+            }
+        })
+        return responseLiveData
+
     }
 }
