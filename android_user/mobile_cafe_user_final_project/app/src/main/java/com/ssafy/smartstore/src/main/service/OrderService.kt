@@ -77,7 +77,9 @@ class OrderService{
                     if (res != null) {
                         // 가공 필요 orderDate 를 기준으로 정렬, o_img 하나로 축약 필요
                         //orderId를 기준으로 새로운 리스트 만들어서 넘기기
+
                         responseLiveData.value = makeLatestOrderList(res)
+                        responseLiveData.postValue(res)
                     }
                     Log.d(TAG, "onResponse: $res")
                 } else {

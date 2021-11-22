@@ -16,8 +16,9 @@ import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.util.CommonUtils
 
 private const val TAG = "OrderAdapter_싸피"
-class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
+class OrderAdapter(val context: Context) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
 
+    private var userLastOrderList: List<LatestOrderResponse>? = null
     inner class OrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
         val textMenuNames = itemView.findViewById<TextView>(R.id.textMenuNames)
@@ -69,6 +70,10 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
             }
         }
     }
+    fun submitList(list: List<LatestOrderResponse>?) {
+        userLastOrderList = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_order, parent, false)
@@ -76,11 +81,11 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
     }
 
     override fun onBindViewHolder(holder: OrderHolder, position: Int) {
-        holder.bindInfo(list[position])
+        holder.bindInfo(userLastOrderList!![position])
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return userLastOrderList!!.size
     }
 
     //클릭 인터페이스 정의 사용하는 곳에서 만들어준다.

@@ -63,7 +63,7 @@ class OrderFragment : Fragment() {
 
     private fun initData(date: String) {
         val notComOrderList = OrderService().getDateNotComOrderList(date, storeId)
-
+        Log.d(TAG, "initData: ${notComOrderList.value}")
         notComOrderList.observe(
             viewLifecycleOwner,
             { notComOrderList ->

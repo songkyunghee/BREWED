@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.src.main.activity.MainActivity
@@ -15,6 +18,7 @@ import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentMypageBinding
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
+import com.ssafy.smartstore.util.MainViewModel
 
 // MyPage 탭
 private const val TAG = "MypageFragment_싸피"
@@ -22,6 +26,7 @@ class MypageFragment : Fragment(){
     private lateinit var orderAdapter : OrderAdapter
     private lateinit var mainActivity: MainActivity
     private lateinit var list : List<LatestOrderResponse>
+    private lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding:FragmentMypageBinding
     override fun onAttach(context: Context) {
@@ -46,23 +51,20 @@ class MypageFragment : Fragment(){
     }
 
     private fun initData(id:String){
+        mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
 
-        val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
-        Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
-        userLastOrderLiveData.observe(
+        val userListOrderList = OrderService().getLastMonthOrder(id)
+        Log.d(TAG, "onViewCreated: ${userListOrderList.value}")
+        userListOrderList.observe(
             viewLifecycleOwner,
-            {
-                list = it
-
-                orderAdapter = OrderAdapter(mainActivity, list)
-                orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener{
-                    override fun onClick(view: View, position: Int, orderid:Int) {
-                        mainActivity.openFragment(2, "orderId", orderid)
-                    }
-                })
+            { userListOrderList ->
+                userListOrderList.let {
+                    mainViewModel.setUserLastOrderItems(userListOrderList)
+                }
 
                 binding.recyclerViewOrder.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    orderAdapter = OrderAdapter(context)
                     adapter = orderAdapter
                     //원래의 목록위치로 돌아오게함
                     adapter!!.stateRestorationPolicy =
@@ -72,11 +74,20 @@ class MypageFragment : Fragment(){
                     mainActivity.openFragment(5)
                 }
 
-                Log.d(TAG, "onViewCreated: $it")
+                subscribeObservers()
             }
         )
 
     }
+
+    private fun subscribeObservers() {
+        mainViewModel.userLastOrderLiveData.observe(mainActivity, Observer{ userLastOrderLiveData ->
+            Log.d(TAG, "subscribeObservers: ${userLastOrderLiveData}")
+            orderAdapter.submitList(userLastOrderLiveData)
+
+        })
+    }
+
 
     private fun getUserData():String{
         var user = ApplicationClass.sharedPreferencesUtil.getUser()
