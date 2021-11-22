@@ -20,9 +20,9 @@ class OrderAdapter(val context: Context, var userLastOrderList: List<LatestOrder
 
     inner class OrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
-        val textMenuNames = itemView.findViewById<TextView>(R.id.textMenuNames)
-        val textMenuPrice = itemView.findViewById<TextView>(R.id.textMenuPrice)
-        val textMenuDate = itemView.findViewById<TextView>(R.id.textMenuDate)
+        val textMenuNames = itemView.findViewById<TextView>(R.id.odlistTvName)
+        val textMenuPrice = itemView.findViewById<TextView>(R.id.odlistTvTotalPrice)
+        val textMenuDate = itemView.findViewById<TextView>(R.id.odlistTvDate)
         val textCompleted = itemView.findViewById<TextView>(R.id.textCompleted)
 
         fun bindInfo(data:LatestOrderResponse){

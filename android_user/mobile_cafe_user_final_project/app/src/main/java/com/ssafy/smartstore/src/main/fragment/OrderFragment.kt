@@ -62,6 +62,7 @@ class OrderFragment : Fragment(){
 
     private fun initData(){
         val productList = ProductService().getProductList()
+        Log.d(TAG, "initData: ${productList}")
         productList.observe(
             viewLifecycleOwner,
             { productList ->

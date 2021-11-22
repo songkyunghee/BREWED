@@ -58,7 +58,9 @@ class OrderDetailFragment : Fragment(){
     }
 
     private fun initData(){
+
         val orderDetails = OrderService().getOrderDetails(orderId)
+        Log.d(TAG, "initData: $orderDetails")
         orderDetails.observe(
             viewLifecycleOwner,
             { orderDetails ->

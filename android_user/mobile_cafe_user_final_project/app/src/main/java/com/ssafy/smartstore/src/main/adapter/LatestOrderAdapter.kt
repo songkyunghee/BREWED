@@ -19,22 +19,22 @@ class LatestOrderAdapter(val context: Context, val list:List<LatestOrderResponse
 
     inner class LatestOrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
-        val textMenuNames = itemView.findViewById<TextView>(R.id.textMenuNames)
-        val textMenuPrice = itemView.findViewById<TextView>(R.id.textMenuPrice)
-        val textMenuDate = itemView.findViewById<TextView>(R.id.textMenuDate)
+        val textMenuNames = itemView.findViewById<TextView>(R.id.odlistTvName)
+        val textMenuPrice = itemView.findViewById<TextView>(R.id.odlistTvTotalPrice)
+        val textMenuDate = itemView.findViewById<TextView>(R.id.odlistTvDate)
         fun bindInfo(data:LatestOrderResponse){
             Glide.with(itemView)
                 .load("${ApplicationClass.MENU_IMGS_URL}${data.img}")
                 .into(menuImage)
 
-//            if(data.orderCnt > 1){
-//                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
-//            }else{
-//                textMenuNames.text = data.productName
-//            }
-//
-//            textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
-//            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
+            if(data.orderCnt > 1){
+                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
+            }else{
+                textMenuNames.text = data.productName
+            }
+
+            textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
+            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
 
         }
     }

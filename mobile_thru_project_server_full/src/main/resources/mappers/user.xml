@@ -18,7 +18,6 @@ VALUES
 	UPDATE t_user
 	SET
     token = #{token},
-    stamps = #{stamps}
 	WHERE id = #{id}
 	</update>
 	

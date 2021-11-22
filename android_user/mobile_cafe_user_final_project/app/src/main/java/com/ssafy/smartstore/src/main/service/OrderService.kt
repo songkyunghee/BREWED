@@ -47,6 +47,7 @@ class OrderService{
         orderDetailRequest.enqueue(object : Callback<List<OrderDetailResponse>> {
             override fun onResponse(call: Call<List<OrderDetailResponse>>, response: Response<List<OrderDetailResponse>>) {
                 val res = response.body()
+                Log.d(TAG, "onResponse: $res")
                 if(response.code() == 200){
                     if (res != null) {
                         responseLiveData.value = res
