@@ -1,6 +1,8 @@
 package com.ssafy.cafe.model.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ssafy.cafe.model.dao.StampDao;
@@ -17,7 +19,7 @@ public class StampServiceImpl implements StampService{
     StampDao sDao;
     
     @Override
-    public List<Stamp> selectByUser(String id) {
+    public List<Map<String, Object>> selectByUser(String id) {
         return sDao.selectByUserId(id);
     }
 
