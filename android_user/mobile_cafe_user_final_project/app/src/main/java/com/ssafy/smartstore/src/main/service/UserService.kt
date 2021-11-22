@@ -139,6 +139,24 @@ class UserService {
             }
         })
         return responseLiveData
+    }
 
+    fun getUserStamp(id: String, callback: RetrofitCallback<Int>){
+        RetrofitUtil.userService.selectStamp(id).enqueue(object : Callback<Int> {
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    }
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
     }
 }

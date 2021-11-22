@@ -20,4 +20,6 @@ public interface StampService {
 	public int updateStampCoupon(Stamp stamp);
 	
 	public int deleteCoupon(int c_id);
+	
+	public String getStamp(String id);
 }
