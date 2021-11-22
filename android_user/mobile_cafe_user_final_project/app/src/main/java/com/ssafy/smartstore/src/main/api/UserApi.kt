@@ -30,6 +30,6 @@ interface UserApi {
     fun selectAdminToken(@Path("sId") sId: String): Call<HashMap<String, String>>
 
     @GET("rest/user/stamp/{id}")
-    fun selectStamp(@Path("id") id: String ): Call<Int>
+    fun selectStamp(@Path("id") id: String ): Call<String>
 
 }

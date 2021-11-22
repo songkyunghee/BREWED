@@ -17,7 +17,7 @@ VALUES
 	<update id="update" parameterType="User">
 	UPDATE t_user
 	SET
-    token = #{token},
+    token = #{token}
 	WHERE id = #{id}
 	</update>
 	

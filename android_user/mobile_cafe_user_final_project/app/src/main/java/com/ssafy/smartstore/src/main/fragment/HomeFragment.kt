@@ -188,25 +188,8 @@ class HomeFragment : Fragment(){
 
 
     private fun initData(id:String){
-        var imgCoffe = mutableListOf<ImageView>()
-        imgCoffe.add(binding.stamp1s)
-        imgCoffe.add(binding.stamp2s)
-        imgCoffe.add(binding.stamp3s)
-        imgCoffe.add(binding.stamp4s)
-        imgCoffe.add(binding.stamp5s)
-        imgCoffe.add(binding.stamp6s)
-        imgCoffe.add(binding.stamp7s)
-        imgCoffe.add(binding.stamp8s)
-        imgCoffe.add(binding.stamp9s)
-        imgCoffe.add(binding.stamp10s)
 
         UserService().getUserStamp(id, StampCallback())
-        Log.d(TAG, "stamp initData: $stamps")
-
-        for(i in 0 until stamps) {
-            imgCoffe[i].setImageResource(R.drawable.stamp_check)
-        }
-
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
         userLastOrderLiveData.observe(
@@ -237,7 +220,7 @@ class HomeFragment : Fragment(){
 
     }
 
-    private fun setShoppingList(orderId:Int){
+    private fun setShoppingList(orderId:Int) {
         val orderDetails = OrderService().getOrderDetails(orderId)
         orderDetails.observe(
             viewLifecycleOwner,
@@ -247,19 +230,22 @@ class HomeFragment : Fragment(){
                         Log.d(TAG, "orderDetails[i]: ${orderDetails[i]}")
                         Log.d(TAG, "orderDetails[i].productId: ${orderDetails[i].productId}")
                         var pId = 0
-                        if(orderDetails[i].productName=="Americano") pId = 1
-                        else if(orderDetails[i].productName=="CafeVienna") pId = 2
-                        else if(orderDetails[i].productName=="Cappuccino") pId = 3
-                        else if(orderDetails[i].productName=="IceLatte") pId = 4
-                        else if(orderDetails[i].productName=="IceChoco") pId = 5
-                        else if(orderDetails[i].productName=="VanillaLatte") pId = 6
-                        else if(orderDetails[i].productName=="GreengrapeAde") pId = 7
-                        else if(orderDetails[i].productName=="GingerTea") pId = 8
-                        else if(orderDetails[i].productName=="StrawberryLatte") pId = 9
-                        else if(orderDetails[i].productName=="StrawberryVerrine") pId = 10
-                        else if(orderDetails[i].productName=="CheeseCake") pId = 11
-                        else if(orderDetails[i].productName=="Madeleine") pId = 12
-                        ApplicationClass.shoppingSharedPreference.putItem(pId, orderDetails[i].quantity)
+                        if (orderDetails[i].productName == "Americano") pId = 1
+                        else if (orderDetails[i].productName == "CafeVienna") pId = 2
+                        else if (orderDetails[i].productName == "Cappuccino") pId = 3
+                        else if (orderDetails[i].productName == "IceLatte") pId = 4
+                        else if (orderDetails[i].productName == "IceChoco") pId = 5
+                        else if (orderDetails[i].productName == "VanillaLatte") pId = 6
+                        else if (orderDetails[i].productName == "GreengrapeAde") pId = 7
+                        else if (orderDetails[i].productName == "GingerTea") pId = 8
+                        else if (orderDetails[i].productName == "StrawberryLatte") pId = 9
+                        else if (orderDetails[i].productName == "StrawberryVerrine") pId = 10
+                        else if (orderDetails[i].productName == "CheeseCake") pId = 11
+                        else if (orderDetails[i].productName == "Madeleine") pId = 12
+                        ApplicationClass.shoppingSharedPreference.putItem(
+                            pId,
+                            orderDetails[i].quantity
+                        )
                     }
                     mainActivity.openFragment(1)
                 }
@@ -277,11 +263,28 @@ class HomeFragment : Fragment(){
         return user.id
     }
 
-    inner class StampCallback: RetrofitCallback<Int> {
-        override fun onSuccess( code: Int, stamp: Int) {
-            Log.d(TAG, "onSuccess: ")
-            stamps = stamp
+    inner class StampCallback: RetrofitCallback<String> {
+        override fun onSuccess( code: Int, stamp: String) {
+            Log.d(TAG, "stampcallback onSuccess: $stamp")
 
+            var imgCoffe = mutableListOf<ImageView>()
+            imgCoffe.add(binding.stamp1s)
+            imgCoffe.add(binding.stamp2s)
+            imgCoffe.add(binding.stamp3s)
+            imgCoffe.add(binding.stamp4s)
+            imgCoffe.add(binding.stamp5s)
+            imgCoffe.add(binding.stamp6s)
+            imgCoffe.add(binding.stamp7s)
+            imgCoffe.add(binding.stamp8s)
+            imgCoffe.add(binding.stamp9s)
+            imgCoffe.add(binding.stamp10s)
+
+
+            Log.d(TAG, "stamp initData: $stamps")
+
+            for(i in 0 until stamp.toInt()) {
+                imgCoffe[i].setImageResource(R.drawable.stamp_check)
+            }
         }
 
         override fun onError(t: Throwable) {
