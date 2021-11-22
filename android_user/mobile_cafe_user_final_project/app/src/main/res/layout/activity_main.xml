@@ -10,9 +10,9 @@
 
     <FrameLayout
         android:id="@+id/frame_layout_main"
-        android:layout_above="@id/tab_layout_bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_layout_bottom_navigation" />
 
     <!--    Material Design + Style 지정 완료   -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

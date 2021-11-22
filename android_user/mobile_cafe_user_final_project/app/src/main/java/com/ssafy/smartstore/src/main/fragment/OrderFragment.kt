@@ -1,6 +1,8 @@
 package com.ssafy.smartstore.src.main.fragment
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.MenuAdapter
 import com.ssafy.smartstore.databinding.FragmentOrderBinding
@@ -41,6 +45,9 @@ class OrderFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var toolbar = binding.toolbarLayout
+        toolbar.inflateMenu(R.menu.order_fragment_items)
+
         initData()
 
         binding.floatingBtn.setOnClickListener{
@@ -62,7 +69,7 @@ class OrderFragment : Fragment(){
                     menuAdapter = MenuAdapter(productList)
                 }
                 binding.recyclerViewMenu.apply {
-                    layoutManager = GridLayoutManager(context,3)
+                    layoutManager = LinearLayoutManager(requireContext())
                     adapter = menuAdapter
                     //원래의 목록위치로 돌아오게함
                     adapter!!.stateRestorationPolicy =
