@@ -63,7 +63,7 @@ class OrderFragment : Fragment() {
 
     private fun initData(date: String) {
         val notComOrderList = OrderService().getDateNotComOrderList(date, storeId)
-
+        Log.d(TAG, "initData: ${notComOrderList.value}")
         notComOrderList.observe(
             viewLifecycleOwner,
             { notComOrderList ->
@@ -118,7 +118,8 @@ class OrderFragment : Fragment() {
                                         var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
                                         OrderService().update(order)
                                         PushService().sendMessageTo(o.token, "pickup", "pickup body")
-                                        orderListAdapter.notifyDataSetChanged()
+                                        Log.d(TAG, "onClick: pickup")
+                                        initData(dateString)
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
 

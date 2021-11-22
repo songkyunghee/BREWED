@@ -11,8 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +19,6 @@ import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
 import com.ssafy.smartstore.src.main.adapter.NoticeAdapter
@@ -29,12 +26,10 @@ import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.src.main.activity.QRActivity
 import com.ssafy.smartstore.src.main.adapter.ViewPageAdapter
-import com.ssafy.smartstore.src.main.dto.BannerItem
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
-import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.StoreService
-import com.ssafy.smartstore.util.HomeViewModel
+import com.ssafy.smartstore.util.MainViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -53,7 +48,7 @@ class HomeFragment : Fragment(){
 
     // 롤링 배너
     private lateinit var viewPagerAdapter: ViewPageAdapter
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var mainViewModel: MainViewModel
     private var isRunning = true
 
     private lateinit var binding:FragmentHomeBinding
@@ -97,13 +92,13 @@ class HomeFragment : Fragment(){
         AccelometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorEventListener = AccelometerListener()
 
-        viewModel = ViewModelProvider(mainActivity).get(HomeViewModel::class.java)
+        mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
         val bannerList = StoreService().getBannerList()
         bannerList.observe(
             viewLifecycleOwner,
             { bannerList ->
                 bannerList.let {
-                    viewModel.setBannerItems(bannerList)
+                    mainViewModel.setBannerItems(bannerList)
                 }
 
             }
@@ -140,12 +135,12 @@ class HomeFragment : Fragment(){
     }
 
     private fun subscribeObservers() {
-        viewModel.bannerItemList.observe(mainActivity, Observer{ bannerItemList ->
+        mainViewModel.bannerItemList.observe(mainActivity, Observer{ bannerItemList ->
             viewPagerAdapter.submitList(bannerItemList)
 
         })
 
-        viewModel.currentPosition.observe(mainActivity, Observer { currentPosition ->
+        mainViewModel.currentPosition.observe(mainActivity, Observer { currentPosition ->
             binding.viewPager2.currentItem = currentPosition
         })
     }
@@ -155,8 +150,8 @@ class HomeFragment : Fragment(){
             whenResumed {
                 while(isRunning) {
                     delay(3000)
-                    viewModel.getcurrentPosition()?.let {
-                        viewModel.setCurrentPosition((it.plus(1)) % 3)
+                    mainViewModel.getcurrentPosition()?.let {
+                        mainViewModel.setCurrentPosition((it.plus(1)) % 3)
                     }
                 }
             }
