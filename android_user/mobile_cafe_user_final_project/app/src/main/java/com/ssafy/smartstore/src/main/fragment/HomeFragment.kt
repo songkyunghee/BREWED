@@ -213,9 +213,6 @@ class HomeFragment : Fragment(){
 
     private fun initData(id:String){
 
-
-
-
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
         userLastOrderLiveData.observe(
@@ -229,8 +226,6 @@ class HomeFragment : Fragment(){
                     override fun onClick(view: View, position: Int, orderId:Int) {
                         ApplicationClass.shoppingSharedPreference.deleteList()
                         setShoppingList(orderId)
-
-
 
                     }
                 })
@@ -272,18 +267,18 @@ class HomeFragment : Fragment(){
                         Log.d(TAG, "orderDetails[i]: ${orderDetails[i]}")
                         Log.d(TAG, "orderDetails[i].productId: ${orderDetails[i].productId}")
                         var pId = 0
-                        if(orderDetails[i].productName=="coffee1") pId = 1
-                        else if(orderDetails[i].productName=="coffee2") pId = 2
-                        else if(orderDetails[i].productName=="coffee3") pId = 3
-                        else if(orderDetails[i].productName=="coffee4") pId = 4
-                        else if(orderDetails[i].productName=="coffee5") pId = 5
-                        else if(orderDetails[i].productName=="coffee6") pId = 6
-                        else if(orderDetails[i].productName=="coffee7") pId = 7
-                        else if(orderDetails[i].productName=="coffee8") pId = 8
-                        else if(orderDetails[i].productName=="coffee9") pId = 9
-                        else if(orderDetails[i].productName=="coffee10") pId = 10
-                        else if(orderDetails[i].productName=="tea1") pId = 11
-                        else if(orderDetails[i].productName=="cookie") pId = 12
+                        if(orderDetails[i].productName=="Americano") pId = 1
+                        else if(orderDetails[i].productName=="CafeVienna") pId = 2
+                        else if(orderDetails[i].productName=="Cappuccino") pId = 3
+                        else if(orderDetails[i].productName=="IceLatte") pId = 4
+                        else if(orderDetails[i].productName=="IceChoco") pId = 5
+                        else if(orderDetails[i].productName=="VanillaLatte") pId = 6
+                        else if(orderDetails[i].productName=="GreengrapeAde") pId = 7
+                        else if(orderDetails[i].productName=="GingerTea") pId = 8
+                        else if(orderDetails[i].productName=="StrawberryLatte") pId = 9
+                        else if(orderDetails[i].productName=="StrawberryVerrine") pId = 10
+                        else if(orderDetails[i].productName=="CheeseCake") pId = 11
+                        else if(orderDetails[i].productName=="Madeleine") pId = 12
                         ApplicationClass.shoppingSharedPreference.putItem(pId, orderDetails[i].quantity)
                     }
                     mainActivity.openFragment(1)
