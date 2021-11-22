@@ -1,6 +1,9 @@
 package com.ssafy.smartstore.src.main.fragment
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,8 +28,6 @@ private const val TAG = "MypageFragment_싸피"
 class MypageFragment : Fragment(){
     private lateinit var orderAdapter : OrderAdapter
     private lateinit var mainActivity: MainActivity
-    private lateinit var list : List<LatestOrderResponse>
-    private lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding:FragmentMypageBinding
     override fun onAttach(context: Context) {
@@ -51,20 +52,29 @@ class MypageFragment : Fragment(){
     }
 
     private fun initData(id:String){
-        mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
+        // 픽업 완료 처리가 되었을 때 백그라운드 푸쉬 알림 오고나면 브로드캐스트 받기
+        val intentFilter = IntentFilter("com.ssafy.shop")
+        val receiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent!!.action
+                initData(id)
+                Log.d(TAG, "receive : $action")
+            }
+        }
+        mainActivity.registerReceiver(receiver, intentFilter)
 
-        mainViewModel.setLastOderList(id)
+        val userLastOrderList = OrderService().getLastMonthOrder(id)
 
-        mainViewModel.userLastOrderLiveData.observe(
+        userLastOrderList.observe(
             viewLifecycleOwner,
-            { userListOrderList ->
-                userListOrderList.let {
-                    mainViewModel.setUserLastOrderItems(userListOrderList)
+            { userLastOrderList ->
+                userLastOrderList.let {
+                    orderAdapter = OrderAdapter(mainActivity, userLastOrderList)
+                    orderAdapter.notifyDataSetChanged()
                 }
 
                 binding.recyclerViewOrder.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    orderAdapter = OrderAdapter(context)
                     adapter = orderAdapter
                     //원래의 목록위치로 돌아오게함
                     adapter!!.stateRestorationPolicy =
@@ -74,20 +84,10 @@ class MypageFragment : Fragment(){
                     mainActivity.openFragment(5)
                 }
 
-                subscribeObservers()
             }
         )
 
     }
-
-    private fun subscribeObservers() {
-        mainViewModel.userLastOrderLiveData.observe(mainActivity, Observer{ userLastOrderLiveData ->
-            Log.d(TAG, "subscribeObservers: ${userLastOrderLiveData}")
-            orderAdapter.submitList(userLastOrderLiveData)
-
-        })
-    }
-
 
     private fun getUserData():String{
         var user = ApplicationClass.sharedPreferencesUtil.getUser()
