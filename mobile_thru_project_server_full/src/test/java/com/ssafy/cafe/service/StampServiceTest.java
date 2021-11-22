@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import com.ssafy.cafe.model.dto.Order;
 import com.ssafy.cafe.model.dto.OrderDetail;
@@ -39,9 +41,9 @@ class StampServiceTest extends AbstractServiceTest{
         User selected = userService.login(testUser.getId(), testUser.getPass());
         assertEquals(selected.getStamps(), 6);
         
-        List<Stamp> stamps = sService.selectByUser("test");
+        List<Map<String, Object>> stamps = sService.selectByUser("test");
         assertEquals(stamps.size(), 2);
-        assertEquals(stamps.get(0).getQuantity(), 1);
+        assertEquals(stamps.get(0).get("quantity"), 1);
     }
     
     @Test

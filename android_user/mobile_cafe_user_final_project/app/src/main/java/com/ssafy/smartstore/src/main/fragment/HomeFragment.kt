@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -35,6 +36,7 @@ import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.StoreService
 import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.MainViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -55,6 +57,8 @@ class HomeFragment : Fragment(){
     private lateinit var viewPagerAdapter: ViewPageAdapter
     private lateinit var mainViewModel: MainViewModel
     private var isRunning = true
+
+    var stamps = 0
 
     private lateinit var binding:FragmentHomeBinding
     override fun onAttach(context: Context) {
@@ -196,20 +200,12 @@ class HomeFragment : Fragment(){
         imgCoffe.add(binding.stamp9s)
         imgCoffe.add(binding.stamp10s)
 
-        val userStampWithCouponInfo = UserService().getUserStampWithCoupon(User(id))
-        userStampWithCouponInfo.observe(
-            viewLifecycleOwner,
-            { userStampWithCouponInfo->
-                userStampWithCouponInfo.let {
-                    Log.d(TAG, "userStampWithCouponInfo: $it")
+        UserService().getUserStamp(id, StampCallback())
+        Log.d(TAG, "stamp initData: $stamps")
 
-                    for(i in 0 until userStampWithCouponInfo.get(0).quantity) {
-                        imgCoffe[i].setImageResource(R.drawable.stamp_check)
-                    }
-                }
-
-            }
-        )
+        for(i in 0 until stamps) {
+            imgCoffe[i].setImageResource(R.drawable.stamp_check)
+        }
 
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
@@ -279,5 +275,21 @@ class HomeFragment : Fragment(){
         binding.textUserName.text = user.name
 
         return user.id
+    }
+
+    inner class StampCallback: RetrofitCallback<Int> {
+        override fun onSuccess( code: Int, stamp: Int) {
+            Log.d(TAG, "onSuccess: ")
+            stamps = stamp
+
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }

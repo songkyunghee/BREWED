@@ -78,6 +78,12 @@ public class UserRestController {
         }
         return selected;
     }
+    
+    @GetMapping("/stamp/{id}")
+    @ApiOperation(value = "사용자의 스탬프 개수를 반환하다.", response = String.class)
+    public String getStamp(@PathVariable String id) {
+    	return sService.getStamp(id);
+    }
 
     @PostMapping("/info")
     @ApiOperation(value = "사용자의 쿠폰 정보와 스탬프 개수를 반환한다.", response = Map.class)
