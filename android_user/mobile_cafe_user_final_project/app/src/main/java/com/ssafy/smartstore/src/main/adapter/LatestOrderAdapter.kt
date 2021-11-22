@@ -27,14 +27,14 @@ class LatestOrderAdapter(val context: Context, val list:List<LatestOrderResponse
                 .load("${ApplicationClass.MENU_IMGS_URL}${data.img}")
                 .into(menuImage)
 
-            if(data.orderCnt > 1){
-                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
-            }else{
-                textMenuNames.text = data.productName
-            }
-
-            textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
-            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
+//            if(data.orderCnt > 1){
+//                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
+//            }else{
+//                textMenuNames.text = data.productName
+//            }
+//
+//            textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
+//            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
 
         }
     }
