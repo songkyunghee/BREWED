@@ -53,9 +53,9 @@ class MypageFragment : Fragment(){
     private fun initData(id:String){
         mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
 
-        val userListOrderList = OrderService().getLastMonthOrder(id)
-        Log.d(TAG, "onViewCreated: ${userListOrderList.value}")
-        userListOrderList.observe(
+        mainViewModel.setLastOderList(id)
+
+        mainViewModel.userLastOrderLiveData.observe(
             viewLifecycleOwner,
             { userListOrderList ->
                 userListOrderList.let {

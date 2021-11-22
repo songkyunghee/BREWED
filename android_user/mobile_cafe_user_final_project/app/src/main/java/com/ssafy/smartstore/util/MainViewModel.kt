@@ -33,6 +33,10 @@ class MainViewModel : ViewModel() {
         _currentPosition.value = position
     }
 
+    fun setLastOderList(id: String) {
+        _userLastOrderLiveData.value = OrderService().getLastMonthOrder(id).value;
+    }
+
     fun setUserLastOrderItems(list: List<LatestOrderResponse>) {
         _userLastOrderLiveData.value = list
     }
