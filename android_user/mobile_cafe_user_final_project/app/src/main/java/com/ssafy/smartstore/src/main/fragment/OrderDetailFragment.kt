@@ -90,7 +90,7 @@ class OrderDetailFragment : Fragment(){
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH시 mm분 ss초")
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-        binding.tvOrderStatus.text = CommonUtils.isOrderCompleted(orderDetails[0])
+        binding.tvOrderStatus.text = "주문완료"
         binding.tvOrderDate.text = dateFormat.format(orderDetails[0].orderDate)
         var totalPrice = 0
         orderDetails.forEach { totalPrice += it.totalPrice }

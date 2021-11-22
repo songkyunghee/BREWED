@@ -33,26 +33,38 @@ class FirebaseMsgService : FirebaseMessagingService() {
             val messageTitle = message!!.getValue("title")
             val messageContent = message!!.getValue("body")
 
-            val mainIntent = Intent(this, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            Log.d(TAG, "onMessageReceived: pickup ${messageTitle}")
+
+            if (messageTitle.equals("pickup")) {
+                Log.d(TAG, "onMessageReceived: background...")
+                // 백그라운드 처리...
             }
+            else {
 
-            val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, 0)
+                val mainIntent = Intent(this, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
 
-            val mLargeIconForNoti = BitmapFactory.decodeResource(resources, R.drawable.brewed_logo)
+                val mainPendingIntent: PendingIntent =
+                    PendingIntent.getActivity(this, 0, mainIntent, 0)
 
-            val builder = NotificationCompat.Builder(this, channel_id)
-                .setLargeIcon(mLargeIconForNoti)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(messageTitle)
-                .setContentText(messageContent)
-                .setAutoCancel(true)
-                .setContentIntent(mainPendingIntent)
+                val mLargeIconForNoti =
+                    BitmapFactory.decodeResource(resources, R.drawable.brewed_logo)
 
-            Log.d(TAG, "onMessageReceived: $messageTitle")
 
-            NotificationManagerCompat.from(this).apply {
-                notify(101, builder.build())
+                val builder = NotificationCompat.Builder(this, channel_id)
+                    .setLargeIcon(mLargeIconForNoti)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle(messageTitle)
+                    .setContentText(messageContent)
+                    .setAutoCancel(true)
+                    .setContentIntent(mainPendingIntent)
+
+                Log.d(TAG, "onMessageReceived: $messageTitle")
+
+                NotificationManagerCompat.from(this).apply {
+                    notify(101, builder.build())
+                }
             }
         }
     }

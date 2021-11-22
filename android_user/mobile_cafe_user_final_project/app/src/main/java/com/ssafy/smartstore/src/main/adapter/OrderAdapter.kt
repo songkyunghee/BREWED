@@ -16,7 +16,12 @@ import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.util.CommonUtils
 
 private const val TAG = "OrderAdapter_싸피"
-class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
+class OrderAdapter(val context: Context, var list:List<LatestOrderResponse>) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
+
+    @JvmName("setList1")
+    fun setList(items: List<LatestOrderResponse>) {
+        this.list = items
+    }
 
     inner class OrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
@@ -51,12 +56,12 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.black))
                 textCompleted.text = "진행 중"
             } else if(com == "P") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "제조완료"
 
             } else if(com == "Y") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "픽업완료"
             } else {
