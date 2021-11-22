@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -35,6 +36,7 @@ import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.StoreService
 import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.MainViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -55,6 +57,8 @@ class HomeFragment : Fragment(){
     private lateinit var viewPagerAdapter: ViewPageAdapter
     private lateinit var mainViewModel: MainViewModel
     private var isRunning = true
+
+    var stamps = 0
 
     private lateinit var binding:FragmentHomeBinding
     override fun onAttach(context: Context) {
@@ -184,35 +188,8 @@ class HomeFragment : Fragment(){
 
 
     private fun initData(id:String){
-        var imgCoffe = mutableListOf<ImageView>()
-        imgCoffe.add(binding.stamp1s)
-        imgCoffe.add(binding.stamp2s)
-        imgCoffe.add(binding.stamp3s)
-        imgCoffe.add(binding.stamp4s)
-        imgCoffe.add(binding.stamp5s)
-        imgCoffe.add(binding.stamp6s)
-        imgCoffe.add(binding.stamp7s)
-        imgCoffe.add(binding.stamp8s)
-        imgCoffe.add(binding.stamp9s)
-        imgCoffe.add(binding.stamp10s)
 
-        val userStampWithCouponInfo = UserService().getUserStampWithCoupon(User(id))
-        userStampWithCouponInfo.observe(
-            viewLifecycleOwner,
-            { userStampWithCouponInfo->
-                userStampWithCouponInfo.let {
-                    Log.d(TAG, "userStampWithCouponInfo: $it")
-
-                    if (userStampWithCouponInfo.size != 0) {
-                        for (i in 0 until userStampWithCouponInfo.get(0).quantity) {
-                            imgCoffe[i].setImageResource(R.drawable.stamp_check)
-                        }
-                    }
-                }
-
-            }
-        )
-
+        UserService().getUserStamp(id, StampCallback())
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
         userLastOrderLiveData.observe(
@@ -243,7 +220,7 @@ class HomeFragment : Fragment(){
 
     }
 
-    private fun setShoppingList(orderId:Int){
+    private fun setShoppingList(orderId:Int) {
         val orderDetails = OrderService().getOrderDetails(orderId)
         orderDetails.observe(
             viewLifecycleOwner,
@@ -253,19 +230,22 @@ class HomeFragment : Fragment(){
                         Log.d(TAG, "orderDetails[i]: ${orderDetails[i]}")
                         Log.d(TAG, "orderDetails[i].productId: ${orderDetails[i].productId}")
                         var pId = 0
-                        if(orderDetails[i].productName=="Americano") pId = 1
-                        else if(orderDetails[i].productName=="CafeVienna") pId = 2
-                        else if(orderDetails[i].productName=="Cappuccino") pId = 3
-                        else if(orderDetails[i].productName=="IceLatte") pId = 4
-                        else if(orderDetails[i].productName=="IceChoco") pId = 5
-                        else if(orderDetails[i].productName=="VanillaLatte") pId = 6
-                        else if(orderDetails[i].productName=="GreengrapeAde") pId = 7
-                        else if(orderDetails[i].productName=="GingerTea") pId = 8
-                        else if(orderDetails[i].productName=="StrawberryLatte") pId = 9
-                        else if(orderDetails[i].productName=="StrawberryVerrine") pId = 10
-                        else if(orderDetails[i].productName=="CheeseCake") pId = 11
-                        else if(orderDetails[i].productName=="Madeleine") pId = 12
-                        ApplicationClass.shoppingSharedPreference.putItem(pId, orderDetails[i].quantity)
+                        if (orderDetails[i].productName == "Americano") pId = 1
+                        else if (orderDetails[i].productName == "CafeVienna") pId = 2
+                        else if (orderDetails[i].productName == "Cappuccino") pId = 3
+                        else if (orderDetails[i].productName == "IceLatte") pId = 4
+                        else if (orderDetails[i].productName == "IceChoco") pId = 5
+                        else if (orderDetails[i].productName == "VanillaLatte") pId = 6
+                        else if (orderDetails[i].productName == "GreengrapeAde") pId = 7
+                        else if (orderDetails[i].productName == "GingerTea") pId = 8
+                        else if (orderDetails[i].productName == "StrawberryLatte") pId = 9
+                        else if (orderDetails[i].productName == "StrawberryVerrine") pId = 10
+                        else if (orderDetails[i].productName == "CheeseCake") pId = 11
+                        else if (orderDetails[i].productName == "Madeleine") pId = 12
+                        ApplicationClass.shoppingSharedPreference.putItem(
+                            pId,
+                            orderDetails[i].quantity
+                        )
                     }
                     mainActivity.openFragment(1)
                 }
@@ -281,5 +261,38 @@ class HomeFragment : Fragment(){
         binding.textUserName.text = user.name
 
         return user.id
+    }
+
+    inner class StampCallback: RetrofitCallback<String> {
+        override fun onSuccess( code: Int, stamp: String) {
+            Log.d(TAG, "stampcallback onSuccess: $stamp")
+
+            var imgCoffe = mutableListOf<ImageView>()
+            imgCoffe.add(binding.stamp1s)
+            imgCoffe.add(binding.stamp2s)
+            imgCoffe.add(binding.stamp3s)
+            imgCoffe.add(binding.stamp4s)
+            imgCoffe.add(binding.stamp5s)
+            imgCoffe.add(binding.stamp6s)
+            imgCoffe.add(binding.stamp7s)
+            imgCoffe.add(binding.stamp8s)
+            imgCoffe.add(binding.stamp9s)
+            imgCoffe.add(binding.stamp10s)
+
+
+            Log.d(TAG, "stamp initData: $stamps")
+
+            for(i in 0 until stamp.toInt()) {
+                imgCoffe[i].setImageResource(R.drawable.stamp_check)
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "유저 정보 불러오는 중 통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
     }
 }
