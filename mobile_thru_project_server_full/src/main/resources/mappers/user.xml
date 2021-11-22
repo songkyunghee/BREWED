@@ -15,10 +15,11 @@ VALUES
 	</insert>
 	
 	<update id="update" parameterType="User">
-UPDATE t_user
-SET
-    token = #{token}
-WHERE id = #{id}
+	UPDATE t_user
+	SET
+    token = #{token},
+    stamps = #{stamps}
+	WHERE id = #{id}
 	</update>
 	
 		<update id="updateStamp" parameterType="User">

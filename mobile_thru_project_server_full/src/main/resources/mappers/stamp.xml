@@ -41,4 +41,19 @@
 		<result column="user_id" property="userId" />
 		<result column="quantity" property="quantity" />
 	</resultMap>
+	
+	<update id="updateStamp" parameterType="Stamp">
+	update t_stamp
+	set quantity = #{quantity}
+	where user_id = #{userId}
+	</update>
+	
+	<insert id="insertCoupon" parameterType="Coupon">
+	insert into t_coupon (c_value, user_id) values (#{cValue}, #{userId})
+	</insert>
+	
+	<delete id="deleteCoupon" parameterType="int">
+	delete from t_coupon
+	where c_id = #{cId}
+	</delete>
 </mapper>

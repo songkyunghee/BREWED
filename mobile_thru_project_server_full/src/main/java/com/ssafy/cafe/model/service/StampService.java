@@ -13,4 +13,9 @@ public interface StampService {
      * @return
      */
 	List<Map<String, Object>> selectByUser(String id);
+	
+	// 사용자 쿠폰과 스탬프 정보를 갱신한다.
+	public int updateStamp(Stamp stamp);
+	
+	public int updateStampCoupon(Stamp stamp);
 }

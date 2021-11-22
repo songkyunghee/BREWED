@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.cafe.model.dto.Order;
+import com.ssafy.cafe.model.dto.Stamp;
 import com.ssafy.cafe.model.dto.User;
 import com.ssafy.cafe.model.service.OrderService;
 import com.ssafy.cafe.model.service.StampService;
@@ -83,17 +84,16 @@ public class UserRestController {
         if (selected == null) {
             return null;
         } else {
-//            Map<String, Object> info = new HashMap<>();
-//            info.put("user", selected);
-//            List<Order> orders = oService.getOrdreByUser(user.getId());
-//            info.put("order", orders);
-//            info.put("grade", getGrade(selected.getStamps()));
-//            return info;
-        	
         	  return sService.selectByUser(selected.getId());
         	  
         	
         }
+    }
+    
+    @PutMapping("/userStampCoupon")
+    @ApiOperation(value = "사용자의 쿠폰 정보와 스탬프 정보를 수정한다.", response = Integer.class)
+    public int update(@RequestBody Stamp stamp) {
+    	return sService.updateStampCoupon(stamp);
     }
 
     public Map<String, Object> getGrade(Integer stamp) {
