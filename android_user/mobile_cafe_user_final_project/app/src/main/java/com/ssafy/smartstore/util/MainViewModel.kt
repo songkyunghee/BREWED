@@ -1,11 +1,9 @@
 package com.ssafy.smartstore.util
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.ssafy.smartstore.src.main.dto.BannerItem
+import androidx.lifecycle.*
 
-class HomeViewModel : ViewModel() {
+
+class MainViewModel : ViewModel() {
     private val _bannerItemList: MutableLiveData<List<String>> = MutableLiveData()
     private val _currentPosition: MutableLiveData<Int> = MutableLiveData()
 
@@ -17,6 +15,7 @@ class HomeViewModel : ViewModel() {
 
     init{
         _currentPosition.value = 0
+
     }
 
     fun setBannerItems(list: List<String>) {
@@ -28,4 +27,5 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getcurrentPosition() = currentPosition.value
+
 }

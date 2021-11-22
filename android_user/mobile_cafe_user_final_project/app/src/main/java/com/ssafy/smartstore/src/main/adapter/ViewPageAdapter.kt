@@ -50,5 +50,4 @@ class ViewPageAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             //itemView.findViewById<ImageView>(R.id.iv_banner_image).setImageResource(bannerItem.image)
         }
     }
-
 }

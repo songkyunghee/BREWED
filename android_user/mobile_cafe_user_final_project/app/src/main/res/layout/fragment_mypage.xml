@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/white"
     android:padding="30dp">
 
 
@@ -17,7 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/user"
-            app:tint="@color/white" />
+            app:tint="@color/brewed_green" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
         android:layout_gravity="center"
         android:src="@drawable/space"
         android:layout_marginBottom="30dp"
-        app:tint="@color/coffee_blue" />
+        app:tint="@color/brewed_green" />
 
 
     <TextView

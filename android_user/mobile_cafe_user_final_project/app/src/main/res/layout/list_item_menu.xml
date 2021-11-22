@@ -6,31 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/white"
     android:gravity="center"
 
     android:paddingLeft="0dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp">
 
-    <androidx.cardview.widget.CardView
+
+    <ImageView
+        android:id="@+id/menuImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/coffee_blue"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:src="@drawable/coffee1" />
 
-        <ImageView
-            android:id="@+id/menuImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:src="@drawable/coffee1" />
-    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textMenuNames"

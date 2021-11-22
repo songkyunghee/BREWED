@@ -16,7 +16,7 @@ import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.util.CommonUtils
 
 private const val TAG = "OrderAdapter_싸피"
-class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
+class OrderAdapter(val context: Context, var userLastOrderList: List<LatestOrderResponse>) :RecyclerView.Adapter<OrderAdapter.OrderHolder>(){
 
     inner class OrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val menuImage = itemView.findViewById<ImageView>(R.id.menuImage)
@@ -51,12 +51,12 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.black))
                 textCompleted.text = "진행 중"
             } else if(com == "P") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "제조완료"
 
             } else if(com == "Y") {
-                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
+                textCompleted.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
                 textCompleted.setTextColor(ContextCompat.getColor(context, R.color.white))
                 textCompleted.text = "픽업완료"
             } else {
@@ -70,17 +70,18 @@ class OrderAdapter(val context: Context, val list:List<LatestOrderResponse>) :Re
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_order, parent, false)
         return OrderHolder(view)
     }
 
     override fun onBindViewHolder(holder: OrderHolder, position: Int) {
-        holder.bindInfo(list[position])
+        holder.bindInfo(userLastOrderList!![position])
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return userLastOrderList!!.size
     }
 
     //클릭 인터페이스 정의 사용하는 곳에서 만들어준다.

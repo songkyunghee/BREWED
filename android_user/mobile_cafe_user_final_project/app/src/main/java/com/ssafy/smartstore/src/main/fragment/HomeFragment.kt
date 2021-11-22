@@ -11,8 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +19,6 @@ import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
 import com.ssafy.smartstore.src.main.adapter.NoticeAdapter
@@ -29,12 +26,10 @@ import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.src.main.activity.QRActivity
 import com.ssafy.smartstore.src.main.adapter.ViewPageAdapter
-import com.ssafy.smartstore.src.main.dto.BannerItem
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.service.OrderService
-import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.StoreService
-import com.ssafy.smartstore.util.HomeViewModel
+import com.ssafy.smartstore.util.MainViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -53,7 +48,7 @@ class HomeFragment : Fragment(){
 
     // 롤링 배너
     private lateinit var viewPagerAdapter: ViewPageAdapter
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var mainViewModel: MainViewModel
     private var isRunning = true
 
     private lateinit var binding:FragmentHomeBinding
@@ -97,13 +92,13 @@ class HomeFragment : Fragment(){
         AccelometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorEventListener = AccelometerListener()
 
-        viewModel = ViewModelProvider(mainActivity).get(HomeViewModel::class.java)
+        mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
         val bannerList = StoreService().getBannerList()
         bannerList.observe(
             viewLifecycleOwner,
             { bannerList ->
                 bannerList.let {
-                    viewModel.setBannerItems(bannerList)
+                    mainViewModel.setBannerItems(bannerList)
                 }
 
             }
@@ -140,12 +135,12 @@ class HomeFragment : Fragment(){
     }
 
     private fun subscribeObservers() {
-        viewModel.bannerItemList.observe(mainActivity, Observer{ bannerItemList ->
+        mainViewModel.bannerItemList.observe(mainActivity, Observer{ bannerItemList ->
             viewPagerAdapter.submitList(bannerItemList)
 
         })
 
-        viewModel.currentPosition.observe(mainActivity, Observer { currentPosition ->
+        mainViewModel.currentPosition.observe(mainActivity, Observer { currentPosition ->
             binding.viewPager2.currentItem = currentPosition
         })
     }
@@ -155,8 +150,8 @@ class HomeFragment : Fragment(){
             whenResumed {
                 while(isRunning) {
                     delay(3000)
-                    viewModel.getcurrentPosition()?.let {
-                        viewModel.setCurrentPosition((it.plus(1)) % 3)
+                    mainViewModel.getcurrentPosition()?.let {
+                        mainViewModel.setCurrentPosition((it.plus(1)) % 3)
                     }
                 }
             }
@@ -213,9 +208,6 @@ class HomeFragment : Fragment(){
 
     private fun initData(id:String){
 
-
-
-
         val userLastOrderLiveData = OrderService().getLastMonthOrder(id)
         Log.d(TAG, "onViewCreated: ${userLastOrderLiveData.value}")
         userLastOrderLiveData.observe(
@@ -229,8 +221,6 @@ class HomeFragment : Fragment(){
                     override fun onClick(view: View, position: Int, orderId:Int) {
                         ApplicationClass.shoppingSharedPreference.deleteList()
                         setShoppingList(orderId)
-
-
 
                     }
                 })
@@ -272,18 +262,18 @@ class HomeFragment : Fragment(){
                         Log.d(TAG, "orderDetails[i]: ${orderDetails[i]}")
                         Log.d(TAG, "orderDetails[i].productId: ${orderDetails[i].productId}")
                         var pId = 0
-                        if(orderDetails[i].productName=="coffee1") pId = 1
-                        else if(orderDetails[i].productName=="coffee2") pId = 2
-                        else if(orderDetails[i].productName=="coffee3") pId = 3
-                        else if(orderDetails[i].productName=="coffee4") pId = 4
-                        else if(orderDetails[i].productName=="coffee5") pId = 5
-                        else if(orderDetails[i].productName=="coffee6") pId = 6
-                        else if(orderDetails[i].productName=="coffee7") pId = 7
-                        else if(orderDetails[i].productName=="coffee8") pId = 8
-                        else if(orderDetails[i].productName=="coffee9") pId = 9
-                        else if(orderDetails[i].productName=="coffee10") pId = 10
-                        else if(orderDetails[i].productName=="tea1") pId = 11
-                        else if(orderDetails[i].productName=="cookie") pId = 12
+                        if(orderDetails[i].productName=="Americano") pId = 1
+                        else if(orderDetails[i].productName=="CafeVienna") pId = 2
+                        else if(orderDetails[i].productName=="Cappuccino") pId = 3
+                        else if(orderDetails[i].productName=="IceLatte") pId = 4
+                        else if(orderDetails[i].productName=="IceChoco") pId = 5
+                        else if(orderDetails[i].productName=="VanillaLatte") pId = 6
+                        else if(orderDetails[i].productName=="GreengrapeAde") pId = 7
+                        else if(orderDetails[i].productName=="GingerTea") pId = 8
+                        else if(orderDetails[i].productName=="StrawberryLatte") pId = 9
+                        else if(orderDetails[i].productName=="StrawberryVerrine") pId = 10
+                        else if(orderDetails[i].productName=="CheeseCake") pId = 11
+                        else if(orderDetails[i].productName=="Madeleine") pId = 12
                         ApplicationClass.shoppingSharedPreference.putItem(pId, orderDetails[i].quantity)
                     }
                     mainActivity.openFragment(1)

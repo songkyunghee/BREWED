@@ -66,7 +66,7 @@ class OrderService{
     }
 
     // 최근 한달간 주문내역 가져오는 API
-    fun getLastMonthOrder(userId: String): LiveData<List<LatestOrderResponse>> {
+    fun getLastMonthOrder(userId: String): MutableLiveData<List<LatestOrderResponse>> {
         val responseLiveData: MutableLiveData<List<LatestOrderResponse>> = MutableLiveData()
         val latestOrderRequest: Call<List<LatestOrderResponse>> = RetrofitUtil.orderService.getLastMonthOrder(userId)
 
