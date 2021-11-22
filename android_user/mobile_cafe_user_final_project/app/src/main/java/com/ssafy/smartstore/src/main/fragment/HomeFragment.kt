@@ -203,8 +203,10 @@ class HomeFragment : Fragment(){
                 userStampWithCouponInfo.let {
                     Log.d(TAG, "userStampWithCouponInfo: $it")
 
-                    for(i in 0 until userStampWithCouponInfo.get(0).quantity) {
-                        imgCoffe[i].setImageResource(R.drawable.stamp_check)
+                    if (userStampWithCouponInfo.size != 0) {
+                        for (i in 0 until userStampWithCouponInfo.get(0).quantity) {
+                            imgCoffe[i].setImageResource(R.drawable.stamp_check)
+                        }
                     }
                 }
 
