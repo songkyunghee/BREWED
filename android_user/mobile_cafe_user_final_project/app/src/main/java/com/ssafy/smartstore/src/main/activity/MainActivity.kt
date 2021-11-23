@@ -154,6 +154,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                transaction.replace(R.id.frame_layout_main, CouponFragment())
                    .addToBackStack(null)
             }
+            8 -> {
+                transaction.replace(R.id.frame_layout_main, HomeCouponFragment())
+                    .addToBackStack(null)
+            }
         }
         transaction.commit()
     }

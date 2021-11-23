@@ -187,7 +187,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView14"
+                    app:layout_constraintStart_toEndOf="@+id/btnCoupon"
                     app:srcCompat="@drawable/alram" />
 
                 <TextView
@@ -200,14 +200,20 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imgAlarm2" />
 
+
+                <LinearLayout
+                    android:id="@+id/btnCoupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
                 <ImageView
                     android:id="@+id/imgCoupon2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/coupon" />
 
                 <TextView
@@ -215,10 +221,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginBottom="16dp"
                     android:text="Coupon"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgCoupon2" />
+
+                     />
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

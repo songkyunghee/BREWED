@@ -113,6 +113,10 @@ class HomeFragment : Fragment(){
             }
         )
 
+        binding.btnCoupon.setOnClickListener {
+            mainActivity.openFragment(8)
+        }
+
         var orderList = OrderService().getAllOrderList()
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")
@@ -167,9 +171,6 @@ class HomeFragment : Fragment(){
     }
 
 
-
-
-
     private inner class AccelometerListener : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
 //            Log.e(TAG, "${event.values[0]}   onSensorChanged: x: " + String.format("%.4f", event.values[0])
@@ -213,7 +214,6 @@ class HomeFragment : Fragment(){
                     adapter!!.stateRestorationPolicy =
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 }
-
 
             }
         )
