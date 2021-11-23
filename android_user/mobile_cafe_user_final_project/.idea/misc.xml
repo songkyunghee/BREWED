@@ -32,7 +32,7 @@
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/dialog_map_store.xml" value="0.1984375" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/dialog_menu_comment.xml" value="0.1984375" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/dialog_menu_editcomment.xml" value="0.1984375" />
-        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/fragment_home.xml" value="0.2966485507246377" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/fragment_home_test.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/fragment_join.xml" value="0.25" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/fragment_login.xml" value="0.1984375" />
@@ -52,6 +52,7 @@
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/list_item_order_detail_list.xml" value="0.25" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/list_item_shopping_list.xml" value="0.25" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/layout/order_fragment_items.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/menu/bottom_nav.xml" value="0.13148148148148148" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_user/mobile_cafe_user_final_project/app/src/main/res/menu/order_fragment_items.xml" value="0.21" />
       </map>
     </option>

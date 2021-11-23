@@ -22,6 +22,7 @@ import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.LatestOrderAdapter
@@ -130,6 +131,13 @@ class HomeFragment : Fragment(){
         initViewPager()
         subscribeObservers()
         autoScrollViewPage()
+        initListener()
+    }
+
+    private fun initListener() {
+        binding.imgNoOrderCart.setOnClickListener {
+            mainActivity.openFragment(6)
+        }
     }
 
     private fun initViewPager() {
@@ -168,6 +176,10 @@ class HomeFragment : Fragment(){
                 }
             }
         }
+
+        Glide.with(this)
+            .load(R.raw.coffee_first_info2)
+            .into(binding.imgFirstInfo)
     }
 
 
@@ -197,6 +209,16 @@ class HomeFragment : Fragment(){
             viewLifecycleOwner,
             {
                 list = it
+
+                if (list.size == 0){
+                    binding.imgNoOrderCart.visibility = View.VISIBLE
+                    binding.tvNoOrderCartText.visibility = View.VISIBLE
+                    binding.recyclerViewLatestOrder.visibility = View.GONE
+                } else {
+                    binding.imgNoOrderCart.visibility = View.GONE
+                    binding.tvNoOrderCartText.visibility = View.GONE
+                    binding.recyclerViewLatestOrder.visibility = View.VISIBLE
+                }
 
                 latestOrderAdapter = LatestOrderAdapter(mainActivity, list)
                 //메인화면에서 최근 목록 클릭시 장바구니로 이동

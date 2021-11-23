@@ -116,7 +116,6 @@ class OrderService {
 
         return responseLiveData
     }
-
     fun update(order: Order) {
         orderService.update(order).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
@@ -129,6 +128,26 @@ class OrderService {
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 Log.d(TAG, "onFailure: 통신오류")
+            }
+
+        })
+    }
+
+    fun update(order: Order, callback: RetrofitCallback<Boolean>) {
+        orderService.update(order).enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if(response.code() == 200) {
+                    Log.d(TAG, "onResponse: 주문 수정 성공")
+                    callback.onSuccess(response.code(), true)
+                } else {
+                    Log.d(TAG, "onResponse: 주문 수정 실패")
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Log.d(TAG, "onFailure: 통신오류")
+                callback.onError(t)
             }
 
         })

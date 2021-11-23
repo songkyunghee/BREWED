@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         }
     }
 
+
     fun openFragment(index:Int, key:String, value:Int){
         moveFragment(index, key, value)
     }
@@ -145,6 +146,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             }
             // bottom navi
             6 -> {
+                bottomNavigation.selectedItemId = R.id.navigation_page_2
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frame_layout_main, OrderFragment())
                     .commit()
