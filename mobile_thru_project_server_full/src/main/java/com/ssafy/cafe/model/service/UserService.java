@@ -46,7 +46,10 @@ public interface UserService {
     
     public int deleteNoti(int n_id);
     
+    
     public int insertNoti(Noti noti);
+    
+    
     
     
     
