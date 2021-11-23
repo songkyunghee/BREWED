@@ -77,7 +77,7 @@
 		join t_product p on d.product_id =p.id
 		join t_stamp s on o.o_id=s.order_id
 
-		where o_id=#{oid};
+		where o_id=#{oId};
 	</select>
 
 	<!-- 관통 프로젝트 6단계에서 추가됨 -->

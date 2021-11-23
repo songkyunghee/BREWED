@@ -25,6 +25,7 @@ import com.ssafy.smartstore.config.ApplicationClass.Companion.storeId
 import com.ssafy.smartstore.src.main.dto.Order
 import com.ssafy.smartstore.src.main.dto.OrderDetail
 import com.ssafy.smartstore.src.main.dto.Product
+import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.PushService
@@ -46,7 +47,11 @@ class ShoppingListFragment : Fragment(){
     private lateinit var btnShop : Button
     private lateinit var btnTakeout : Button
     private lateinit var btnOrder : Button
+    private lateinit var btnCoupon: Button
     private var isShop : Boolean = true
+    private var isCoupon: Boolean = false
+    private lateinit var userId: String
+    private var couponId = -1
 
     private var prodList:MutableList<Product> = mutableListOf()
     private var prodCntList:MutableList<Int> = mutableListOf()
@@ -54,6 +59,7 @@ class ShoppingListFragment : Fragment(){
 
     private lateinit var textShoppingCount : TextView
     private lateinit var textShoppingMoney : TextView
+    private lateinit var textDiscount: TextView
     private var shoppingCount : Int = 0
     private var shoppingMoney : Int = 0
 
@@ -68,6 +74,10 @@ class ShoppingListFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity.hideBottomNav(true)
+
+        arguments?.let {
+            couponId = it.getInt("couponId")
+        }
     }
 
     override fun onCreateView(
@@ -80,17 +90,20 @@ class ShoppingListFragment : Fragment(){
         btnShop = view.findViewById(R.id.btnShop)
         btnTakeout = view.findViewById(R.id.btnTakeout)
         btnOrder = view.findViewById(R.id.btnOrder)
+        btnCoupon = view.findViewById(R.id.btnCoupon)
         textShoppingCount = view.findViewById(R.id.textShoppingCount)
         textShoppingMoney = view.findViewById(R.id.textShoppingMoney)
+        textDiscount = view.findViewById(R.id.textDiscount)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userId = getUserData()
 
         var i = Intent(requireContext(), MainActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-        pIntent = PendingIntent.getActivity(requireContext(),0, i, 0)
+        pIntent = PendingIntent.getActivity(requireContext(), 0, i, 0)
 
         val ndf_filter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)
         ndf_filter.addDataType("text/plain")
@@ -102,34 +115,45 @@ class ShoppingListFragment : Fragment(){
         val productList = ProductService().getProductList()
         productList.observe(
             viewLifecycleOwner,
-            {productList ->
+            { productList ->
                 setShoppingListScreen(productList)
             }
         )
 
 
         btnShop.setOnClickListener {
-            btnShop.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_color)
-            btnTakeout.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_non_color)
+            btnShop.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.button_color)
+            btnTakeout.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.button_non_color)
             isShop = true
         }
         btnTakeout.setOnClickListener {
-            btnTakeout.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_color)
-            btnShop.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_non_color)
+            btnTakeout.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.button_color)
+            btnShop.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.button_non_color)
             isShop = false
         }
         btnOrder.setOnClickListener {
-            if(isShop) {
+            if (isShop) {
                 yourStore()
-            }
-            else {
+            } else {
                 //거리가 200이상이라면
-                if(true) {
+                if (true) {
 
                     showDialogForOrderTakeoutOver200m()
                 }
             }
         }
+        btnCoupon.setOnClickListener {
+            mainActivity.openFragment(7)
+        }
+    }
+
+    private fun getUserData():String{
+        var user = ApplicationClass.sharedPreferencesUtil.getUser()
+        return user.id
     }
 
     private fun setShoppingListScreen(productList: List<Product>) {
@@ -263,6 +287,14 @@ class ShoppingListFragment : Fragment(){
 
         OrderService().makeOrder(order)
 
+        if(isCoupon) { // 쿠폰을 적용하고 주문했을때
+            val userStampWithCouponList = UserService().getUserStampWithCoupon(User(userId))
+
+        } else {
+            OrderService().makeOrder(order)
+        }
+
+
         prodList.clear()
         prodCntList.clear()
         shoppingListRecyclerView.adapter = shoppingListAdapter
@@ -312,5 +344,15 @@ class ShoppingListFragment : Fragment(){
                 }
             }
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(key:String, value:Int) =
+            ShoppingListFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(key, value)
+                }
+            }
     }
 }
