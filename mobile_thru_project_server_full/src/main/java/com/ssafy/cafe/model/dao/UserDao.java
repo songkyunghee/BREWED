@@ -12,12 +12,6 @@ public interface UserDao {
      */
     int insert(User user);
 
-    /**
-     * 사용자의 Stamp 정보를 수정한다.
-     * @param user
-     * @return
-     */
-    int updateStamp(User user);
     
     /**
      * 사용자 정보를 조회한다.
@@ -40,6 +34,9 @@ public interface UserDao {
     
     // 모든 유저의 토큰 값을 조회한다.
     List<String> selectUserToken();
+    
+    // 유저의 스탬프 값을 수정한다.
+    int updateUserStamp(User user);
     
    
     

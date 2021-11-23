@@ -3,8 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/activity_main.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/drawable/button_regular.xml" value="0.32760416666666664" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/drawable/textview_regular.xml" value="0.32760416666666664" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/fragment_order.xml" value="0.2" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/fragment_order_com.xml" value="0.31145833333333334" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/fragment_order_detail.xml" value="0.31145833333333334" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/list_item_order_com_list.xml" value="0.5" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/list_item_order_detail_list.xml" value="0.315625" />
+        <entry key="..\:/Users/leaderpop/git/mobilecafe_final_thru_project/android_admin/mobile_cafe_admin_fianl_project/app/src/main/res/layout/list_item_order_list.xml" value="0.315625" />
       </map>
     </option>
   </component>

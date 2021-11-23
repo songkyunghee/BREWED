@@ -38,9 +38,6 @@ public class StampServiceImpl implements StampService{
 	@Override
 	public int updateStampCoupon(Stamp stamp) {
 		User user = uDao.select(stamp.getUserId());
-		List<Map<String, Object>> userInfo = sDao.selectByUserId(stamp.getUserId());
-		int stampNum = (int) userInfo.get(0).get("quantity"); // 현재 스탬프 개수
-		int couponId = (int) userInfo.get(0).get("c_id");
 		int n = user.getStamps() + stamp.getQuantity();
 		int couponCnt = n / 10;
 		int stampCnt = n % 10;
