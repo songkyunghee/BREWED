@@ -147,11 +147,17 @@ class MenuDetailFragment : Fragment() {
 
 
         binding.btnAddList.setOnClickListener {
-            ApplicationClass.shoppingSharedPreference.putItem(
-                productId,
-                binding.textMenuCount.text.toString().toInt()
-            )
-            Toast.makeText(context, "상품이 장바구니에 담겼습니다.", Toast.LENGTH_SHORT).show()
+
+            if (binding.textMenuCount.text.toString().toInt() == 0){
+                Toast.makeText(context, "수량을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+
+                ApplicationClass.shoppingSharedPreference.putItem(
+                    productId,
+                    binding.textMenuCount.text.toString().toInt()
+                )
+                Toast.makeText(context, "상품이 장바구니에 담겼습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnCreateComment.setOnClickListener {
             showDialogRatingStar()

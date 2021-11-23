@@ -57,12 +57,13 @@
                 android:textSize="30dp"
                 android:layout_weight="1"
                 style="@style/Text.Regular"/>
+
             <ImageButton
                 android:id="@+id/btnMinusCount"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:backgroundTint="@color/coffee_blue"
-                android:background="@drawable/minus" />
+                android:background="@drawable/minus"
+                android:backgroundTint="@color/brewed_green" />
 
             <TextView
                 android:id="@+id/textMenuCount"
@@ -77,8 +78,8 @@
                 android:id="@+id/btnAddCount"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:backgroundTint="@color/coffee_blue"
-                android:background="@drawable/add" />
+                android:background="@drawable/add"
+                android:backgroundTint="@color/brewed_green" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

@@ -25,7 +25,7 @@ class OrderFragment : Fragment(){
     private lateinit var menuAdapter: MenuAdapter
     private lateinit var mainActivity: MainActivity
     private lateinit var prodList:List<Product>
-    private lateinit var binding:FragmentOrderBinding
+    private lateinit var binding: FragmentOrderBinding
 
     // mode == 0 :: 기본 정렬
     // mode == 1 :: 인기순 정렬
