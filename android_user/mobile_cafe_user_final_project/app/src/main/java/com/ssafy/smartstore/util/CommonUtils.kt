@@ -12,12 +12,19 @@ object CommonUtils {
     //천단위 콤마
     fun makeComma(num: Int): String {
         var comma = DecimalFormat("#,###")
-        return "${comma.format(num)} 원"
+        return "${comma.format(num)}원"
     }
 
 
     fun getFormattedString(date:Date): String {
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH시 mm분")
+        dateFormat.timeZone = TimeZone.getTimeZone("Seoul/Asia")
+
+        return dateFormat.format(date)
+    }
+
+    fun getFormattedString2(date:Date): String {
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd\nHH시 mm분")
         dateFormat.timeZone = TimeZone.getTimeZone("Seoul/Asia")
 
         return dateFormat.format(date)

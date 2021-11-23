@@ -46,7 +46,14 @@ public interface UserService {
     
     public int deleteNoti(int n_id);
     
+    
     public int insertNoti(Noti noti);
+    
+    public User selectUser(String id);
+    
+    public List<String> selectWithCommentUserName(int userId);
+    
+    
     
     
     

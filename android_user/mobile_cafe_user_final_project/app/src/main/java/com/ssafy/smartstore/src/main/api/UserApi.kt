@@ -36,4 +36,12 @@ interface UserApi {
     @DELETE("rest/user/coupon/{id}")
     fun delete(@Path("id") id: Int): Call<Boolean>
 
+    // {id}에 해당하는 user의 정보를 조회한다.
+    @GET("rest/user/select/{id}")
+    fun selectUser(@Path("id") id: String): Call<User>
+
+    // {productId}에 해당하는 Comment를 작성한 user의 name을 조회한다.
+    @GET("rest/user/selectcomment/{productId}")
+    fun selectWithCommentUserName(@Path("productId") productId: Int): Call<List<String>>
+
 }

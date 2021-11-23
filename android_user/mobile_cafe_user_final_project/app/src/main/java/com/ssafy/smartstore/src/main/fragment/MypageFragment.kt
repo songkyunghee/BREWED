@@ -49,6 +49,33 @@ class MypageFragment : Fragment(){
 
         var id = getUserData()
         initData(id)
+        listener()
+    }
+
+    private fun listener() {
+        binding.btnOrderMyPage.setOnClickListener{
+            mainActivity.openFragment(6)
+        }
+
+        binding.btnSettingsMyPage.setOnClickListener{
+
+        }
+
+        binding.btnAlarmMyPage.setOnClickListener{
+            mainActivity.openFragment(10)
+        }
+
+        binding.btnCouponMyPage.setOnClickListener{
+            mainActivity.openFragment(8)
+        }
+
+        binding.btnCenterMyPage.setOnClickListener{
+
+        }
+
+        binding.btnPolicyMyPage.setOnClickListener{
+
+        }
     }
 
     private fun initData(id:String){

@@ -2,6 +2,8 @@ package com.ssafy.smartstore.src.main.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -12,7 +14,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -118,6 +122,10 @@ class HomeFragment : Fragment(){
             mainActivity.openFragment(8)
         }
 
+        binding.btnAlarm.setOnClickListener{
+            mainActivity.openFragment(10)
+        }
+
         var orderList = OrderService().getAllOrderList()
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")
@@ -138,6 +146,23 @@ class HomeFragment : Fragment(){
         binding.imgNoOrderCart.setOnClickListener {
             mainActivity.openFragment(6)
         }
+
+        binding.imgFirstInfo.setOnClickListener {
+            val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.beacon_dialog, null)
+
+            val mBuilder = AlertDialog.Builder(requireContext())
+                .setView(mDialogView)
+                .setTitle("")
+
+            if(!mainActivity.isFinishing){
+                val mAlertDialog = mBuilder.show()
+                mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener{
+                    mAlertDialog.dismiss()
+                }
+            }
+        }
+
     }
 
     private fun initViewPager() {
@@ -276,11 +301,12 @@ class HomeFragment : Fragment(){
     }
     private fun initUserName(){
         var user = ApplicationClass.sharedPreferencesUtil.getUser()
-        binding.textUserName.text = "${user.name} 님"
+        binding.textUserName.text = "${user.name}님"
     }
+
     private fun getUserData():String{
         var user = ApplicationClass.sharedPreferencesUtil.getUser()
-        binding.textUserName.text = user.name
+        binding.textUserName.text = "${user.name}님"
 
         return user.id
     }

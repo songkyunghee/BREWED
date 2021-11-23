@@ -32,7 +32,7 @@ class OrderDetailListAdapter(val context: Context, val orderDetail:List<OrderDet
                 .load("${ApplicationClass.MENU_IMGS_URL}${data.img}")
                 .into(menuImage)
 
-            textShoppingMenuName.text = data.productName
+            textShoppingMenuName.text = data.koname
             textShoppingMenuMoney.text = CommonUtils.makeComma(data.unitPrice)
             textShoppingMenuCount.text = "${data.quantity} ${type}"
             textShoppingMenuMoneyAll.text = CommonUtils.makeComma(data.unitPrice * data.quantity)

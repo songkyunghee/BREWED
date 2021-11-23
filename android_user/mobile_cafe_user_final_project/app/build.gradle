@@ -100,4 +100,7 @@ dependencies {
     // Kakao API
     implementation "com.kakao.sdk:v2-talk-rx:2.4.2" // 친구, 메시지(카카오톡)
     implementation "com.kakao.sdk:v2-link-rx:2.4.2" // 메시지(카카오링크)
+
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

@@ -15,6 +15,10 @@ public class Noti {
 		this.userId = userId;
 	}
 	
+	public Noti() {
+		
+	}
+	
 	public Integer getnId() {
 		return nId;
 	}

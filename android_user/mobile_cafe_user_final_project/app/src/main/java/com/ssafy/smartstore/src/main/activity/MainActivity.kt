@@ -166,6 +166,15 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 fm.popBackStack()
                 transaction.replace(R.id.frame_layout_main, ShoppingListFragment.newInstance(key, value))
             }
+            // comment fragment
+            10 -> {
+                transaction.replace(R.id.frame_layout_main, CommentFragment.newInstance(key, value))
+                    .addToBackStack(null)
+            }
+            11-> {
+                transaction.replace(R.id.frame_layout_main, AlarmFragment())
+                    .addToBackStack(null)
+            }
         }
         transaction.commit()
     }
