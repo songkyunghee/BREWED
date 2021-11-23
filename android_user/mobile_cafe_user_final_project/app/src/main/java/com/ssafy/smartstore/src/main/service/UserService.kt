@@ -161,4 +161,20 @@ class UserService {
             }
         })
     }
+
+    fun deleteCoupon(id: Int, callback: RetrofitCallback<Boolean>)  {
+        RetrofitUtil.userService.delete(id).enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                val res = response.body()
+                if(res!!){
+                    callback.onSuccess(response.code(), true)
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
 }

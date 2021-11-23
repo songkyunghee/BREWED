@@ -25,6 +25,7 @@ class ProductService {
                 if(response.code() == 200){
                     if (res != null) {
                         responseLiveData.value = res
+                        Log.d(TAG, "onResponse: ShoppingListFragment ${res.size}")
                     }
                 } else {
                     Log.d(TAG, "onResponse: Error Code ${response.code()}")

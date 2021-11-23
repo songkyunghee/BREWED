@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="30sp"
-        android:textColor="@color/coffee_dark_gray"
+        android:textColor="@color/brewed_green"
         android:fontFamily="@font/eland_choice_b"
         android:text="2,000원"/>
 
@@ -36,30 +36,6 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/eland_choice_m"
             android:text="브루드 2천원 할인"/>
-
-        <TextView
-            android:id="@+id/textWarning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textValueInfo"
-            android:textSize="18sp"
-            android:textColor="@color/coffee_point_red"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/eland_choice_m"
-            android:text="쿠폰 중복 적용은 불가합니다."/>
-
-        <ImageView
-            android:id="@+id/btnCouponCheck"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/check"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

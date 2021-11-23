@@ -12,10 +12,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+       >
     <RelativeLayout
         android:id="@+id/imgNoCoupon"
         android:layout_width="match_parent"
@@ -33,27 +34,38 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:visibility="visible"
-        android:background="@color/coffee_light_gray"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:id="@+id/couponView"
+            android:paddingTop="3dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textCouponNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 보유쿠폰 0개"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/eland_choice_b"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:visibility="visible"
+                android:layout_marginTop="5dp"
+
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+
 
     </FrameLayout>
 
-
-    <Button
-        android:id="@+id/btnCouponApply"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/coffee_dark_gray"
-        android:visibility="visible"
-        android:text="적용하기"
-        android:layout_gravity="bottom"/>
 </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

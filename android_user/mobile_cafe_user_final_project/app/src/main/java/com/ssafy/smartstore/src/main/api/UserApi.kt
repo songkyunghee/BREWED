@@ -32,4 +32,8 @@ interface UserApi {
     @GET("rest/user/stamp/{id}")
     fun selectStamp(@Path("id") id: String ): Call<String>
 
+    // {id}에 해당하는 coupon을 삭제한다.
+    @DELETE("rest/user/coupon/{id}")
+    fun delete(@Path("id") id: Int): Call<Boolean>
+
 }

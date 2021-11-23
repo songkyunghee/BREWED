@@ -77,7 +77,9 @@ class ShoppingListFragment : Fragment(){
 
         arguments?.let {
             couponId = it.getInt("couponId")
+            Log.d(TAG, "onCreate: ShoppingListFragment $couponId")
         }
+
     }
 
     override fun onCreateView(
@@ -100,6 +102,14 @@ class ShoppingListFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userId = getUserData()
+        shoppingCount = 0
+        shoppingMoney = 0
+
+        if(couponId == 0) {
+            textDiscount.visibility = View.INVISIBLE
+        } else {
+            textDiscount.visibility = View.VISIBLE
+        }
 
         var i = Intent(requireContext(), MainActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -112,11 +122,13 @@ class ShoppingListFragment : Fragment(){
         //장바구니에서 리스트 가져옴
         shoppingList = ApplicationClass.shoppingSharedPreference.getList()
 
+
         val productList = ProductService().getProductList()
         productList.observe(
             viewLifecycleOwner,
             { productList ->
                 setShoppingListScreen(productList)
+
             }
         )
 
@@ -151,12 +163,16 @@ class ShoppingListFragment : Fragment(){
         }
     }
 
+
     private fun getUserData():String{
         var user = ApplicationClass.sharedPreferencesUtil.getUser()
         return user.id
     }
 
     private fun setShoppingListScreen(productList: List<Product>) {
+        prodList.clear()
+        prodCntList.clear()
+
         for(i in 1..12){
             var product = productList[i-1]
             if(shoppingList[i] != 0){
@@ -171,7 +187,14 @@ class ShoppingListFragment : Fragment(){
 
     fun setViewListener(){
         textShoppingCount.text = ("총 "+shoppingCount.toString()+"개")
-        textShoppingMoney.text = makeComma(shoppingMoney)
+
+        if(couponId == 0) {
+            textShoppingMoney.text = makeComma(shoppingMoney)
+        } else {
+            textShoppingMoney.text = makeComma(shoppingMoney - 2000)
+        }
+
+
         //어댑터에 in
         shoppingListAdapter = ShoppingListAdapter(requireContext(), prodList, prodCntList)
 
@@ -183,8 +206,12 @@ class ShoppingListFragment : Fragment(){
                 shoppingCount -= prodCntList[position]
                 shoppingMoney -= prodList[position].price*prodCntList[position]
                 textShoppingCount.text = ("총 "+shoppingCount.toString()+"개")
-                textShoppingMoney.text = makeComma(shoppingMoney)
-
+                if(shoppingCount == 0) {
+                    textDiscount.visibility = View.INVISIBLE
+                    textShoppingMoney.text = makeComma(shoppingMoney)
+                } else {
+                    textShoppingMoney.text = makeComma(shoppingMoney - 2000)
+                }
                 prodList.removeAt(position)
                 prodCntList.removeAt(position)
 
@@ -301,11 +328,28 @@ class ShoppingListFragment : Fragment(){
         ApplicationClass.shoppingSharedPreference.deleteList()
 
         UserService().selectAdminToken("1", AdminTokenCallback())
+        if(couponId != 0) {
+            UserService().deleteCoupon(couponId, deleteCouponCallback())
+        }
         Log.d(TAG, "completedOrder: here come??")
         mainActivity.openFragment(6)
 
 
     }
+    inner class deleteCouponCallback : RetrofitCallback<Boolean> {
+        override fun onSuccess(code: Int, responseData: Boolean) {
+            Log.d(TAG, "onSuccess: ${couponId} 쿠폰이 적용되었습니다.")
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onResponse: Error Code $code")
+        }
+    }
+    
     inner class AdminTokenCallback: RetrofitCallback<String> {
         override fun onError(t: Throwable) {
             Log.d(TAG, t.message ?: "어드민 토큰 정보 불러오는 중 통신오류")

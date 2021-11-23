@@ -14,19 +14,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.databinding.FragmentCouponBinding
+import com.ssafy.smartstore.databinding.FragmentHomeCouponBinding
 import com.ssafy.smartstore.databinding.FragmentOrderDetailBinding
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.CouponListAdapter
+import com.ssafy.smartstore.src.main.adapter.HomeCouponListAdapter
 import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.UserService
 
 
-class CouponFragment : Fragment() {
-    private lateinit var binding: FragmentCouponBinding
+class HomeCouponFragment : Fragment() {
+    private lateinit var binding: FragmentHomeCouponBinding
     private lateinit var mainActivity: MainActivity
-    private lateinit var couponListAdapter: CouponListAdapter
+    private lateinit var couponListAdapter: HomeCouponListAdapter
     private lateinit var userId: String
-    private var couponId = -1
     var couponSize = 0
 
 
@@ -55,7 +56,7 @@ class CouponFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCouponBinding.inflate(inflater, container, false)
+        binding = FragmentHomeCouponBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -77,15 +78,14 @@ class CouponFragment : Fragment() {
                     couponSize = userStampWithCouponList.size
                     if (couponSize == 0) {
                         binding.imgNoCoupon.visibility = View.VISIBLE
-                        binding.recyclerview.visibility = View.INVISIBLE
-                        binding.btnCouponApply.visibility = View.INVISIBLE
+                        binding.couponView.visibility = View.INVISIBLE
 
                     } else {
                         Log.d("couponFragment", "couponSize initData: $couponSize")
                         binding.imgNoCoupon.visibility = View.INVISIBLE
-                        binding.recyclerview.visibility = View.VISIBLE
-                        binding.btnCouponApply.visibility = View.VISIBLE
-                        couponListAdapter = CouponListAdapter(mainActivity, userStampWithCouponList)
+                        binding.couponView.visibility = View.VISIBLE
+                        binding.textCouponNum.text = "총 보유쿠폰 ${userStampWithCouponList.size.toString()}개"
+                        couponListAdapter = HomeCouponListAdapter(mainActivity, userStampWithCouponList)
 
                         binding.recyclerview.apply {
                             layoutManager = LinearLayoutManager(requireContext())
@@ -96,31 +96,8 @@ class CouponFragment : Fragment() {
                         }
 
 
-                        couponListAdapter.clickListener = object : CouponListAdapter.OnItemClickListener {
-                            override fun onClick(view: View, position: Int, cId: Int) {
-                                couponListAdapter.notifyDataSetChanged()
-                                couponId = cId
-                                if (couponListAdapter.selectCheck[position] == 1) {
-                                    binding.btnCouponApply.background.setTint(
-                                        ContextCompat.getColor(
-                                            mainActivity,
-                                            R.color.brewed_green
-                                        )
-                                    )
-                                }
-                            }
-
-                        }
-
-                        // 쿠폰 적용하기를 눌렀을때
-                        binding.btnCouponApply.setOnClickListener {
-                            mainActivity.openFragment(1, "couponId", couponId)
-                        }
-
                     }
                 }
-
-
 
             }
         )

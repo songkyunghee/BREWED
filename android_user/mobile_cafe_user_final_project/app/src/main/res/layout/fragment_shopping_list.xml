@@ -83,13 +83,13 @@
             android:layout_height="wrap_content"
             style="@style/Text.Title"
             android:layout_weight="1"
-            android:text="총 3개"/>
+            android:text=""/>
         <TextView
             android:id="@+id/textShoppingMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Text.Title"
-            android:text="19,500 원"/>
+            android:text=""/>
     </LinearLayout>
 
     <Button
