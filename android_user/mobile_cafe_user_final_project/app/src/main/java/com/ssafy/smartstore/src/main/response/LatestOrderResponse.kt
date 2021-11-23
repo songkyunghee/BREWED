@@ -14,5 +14,6 @@ data class LatestOrderResponse(
     @SerializedName("completed") var orderCompleted: Char = 'N',
     @SerializedName("price") val productPrice: Int,
     @SerializedName("type") val type: String,
+    @SerializedName("koname") val koName: String,
     var totalPrice: Int = 0
 )

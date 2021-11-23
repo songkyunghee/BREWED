@@ -45,8 +45,8 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
                 .into(menuImage)
 
             if(completed == "N") {
-                orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
+                orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                 makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                 makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                 comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
@@ -55,8 +55,8 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
             if(completed == "M") {
                 orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                 orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
+                makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                 comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                 comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
             }
@@ -65,8 +65,8 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
                 orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                 makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                 makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                comIconBack.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
+                comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
             }
         }
     }
@@ -86,8 +86,8 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
                 if(com == "N") {
                     orderIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                    makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                    makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
+                    makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     clickListener.onOrderTakeClick(it, position, notComOrderList[position].o_id)
@@ -102,8 +102,8 @@ class OrderListAdapter (val context: Context, var notComOrderList: MutableList<O
                     orderIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     makeIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_grey))
                     makeIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
-                    comIconBack.background.setTint(ContextCompat.getColor(context, R.color.coffee_blue))
-                    comIcon.setColorFilter(ContextCompat.getColor(context, R.color.coffee_able))
+                    comIconBack.background.setTint(ContextCompat.getColor(context, R.color.brewed_green))
+                    comIcon.setColorFilter(ContextCompat.getColor(context, R.color.white))
                     clickListener.onOrderMakeClick(it, position, notComOrderList[position].o_id)
                     com = "P"
                 }

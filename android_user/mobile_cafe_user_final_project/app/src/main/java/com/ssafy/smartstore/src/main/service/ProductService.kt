@@ -105,6 +105,7 @@ class ProductService {
     fun restComment(comment: Comment, callback: RetrofitCallback<Boolean>)  {
         RetrofitUtil.commentService.insert(comment).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                Log.d(TAG, "onResponse: $comment , $response")
                 val res = response.body()
                 if(res!!){
                     callback.onSuccess(response.code(), true)

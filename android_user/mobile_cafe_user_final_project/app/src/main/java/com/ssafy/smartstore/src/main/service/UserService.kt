@@ -16,6 +16,25 @@ import retrofit2.Response
 private const val TAG = "LoginService_싸피"
 class UserService {
 
+    fun userSelect(id: String, callback: RetrofitCallback<User>) {
+        RetrofitUtil.userService.selectUser(id).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        callback.onSuccess(response.code(), res)
+                    } else {
+                        callback.onFailure(response.code())
+                    }
+                }
+            }
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                callback.onError(t)
+            }
+
+        })
+    }
+
     fun login(user:User, callback: RetrofitCallback<User>)  {
         RetrofitUtil.userService.login(user).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
@@ -237,6 +256,26 @@ class UserService {
                 }
             }
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                callback.onError(t)
+            }
+        })
+    }
+
+    fun selectWithCommentUserName(productId: Int, callback: RetrofitCallback<List<String>>) {
+        RetrofitUtil.userService.selectWithCommentUserName(productId).enqueue(object: Callback<List<String>> {
+            override fun onResponse(
+                call: Call<List<String>>,
+                response: Response<List<String>>
+            ) {
+                val res = response.body()
+                if (response.code() == 200) {
+                    callback.onSuccess(response.code(), res ?: emptyList())
+                } else {
+                    callback.onFailure(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 callback.onError(t)
             }
         })

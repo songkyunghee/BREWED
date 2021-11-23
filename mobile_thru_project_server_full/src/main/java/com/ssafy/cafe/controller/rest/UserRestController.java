@@ -111,7 +111,17 @@ public class UserRestController {
     	return true;
     }
     
+    @GetMapping("/select/{id}")
+    @ApiOperation(value="{id}에 해당하는 user의 정보를 반환한다.", response = User.class)
+    public User selectUser(@PathVariable String id) {
+    	return uService.selectUser(id);
+    }
     
+    @GetMapping("/selectcomment/{productId}")
+    @ApiOperation(value="{productId}에 해당하는 user의 정보를 반환한다.", response = Map.class)
+    public List<String> selectWithCommentUserName(@PathVariable int productId) {
+    	return uService.selectWithCommentUserName(productId);
+    	
     @PostMapping("/noti")
     @Transactional
     @ApiOperation(value="Noti 객체를 추가한다.", response = Boolean.class)
