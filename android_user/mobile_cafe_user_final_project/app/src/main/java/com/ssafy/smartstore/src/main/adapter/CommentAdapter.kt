@@ -1,15 +1,20 @@
 package com.ssafy.smartstore.src.main.adapter
 
+import android.graphics.Color
+import android.media.Rating
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass
+import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.smartstore.src.main.response.MenuDetailWithCommentResponse
 
 
@@ -34,10 +39,22 @@ class CommentAdapter(var list:MutableList<MenuDetailWithCommentResponse>) :Recyc
         var acceptImg: ImageView = itemView.findViewById(R.id.iv_modify_accept_comment) // comment 수정 저장 버튼
         var cancelImg: ImageView = itemView.findViewById(R.id.iv_modify_cancel_comment) // comment 수정 취소 버튼
         var modifyImg: ImageView = itemView.findViewById(R.id.iv_modify_comment) // comment 수정 버튼
-        var deleteImg: ImageView = itemView.findViewById(R.id.iv_delete_comment) // comment 삭제 버튼\
+        var deleteImg: ImageView = itemView.findViewById(R.id.iv_delete_comment) // comment 삭제 버튼
+
+        // 코멘트를 단 유저이름
+        var userNameTv: TextView = itemView.findViewById(R.id.tvCommentUser)
+        var userRatingBar: RatingBar = itemView.findViewById(R.id.commentRate)
 
         fun bindInfo(data :MenuDetailWithCommentResponse){
             comment.text = data.commentContent
+            userNameTv.text = data.userId
+            userRatingBar.rating = data.productRating
+
+            if (data.userId == null) {
+                comment.text = "아직 리뷰가 없습니다. 리뷰를 추가해주세요"
+                comment.setTextColor(Color.LTGRAY)
+            }
+
 
             if(userId != data.userId) { // 로그인한 유저 댓글이 아닐 때
                 acceptImg.visibility= View.GONE
@@ -78,8 +95,6 @@ class CommentAdapter(var list:MutableList<MenuDetailWithCommentResponse>) :Recyc
             bindInfo(list[position])
 
             // 수정
-
-
             modifyImg.setOnClickListener {
                 if (update == false) {
                     modifyImg.visibility = View.GONE

@@ -75,6 +75,17 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDao.insert(noti);
 	}
+
+	@Override
+	public User selectUser(String id) {
+		return userDao.selectUser(id);
+	}
+
+	@Override
+	public List<String> selectWithCommentUserName(int productId) {
+		return userDao.selectWithCommentUserName(productId);
+	}
+	
 	
 	
 }

@@ -33,9 +33,9 @@ class OrderAdapter(val context: Context, var userLastOrderList: List<LatestOrder
                 .into(menuImage)
 
             if(data.orderCnt > 1){
-                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
+                textMenuNames.text = "${data.koName} 외 ${data.orderCnt -1}건"  //외 x건
             }else{
-                textMenuNames.text = data.productName
+                textMenuNames.text = data.koName
             }
 
             textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)

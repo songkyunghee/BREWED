@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.src.main.dto.Product
+import com.ssafy.smartstore.util.CommonUtils
 
 private const val TAG = "MenuAdapter_싸피"
 class MenuAdapter(var productList:List<Product>) :RecyclerView.Adapter<MenuAdapter.MenuHolder>(){
@@ -31,7 +32,7 @@ class MenuAdapter(var productList:List<Product>) :RecyclerView.Adapter<MenuAdapt
 
             Log.d(TAG, "bindInfo: $product")
             
-            menuPrice.text = product.price.toString()
+            menuPrice.text = CommonUtils.makeComma(product.price)
 
             itemView.setOnClickListener{
                 itemClickListner.onClick(it, layoutPosition, productList[layoutPosition].id)

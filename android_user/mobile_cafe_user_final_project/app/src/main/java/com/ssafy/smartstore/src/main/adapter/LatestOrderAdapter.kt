@@ -28,13 +28,13 @@ class LatestOrderAdapter(val context: Context, val list:List<LatestOrderResponse
                 .into(menuImage)
 
             if(data.orderCnt > 1){
-                textMenuNames.text = "${data.productName} 외 ${data.orderCnt -1}건"  //외 x건
+                textMenuNames.text = "${data.koName} 외 ${data.orderCnt -1}건"  //외 x건
             }else{
-                textMenuNames.text = data.productName
+                textMenuNames.text = data.koName
             }
 
             textMenuPrice.text = CommonUtils.makeComma(data.totalPrice)
-            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate)
+            textMenuDate.text = CommonUtils.getFormattedString(data.orderDate).substring(0,10)
 
         }
     }

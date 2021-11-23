@@ -59,4 +59,15 @@ VALUES
 	where n_id = #{nId}
 	</delete>
 	
+	<select id="selectUser" parameterType="string" resultType="User">
+	select * from t_user where id = #{id}
+	</select>
+	
+	<select id="selectWithCommentUserName" parameterType="int" resultType="string">
+	select u.name
+	from t_user u join t_comment c
+	on u.id = c.user_id
+	where product_id = #{productId};
+	</select>
+	
 </mapper>

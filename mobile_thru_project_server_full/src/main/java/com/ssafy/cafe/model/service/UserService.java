@@ -48,6 +48,10 @@ public interface UserService {
     
     public int insertNoti(Noti noti);
     
+    public User selectUser(String id);
+    
+    public List<String> selectWithCommentUserName(int userId);
+    
     
     
     
