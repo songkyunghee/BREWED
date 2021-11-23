@@ -47,6 +47,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
                     android:text="2021 Brewed Coffee Stamp"
+                    android:fontFamily="@font/nanum_barun_gothic_bold"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toTopOf="@+id/imageViews"
@@ -159,6 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:fontFamily="@font/nanum_barun_gothic_light"
                     android:text="10개의 스탬프를 완성시키면\n쿠폰 1개가 발급됩니다."
                     android:textColor="@color/alpha_black"
                     app:layout_constraintBottom_toTopOf="@+id/stamp8s"
@@ -201,6 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/nanum_barun_gothic"
                     android:text="Alarm"
                      />
 
@@ -225,6 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/nanum_barun_gothic"
                     android:text="Coupon"
 
                      />
@@ -254,7 +258,9 @@
 
             <TextView
                 android:id="@+id/textUserName"
-                style="@style/Text.Title"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/nanum_barun_gothic_bold"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -266,7 +272,8 @@
 
             <TextView
                 android:id="@+id/textView"
-                style="@style/Text.light"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/nanum_barun_gothic_light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -497,6 +504,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:text="What's New"
+                android:fontFamily="@font/nanum_barun_gothic_bold"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
