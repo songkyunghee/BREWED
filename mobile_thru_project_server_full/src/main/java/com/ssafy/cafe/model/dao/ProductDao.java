@@ -17,4 +17,9 @@ public interface ProductDao {
     
     // backend 관통 과정에서 추가됨.
     List<Map<String, Object>> selectWithComment(Integer productId);
+    
+    List<Product> selectHot();
+    
+    // 판매량을 갱신한다.
+    int updateProductSales(Product product);
 }

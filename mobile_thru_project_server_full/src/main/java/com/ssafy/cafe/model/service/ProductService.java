@@ -19,4 +19,9 @@ public interface ProductService {
      */
     List<Map<String, Object>> selectWithComment(Integer productId);
     
+    // 판매량 순으로 정보를 반환한다.
+    List<Product> getHotProductList();
+    
+    // 판매량을 갱신한다.
+    int updateProductSales(Product product);
 }

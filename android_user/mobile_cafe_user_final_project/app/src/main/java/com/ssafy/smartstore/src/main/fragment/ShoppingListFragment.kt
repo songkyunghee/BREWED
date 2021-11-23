@@ -255,10 +255,12 @@ class ShoppingListFragment : Fragment(){
             if(prodCntList[i] != 0){
                 Log.d(TAG, "prodList[i].id: ${prodList[i].id}")
                 details.add(OrderDetail(prodList[i].id, prodCntList[i]))
+                ProductService().updateSalesProduct(Product(prodList[i].id,"","","",0,"",prodCntList[i]))
             }
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
         Log.d(TAG, "completedOrder: $order")
+
         OrderService().makeOrder(order)
 
         prodList.clear()
