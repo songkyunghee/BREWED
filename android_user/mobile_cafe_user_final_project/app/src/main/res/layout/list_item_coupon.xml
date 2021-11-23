@@ -6,6 +6,7 @@
     android:id="@+id/cardview"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
+    android:layout_margin="5dp"
     app:contentPadding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +46,17 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/eland_choice_m"
             android:text="쿠폰 중복 적용은 불가합니다."/>
+
+        <ImageView
+            android:id="@+id/btnCouponCheck"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/check"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 

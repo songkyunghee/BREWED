@@ -23,9 +23,9 @@
     <Button
         android:id="@+id/btnCouponApply"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/coffee_light_gray"
+        android:backgroundTint="@color/coffee_dark_gray"
         android:text="적용하기"
         android:layout_gravity="bottom"/>
 </LinearLayout>
