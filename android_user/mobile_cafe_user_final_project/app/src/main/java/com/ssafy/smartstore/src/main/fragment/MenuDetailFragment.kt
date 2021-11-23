@@ -25,6 +25,7 @@ import com.ssafy.smartstore.R
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.CommentAdapter
 import com.ssafy.smartstore.config.ApplicationClass
+import com.ssafy.smartstore.config.ApplicationClass.Companion.commentUserList
 import com.ssafy.smartstore.databinding.FragmentMenuDetailBinding
 import com.ssafy.smartstore.src.main.dto.Comment
 import com.ssafy.smartstore.src.main.response.MenuDetailWithCommentResponse
@@ -85,60 +86,20 @@ class MenuDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.hideBottomNav(true)
         initData()
         initListener()
     }
 
     //MutableLiveData<List<MenuDetailWithCommentResponse>>
     private fun initData() {
+
+        mainActivity.hideBottomNav(true)
+
         val menuDetails = ProductService().getProductWithComments(productId)
         menuDetails.observe(
             viewLifecycleOwner,
             { menuDetails ->
-                menuDetails.let {
-                    commentAdapter = CommentAdapter(menuDetails)
-
-                    Log.d(TAG, "initData: ${menuDetails}")
-                    commentAdapter.notifyDataSetChanged()
-                }
-                commentList = menuDetails
-                binding.recyclerViewMenuDetail.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    adapter = commentAdapter
-                    //원래의 목록위치로 돌아오게함
-                    adapter!!.stateRestorationPolicy =
-                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-                }
-
-                commentAdapter.clickListener = object : CommentAdapter.OnItemClickListener {
-                    override fun onEditClick(view: View, position: Int, commentId: Int) {
-                        if (commentAdapter.update == false) {
-                            prevComment = commentAdapter.list.get(position).commentContent!!
-                            commentAdapter.updateIdx = commentId
-                            commentAdapter.update = true
-                            showDialogEditComment(position)
-                        }
-                    }
-
-                    override fun onDeleteClick(view: View, position: Int, commentId: Int) {
-                        ProductService().deleteComment(commentId, deleteCommnetCallback())
-                        commentAdapter.update = false
-                    }
-
-                    override fun onSaveClick(view: View, position: Int, commentId: Int) {
-                        var cObj = commentAdapter.list[position]
-                        var comment = Comment(cObj.commentId, cObj.userId!!, productId, cObj.productRating.toFloat(), cObj.commentContent!!)
-                        CommentService().update(comment)
-                        commentAdapter.update = false
-                    }
-
-                    override fun onCancelClick(view: View, position: Int, commentId: Int) {
-                        commentAdapter.list[position].commentContent = prevComment
-                        commentAdapter.notifyDataSetChanged()
-                        commentAdapter.update = false
-                    }
-                }
-
                 setScreen(menuDetails)
             }
         )
@@ -152,31 +113,7 @@ class MenuDetailFragment : Fragment() {
         binding.txtRating.text = "${(round(menu[0].productRatingAvg * 10) / 10)}점"
         binding.ratingBar.rating = menu[0].productRatingAvg.toFloat() / 2
 
-        if (productId == 1){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbaq1Xj%2FbtrlXCyacq0%2FZkKszWBcTNaseARf4sVDLk%2Fimg.png"
-        } else if (productId == 2){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc10851%2FbtrlZvkJv2h%2FD3rTzIcDzsCou1R8OQgzNK%2Fimg.png"
-        } else if (productId == 3){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F3rrN3%2Fbtrl01KdWbH%2F1IBkj3Gjxk5LugcHCoBuYK%2Fimg.png"
-        } else if (productId == 4){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcBZ5nc%2FbtrlSY9Rg67%2Fx4kgIRah8k0GiE8ui6hq21%2Fimg.pnghttps://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FC4HmU%2FbtrlYNe6D4r%2FTA11A9LD6dTPHOii9loA4K%2Fimg.png"
-        } else if (productId == 5){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FC4HmU%2FbtrlYNe6D4r%2FTA11A9LD6dTPHOii9loA4K%2Fimg.png"
-        } else if (productId == 6){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqQQAU%2FbtrlXDDRFMp%2Fb5aDuUnrN1EOKhD8wklyC0%2Fimg.png"
-        } else if (productId == 7){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1ruRZ%2FbtrlYMHgMbC%2Fo2Sg8rxc3cmJwf4nsweZjk%2Fimg.png"
-        } else if (productId == 8){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcp8OTC%2FbtrlZ99ApTF%2F8ukQb81GYTnwKGQQoQQ131%2Fimg.png"
-        } else if (productId == 9){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblYGAR%2FbtrlXEpgw43%2F8CIZfn64XRAFmkkTLMQnN1%2Fimg.png"
-        } else if (productId == 10){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcEr0Ob%2Fbtrl01XLugn%2F4DHxA2x4tDNrNgJSGzUluK%2Fimg.png"
-        } else if (productId == 11){
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYHYRV%2FbtrlT0F5lBS%2FkR424iKarykcwKLXzmrKTK%2Fimg.png"
-        } else {
-            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcUxX90%2FbtrlUPkw75S%2FjiiFRmcRByXogjx0ubhWkK%2Fimg.png"
-        }
+
 
         Glide.with(this)
             .load("${ApplicationClass.MENU_IMGS_URL}${menu[0].productImg}")
@@ -199,9 +136,7 @@ class MenuDetailFragment : Fragment() {
                 Toast.makeText(context, "상품이 장바구니에 담겼습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-        binding.btnCreateComment.setOnClickListener {
-            showDialogRatingStar()
-        }
+
         binding.btnAddCount.setOnClickListener {
             binding.textMenuCount.text =
                 (binding.textMenuCount.text.toString().toInt() + 1).toString()
@@ -213,8 +148,8 @@ class MenuDetailFragment : Fragment() {
             }
         }
 
-        binding.btnCreateComment.setOnClickListener {
-            showDialogRatingStar()
+        binding.imageView4.setOnClickListener {
+            mainActivity.openFragment(10,"productId",productId)
         }
 
         binding.imageView3.setOnClickListener {
@@ -257,118 +192,10 @@ class MenuDetailFragment : Fragment() {
             .addTo(disposable)
     }
 
-    private fun insertComment(userId: String, productId: Int, rating: Float, comment: String) {
-
-        val comment = Comment(0, userId, productId, rating, comment)
-        ProductService().restComment(comment, insertCommentCallback())
-    }
-
-    inner class insertCommentCallback : RetrofitCallback<Boolean> {
-
-        override fun onSuccess(code: Int, responseData: Boolean) {
-            if (responseData) {
-                initData()
-                Toast.makeText(context, "별점이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onError(t: Throwable) {
-            Log.d(TAG, t.message ?: "통신오류")
-        }
-
-        override fun onFailure(code: Int) {
-            Toast.makeText(context, "별점 등록 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         mainActivity.hideBottomNav(false)
-    }
-
-    private fun showDialogRatingStar() {
-        //F10
-        val builder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
-        val v1 = layoutInflater.inflate(R.layout.dialog_menu_comment, null)
-        builder.setView(v1)
-
-        val listener = DialogInterface.OnClickListener { p0, p1 ->
-            val alert = p0 as AlertDialog
-            val rBar: RatingBar = alert.findViewById(R.id.ratingBarMenuDialogComment)
-
-            when (p1) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    val comment: String = binding.editRestComment.text.toString() ?: ""
-                    rating = rBar.rating * 2
-
-                    // insert
-                    insertComment(userId, productId, rating, comment)
-
-                    // init
-                    binding.editRestComment.setText("")
-                    Toast.makeText(requireContext(), "별점이 등록 되었습니다.", Toast.LENGTH_SHORT).show()
-
-                    // notify
-                    //ProductService().getProductWithComments(productId, ProductWithCommentInsertCallback())
-                    val menuDetails = ProductService().getProductWithComments(productId)
-                    menuDetails.observe(
-                        viewLifecycleOwner,
-                        { menuDetails ->
-                            menuDetails.let {
-                                commentAdapter.list = menuDetails
-                                commentAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    )
-
-
-                    binding.txtRating.text =
-                        numberFormat.format(commentList.get(0).productRatingAvg.toFloat())
-                    binding.ratingBar.rating = commentList.get(0).productRatingAvg.toFloat()
-                }
-            }
-        }
-
-        builder.setPositiveButton("확인", listener)
-        builder.setNegativeButton("취소", listener)
-        builder.show()
-
-    }
-
-    private fun showDialogEditComment(position: Int) {
-        val builder = AlertDialog.Builder(requireContext(), R.style.DialogStyle)
-        val v1 = layoutInflater.inflate(R.layout.dialog_menu_editcomment,null)
-        builder.setView(v1)
-
-        val listener = DialogInterface.OnClickListener { dialog, which ->
-            val alert = dialog as AlertDialog
-
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    currentComment = alert.findViewById<EditText>(R.id.dialEditText).text.toString()
-
-                    commentAdapter.list[position].commentContent = currentComment
-                    commentAdapter.notifyDataSetChanged()
-                }
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    commentAdapter.update = false
-                    commentAdapter.notifyDataSetChanged()
-                }
-            }
-        }
-        builder.setPositiveButton("확인", listener)
-        builder.setNegativeButton("취소", listener)
-        builder.show()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(key: String, value: Int) =
-            MenuDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(key, value)
-                }
-            }
     }
 
     inner class deleteCommnetCallback : RetrofitCallback<Boolean> {
@@ -389,5 +216,43 @@ class MenuDetailFragment : Fragment() {
         override fun onFailure(code: Int) {
             Log.d(TAG, "onResponse: Error Code $code")
         }
+    }
+
+    fun selectImg() {
+        if (productId == 1){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbaq1Xj%2FbtrlXCyacq0%2FZkKszWBcTNaseARf4sVDLk%2Fimg.png"
+        } else if (productId == 2){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc10851%2FbtrlZvkJv2h%2FD3rTzIcDzsCou1R8OQgzNK%2Fimg.png"
+        } else if (productId == 3){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F3rrN3%2Fbtrl01KdWbH%2F1IBkj3Gjxk5LugcHCoBuYK%2Fimg.png"
+        } else if (productId == 4){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcBZ5nc%2FbtrlSY9Rg67%2Fx4kgIRah8k0GiE8ui6hq21%2Fimg.pnghttps://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FC4HmU%2FbtrlYNe6D4r%2FTA11A9LD6dTPHOii9loA4K%2Fimg.png"
+        } else if (productId == 5){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FC4HmU%2FbtrlYNe6D4r%2FTA11A9LD6dTPHOii9loA4K%2Fimg.png"
+        } else if (productId == 6){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqQQAU%2FbtrlXDDRFMp%2Fb5aDuUnrN1EOKhD8wklyC0%2Fimg.png"
+        } else if (productId == 7){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1ruRZ%2FbtrlYMHgMbC%2Fo2Sg8rxc3cmJwf4nsweZjk%2Fimg.png"
+        } else if (productId == 8){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcp8OTC%2FbtrlZ99ApTF%2F8ukQb81GYTnwKGQQoQQ131%2Fimg.png"
+        } else if (productId == 9){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblYGAR%2FbtrlXEpgw43%2F8CIZfn64XRAFmkkTLMQnN1%2Fimg.png"
+        } else if (productId == 10){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcEr0Ob%2Fbtrl01XLugn%2F4DHxA2x4tDNrNgJSGzUluK%2Fimg.png"
+        } else if (productId == 11){
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYHYRV%2FbtrlT0F5lBS%2FkR424iKarykcwKLXzmrKTK%2Fimg.png"
+        } else {
+            imgurl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcUxX90%2FbtrlUPkw75S%2FjiiFRmcRByXogjx0ubhWkK%2Fimg.png"
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(key: String, value: Int) =
+            MenuDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(key, value)
+                }
+            }
     }
 }

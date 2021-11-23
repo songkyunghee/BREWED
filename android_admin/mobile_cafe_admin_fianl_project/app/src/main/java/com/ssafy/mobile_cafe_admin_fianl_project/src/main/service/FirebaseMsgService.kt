@@ -30,7 +30,9 @@ class FirebaseMsgService : FirebaseMessagingService() {
             val messageTitle = message!!.getValue("title")
             val messageContent = message!!.getValue("body")
 
-            if (messageTitle.equals("주문이 접수되었습니다. 주문을 확인해주세요.")) {
+            Log.d(TAG, "onMessageReceived: $messageTitle")
+            if (messageTitle.equals("Brewed Coffee")) {
+                Log.d(TAG, "onMessageReceived: brewed coffee")
                 val intent = Intent("add.order")
                 sendBroadcast(intent)
             }

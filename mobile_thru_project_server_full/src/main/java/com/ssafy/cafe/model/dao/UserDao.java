@@ -47,8 +47,9 @@ public interface UserDao {
     
     int insert(Noti noti);
     
-   
+    User selectUser(String id);
     
+    List<String> selectWithCommentUserName(int productId);
    
     
 
