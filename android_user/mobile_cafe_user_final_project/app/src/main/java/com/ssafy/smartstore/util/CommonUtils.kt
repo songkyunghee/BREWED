@@ -15,6 +15,7 @@ object CommonUtils {
         return "${comma.format(num)} 원"
     }
 
+
     fun getFormattedString(date:Date): String {
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH시 mm분")
         dateFormat.timeZone = TimeZone.getTimeZone("Seoul/Asia")

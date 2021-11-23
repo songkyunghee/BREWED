@@ -26,6 +26,7 @@ class CouponFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var couponListAdapter: CouponListAdapter
     private lateinit var userId: String
+    private var couponId = -1
     var couponSize = 0
 
 
@@ -64,10 +65,6 @@ class CouponFragment : Fragment() {
         userId = getUserData()
         initData()
 
-
-        binding.btnCouponApply.setOnClickListener{
-
-        }
     }
 
     private fun initData() {
@@ -100,8 +97,9 @@ class CouponFragment : Fragment() {
 
 
                         couponListAdapter.clickListener = object : CouponListAdapter.OnItemClickListener {
-                            override fun onClick(view: View, position: Int, commentId: Int) {
+                            override fun onClick(view: View, position: Int, cId: Int) {
                                 couponListAdapter.notifyDataSetChanged()
+                                couponId = cId
                                 if (couponListAdapter.selectCheck[position] == 1) {
                                     binding.btnCouponApply.background.setTint(
                                         ContextCompat.getColor(
@@ -112,6 +110,11 @@ class CouponFragment : Fragment() {
                                 }
                             }
 
+                        }
+
+                        // 쿠폰 적용하기를 눌렀을때
+                        binding.btnCouponApply.setOnClickListener {
+                            mainActivity.openFragment(1, "couponId", couponId)
                         }
 
                     }
