@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.cafe.model.dto.Comment;
+import com.ssafy.cafe.model.dto.Noti;
 import com.ssafy.cafe.model.dto.Order;
 import com.ssafy.cafe.model.dto.Stamp;
 import com.ssafy.cafe.model.dto.User;
@@ -107,6 +110,18 @@ public class UserRestController {
     	sService.deleteCoupon(id);
     	return true;
     }
+    
+    
+    @PostMapping
+    @Transactional
+    @ApiOperation(value="Noti 객체를 추가한다.", response = Boolean.class)
+    public Boolean insert(@RequestBody Noti noti) {
+    	uService.insertNoti(noti);
+        return true;
+    }
+    
+    
+    
     
     
 

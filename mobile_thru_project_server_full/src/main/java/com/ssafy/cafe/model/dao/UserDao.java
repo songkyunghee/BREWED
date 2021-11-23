@@ -2,6 +2,8 @@ package com.ssafy.cafe.model.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.cafe.model.dto.Noti;
 import com.ssafy.cafe.model.dto.User;
 
 public interface UserDao {
@@ -37,6 +39,13 @@ public interface UserDao {
     
     // 유저의 스탬프 값을 수정한다.
     int updateUserStamp(User user);
+    
+    // 유저의 알림들을 조회한다.
+    List<Map<String, Object>> selectNotiByUser(String userId);
+    
+    int deleteNoti(int nId);
+    
+    int insert(Noti noti);
     
    
     

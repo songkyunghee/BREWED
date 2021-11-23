@@ -19,6 +19,7 @@ import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.CouponListAdapter
 import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.UserService
+import kotlin.math.log
 
 
 class CouponFragment : Fragment() {
@@ -28,6 +29,7 @@ class CouponFragment : Fragment() {
     private lateinit var userId: String
     private var couponId = -1
     var couponSize = 0
+    var isEnable = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +99,8 @@ class CouponFragment : Fragment() {
 
 
                         couponListAdapter.clickListener = object : CouponListAdapter.OnItemClickListener {
-                            override fun onClick(view: View, position: Int, cId: Int) {
+                            override fun onClick(view: View, position: Int, cId: Int, mode: Boolean) {
+                                Log.d("coupon", "onClick: $mode")
                                 couponListAdapter.notifyDataSetChanged()
                                 couponId = cId
                                 if (couponListAdapter.selectCheck[position] == 1) {
@@ -107,15 +110,32 @@ class CouponFragment : Fragment() {
                                             R.color.brewed_green
                                         )
                                     )
+                                    binding.btnCouponApply.isEnabled = true
+                                }
+                                if(mode) {
+                                        var size = 0
+                                        for(i in 0 until couponListAdapter.selectCheck.size) {
+                                            if(couponListAdapter.selectCheck[i] == 1) {
+                                                size++
+                                            }
+                                        }
+                                    if(size == 0)
+                                        binding.btnCouponApply.background.setTint(ContextCompat.getColor(
+                                            mainActivity,
+                                            R.color.coffee_dark_gray
+                                        ))
+                                    binding.btnCouponApply.isEnabled = false
                                 }
                             }
 
                         }
 
-                        // 쿠폰 적용하기를 눌렀을때
-                        binding.btnCouponApply.setOnClickListener {
-                            mainActivity.openFragment(1, "couponId", couponId)
-                        }
+                            // 쿠폰 적용하기를 눌렀을때
+                            binding.btnCouponApply.setOnClickListener {
+                                if(couponListAdapter.checkMode == 1) {
+                                    mainActivity.openFragment(9, "couponId", couponId)
+                                }
+                            }
 
                     }
                 }
