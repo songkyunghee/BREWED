@@ -50,7 +50,7 @@ class OrderFragment : Fragment(){
 
         initData()
 
-        binding.floatingBtn.setOnClickListener{
+        binding.floatingBtn.setOnClickListener {
             //장바구니 이동
             mainActivity.openFragment(1)
         }
