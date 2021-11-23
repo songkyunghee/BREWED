@@ -1,6 +1,9 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.List;
 import java.util.Map;
+
+import com.ssafy.cafe.model.dto.Noti;
 import com.ssafy.cafe.model.dto.User;
 
 
@@ -37,5 +40,16 @@ public interface UserService {
     
     // user 정보를 갱신한다.
     public int update(User user);
+    
+    
+    public List<Map<String, Object>> selectNotiByUser(String id);
+    
+    public int deleteNoti(int n_id);
+    
+    public int insertNoti(Noti noti);
+    
+    
+    
+    
 
 }

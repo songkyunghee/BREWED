@@ -1,6 +1,7 @@
 package com.ssafy.smartstore.src.main.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class CouponListAdapter(val context: Context, var list: MutableList<StampWithCou
 
 
     interface OnItemClickListener {
-        fun onClick(view: View, position: Int, commentId: Int)
+        fun onClick(view: View, position: Int, commentId: Int, mode:Boolean)
     }
     inner class CouponHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var item: CardView = itemView.findViewById<CardView>(R.id.cardview)
@@ -67,13 +68,15 @@ class CouponListAdapter(val context: Context, var list: MutableList<StampWithCou
                     selectCheck[position] = 1
                     checkMode = 1
                     checkPosition = position
-                    clickListener.onClick(it, position, list[position].cId)
+                    clickListener.onClick(it, position, list[position].cId, false)
+
 
                 } else if(checkMode == 1 && selectCheck[position] == 0) {
                     selectCheck[position] = 1
                     selectCheck[checkPosition] = 0
                     checkPosition = position
-                    clickListener.onClick(it, position, list[position].cId)
+                    clickListener.onClick(it, position, list[position].cId, false)
+
 
                 }
                 else if(checkMode == 1 && selectCheck[position] == 1) {
@@ -81,7 +84,8 @@ class CouponListAdapter(val context: Context, var list: MutableList<StampWithCou
                         checkMode = 0
                     }
                     selectCheck[position] = 0
-                    clickListener.onClick(it, position, list[position].cId)
+                    clickListener.onClick(it, position, list[position].cId, true)
+
                 }
 
             }

@@ -24,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ssafy.smartstore.*
 import com.ssafy.smartstore.R
@@ -127,6 +128,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
     private fun moveFragment(index:Int, key:String, value:Int){
         val transaction = supportFragmentManager.beginTransaction()
+        val fm = supportFragmentManager
         when(index){
             //장바구니
             1 -> transaction.replace(R.id.frame_layout_main, ShoppingListFragment.newInstance(key, value))
@@ -159,6 +161,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             8 -> {
                 transaction.replace(R.id.frame_layout_main, HomeCouponFragment())
                     .addToBackStack(null)
+            }
+            9 -> {
+                fm.popBackStack()
+                transaction.replace(R.id.frame_layout_main, ShoppingListFragment.newInstance(key, value))
             }
         }
         transaction.commit()

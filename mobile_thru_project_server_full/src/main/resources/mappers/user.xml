@@ -49,4 +49,14 @@ VALUES
 		SELECT * from t_noti
 		WHERE id = #{userId}}
 	</select>
+	
+	<insert id="insertNoti" parameterType="Noti">
+	insert into t_noti (n_msg, user_id) values (#{nMsg}, #{userId})
+	</insert>
+	
+	<delete id="deleteNoti" parameterType="int">
+	delete from t_noti
+	where n_id = #{nId}
+	</delete>
+	
 </mapper>

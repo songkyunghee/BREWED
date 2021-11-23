@@ -99,8 +99,14 @@ class ShoppingListFragment : Fragment(){
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainActivity.hideBottomNav(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.hideBottomNav(true)
         userId = getUserData()
         shoppingCount = 0
         shoppingMoney = 0
