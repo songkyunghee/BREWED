@@ -6,6 +6,7 @@ import android.app.Application
 import android.nfc.NfcAdapter
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.KakaoSdk
 import com.ssafy.smartstore.src.main.api.FirebaseTokenApi
 import com.ssafy.smartstore.src.main.intercepter.AddCookiesInterceptor
 import com.ssafy.smartstore.src.main.intercepter.ReceivedCookiesInterceptor
@@ -72,6 +73,9 @@ class ApplicationClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // Kakao SDK 초기화
+        KakaoSdk.init(this, "469a7a1af0b6f9a1317fef19d2f78c46")
 
         //shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
