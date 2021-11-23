@@ -1,8 +1,8 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.fragment
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
+import android.content.*
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -33,6 +33,7 @@ class OrderFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var orderListAdapter : OrderListAdapter
     private var storeId = "1"
+    var size = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,11 +63,34 @@ class OrderFragment : Fragment() {
     }
 
     private fun initData(date: String) {
+
+        val intentFilter = IntentFilter("add.order")
+        val receiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent!!.action
+                initData(date)
+                Log.d(TAG, "receive : $action")
+            }
+        }
+        mainActivity.registerReceiver(receiver, intentFilter)
+
         val notComOrderList = OrderService().getDateNotComOrderList(date, storeId)
+
+
         Log.d(TAG, "initData: ${notComOrderList.value}")
         notComOrderList.observe(
             viewLifecycleOwner,
             { notComOrderList ->
+                size = notComOrderList.size
+                Log.d(TAG, "initData: $size")
+                if (size == 0){
+                    binding.noOrderLayout.visibility = View.VISIBLE
+                    binding.recyclerViewOrder.visibility = View.GONE
+                } else {
+                    binding.noOrderLayout.visibility = View.GONE
+                    binding.recyclerViewOrder.visibility = View.VISIBLE
+                }
+
                 notComOrderList.let {
 
                     orderListAdapter.notComOrderList = notComOrderList
@@ -116,10 +140,8 @@ class OrderFragment : Fragment() {
                                         var o = orderListAdapter.notComOrderList[position]
                                         Log.d(TAG, "onOrderTakeClick: position = $position $o")
                                         var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
-                                        OrderService().update(order)
+                                        OrderService().update(order,UpdateCallback())
                                         PushService().sendMessageTo(o.token, "pickup", "pickup body")
-                                        Log.d(TAG, "onClick: pickup")
-                                        initData(dateString)
                                     }
                                     DialogInterface.BUTTON_NEGATIVE -> {
 
@@ -141,6 +163,22 @@ class OrderFragment : Fragment() {
             }
         )
 
+
+    }
+
+    inner class UpdateCallback(): RetrofitCallback<Boolean> {
+        override fun onError(t: Throwable) {
+            Log.d(TAG, "onError: Error $t")
+        }
+
+        override fun onSuccess(code: Int, responseData: Boolean) {
+            Log.d(TAG, "onSuccess: update Success")
+            initData(dateString)
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "onFailure Code :: $code")
+        }
 
     }
 }

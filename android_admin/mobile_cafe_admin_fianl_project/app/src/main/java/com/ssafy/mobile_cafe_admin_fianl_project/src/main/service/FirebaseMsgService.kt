@@ -30,6 +30,11 @@ class FirebaseMsgService : FirebaseMessagingService() {
             val messageTitle = message!!.getValue("title")
             val messageContent = message!!.getValue("body")
 
+            if (messageTitle.equals("주문이 접수되었습니다. 주문을 확인해주세요.")) {
+                val intent = Intent("add.order")
+                sendBroadcast(intent)
+            }
+
             val mainIntent = Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
