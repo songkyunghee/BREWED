@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Map<String, Object>> selectNotiByUser(String id) {
 		// TODO Auto-generated method stub
-		return userDao.selectNotiByUser(id);
+		return userDao.selectUserNoti(id);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int insertNoti(Noti noti) {
 		// TODO Auto-generated method stub
-		return userDao.insert(noti);
+		return userDao.insertNoti(noti);
 	}
 
 	@Override

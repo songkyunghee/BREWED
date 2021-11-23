@@ -30,7 +30,8 @@
         android:textSize="15dp"
         android:gravity="center"
         android:textColor="@color/black"
-        style="@style/Text.Regular"/>
+        android:fontFamily="@font/nanum_barun_gothic"
+        />
     <TextView
         android:id="@+id/odlistTvTotalPrice"
         android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
         android:text="25,000원"
         android:textSize="15dp"
         android:textColor="@color/black"
-        style="@style/Text.Regular"/>
+        android:fontFamily="@font/nanum_barun_gothic"/>
     <TextView
         android:id="@+id/odlistTvDate"
         android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
         android:text="2021.05.06"
         android:textSize="15dp"
         android:textColor="@color/black"
-        style="@style/Text.Regular"/>
+        android:fontFamily="@font/nanum_barun_gothic"/>
     <TextView
         android:id="@+id/textCompleted"
         android:background="@drawable/button_regular"
@@ -56,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:fontFamily="@font/nanum_barun_gothic"
         android:textColor="@color/white"
         android:text="픽업완료"
         />

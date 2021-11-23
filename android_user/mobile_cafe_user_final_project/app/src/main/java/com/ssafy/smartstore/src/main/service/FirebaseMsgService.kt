@@ -6,18 +6,22 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.config.ApplicationClass.Companion.channel_id
 import com.ssafy.smartstore.config.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.smartstore.config.ApplicationClass.Companion.uploadToken
 import com.ssafy.smartstore.config.ApplicationClass.Companion.userToken
 import com.ssafy.smartstore.src.main.activity.LoginActivity
+import com.ssafy.smartstore.src.main.dto.Noti
 import com.ssafy.smartstore.util.MainViewModel
+import com.ssafy.smartstore.util.RetrofitCallback
 import com.ssafy.smartstore.util.SharedPreferencesUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,13 +74,31 @@ class FirebaseMsgService : FirebaseMessagingService() {
                     .setContentText(messageContent)
                     .setAutoCancel(true)
                     .setContentIntent(mainPendingIntent)
+                var userId = sharedPreferencesUtil.getUser().id
+                Log.d(TAG, "onMessageReceived: $messageTitle  $messageContent $userId")
 
-                Log.d(TAG, "onMessageReceived: $messageTitle  $messageContent")
+                UserService().insertNoti(Noti(messageContent, userId), insertAlarmCallback())
 
                 NotificationManagerCompat.from(this).apply {
                     notify(101, builder.build())
                 }
             }
+        }
+    }
+
+    inner class insertAlarmCallback : RetrofitCallback<Boolean> {
+        override fun onSuccess(code: Int, responseData: Boolean) {
+            if (responseData) {
+                Log.d(TAG, "알람 등록 성공")
+            }
+        }
+
+        override fun onError(t: Throwable) {
+            Log.d(TAG, t.message ?: "통신오류")
+        }
+
+        override fun onFailure(code: Int) {
+            Log.d(TAG, "등록실패")
         }
     }
 

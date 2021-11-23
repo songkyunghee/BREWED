@@ -171,6 +171,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 transaction.replace(R.id.frame_layout_main, CommentFragment.newInstance(key, value))
                     .addToBackStack(null)
             }
+            11-> {
+                transaction.replace(R.id.frame_layout_main, AlarmFragment())
+                    .addToBackStack(null)
+            }
         }
         transaction.commit()
     }

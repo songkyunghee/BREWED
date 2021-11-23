@@ -47,7 +47,7 @@ VALUES
 	
 	<select id="selectUserNoti" resultType="map" parameterType="string">
 		SELECT * from t_noti
-		WHERE id = #{userId}}
+		WHERE user_id = #{userId}
 	</select>
 	
 	<insert id="insertNoti" parameterType="Noti">

@@ -41,11 +41,11 @@ public interface UserDao {
     int updateUserStamp(User user);
     
     // 유저의 알림들을 조회한다.
-    List<Map<String, Object>> selectNotiByUser(String userId);
+    List<Map<String, Object>> selectUserNoti(String userId);
     
     int deleteNoti(int nId);
     
-    int insert(Noti noti);
+    int insertNoti(Noti noti);
     
     User selectUser(String id);
     
