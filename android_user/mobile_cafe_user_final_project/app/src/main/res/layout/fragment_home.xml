@@ -180,14 +180,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:id="@+id/btnAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintStart_toEndOf="@+id/btnCoupon">
+
                 <ImageView
                     android:id="@+id/imgAlarm2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnCoupon"
                     app:srcCompat="@drawable/alram" />
 
                 <TextView
@@ -195,12 +201,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginBottom="16dp"
                     android:text="Alarm"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgAlarm2" />
+                     />
 
-
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/btnCoupon"
                     android:layout_width="wrap_content"

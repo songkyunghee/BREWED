@@ -118,6 +118,10 @@ class HomeFragment : Fragment(){
             mainActivity.openFragment(8)
         }
 
+        binding.btnAlarm.setOnClickListener{
+            mainActivity.openFragment(10)
+        }
+
         var orderList = OrderService().getAllOrderList()
         orderList.forEach {
             Log.d(TAG, "onViewCreated: $it")

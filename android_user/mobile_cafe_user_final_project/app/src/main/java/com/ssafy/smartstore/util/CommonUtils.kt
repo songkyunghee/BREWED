@@ -22,4 +22,11 @@ object CommonUtils {
 
         return dateFormat.format(date)
     }
+
+    fun getFormattedString2(date:Date): String {
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd\nHH시 mm분")
+        dateFormat.timeZone = TimeZone.getTimeZone("Seoul/Asia")
+
+        return dateFormat.format(date)
+    }
 }
