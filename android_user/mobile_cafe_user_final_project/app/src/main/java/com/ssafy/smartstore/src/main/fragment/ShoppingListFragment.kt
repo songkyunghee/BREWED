@@ -149,7 +149,11 @@ class ShoppingListFragment : Fragment(){
         }
         btnOrder.setOnClickListener {
             if (isShop) {
-                yourStore()
+                if (shoppingCount == 0){
+                    Toast.makeText(requireContext(),"주문할 상품이 없습니다.",Toast.LENGTH_SHORT).show()
+                } else {
+                    yourStore()
+                }
             } else {
                 //거리가 200이상이라면
                 if (true) {
