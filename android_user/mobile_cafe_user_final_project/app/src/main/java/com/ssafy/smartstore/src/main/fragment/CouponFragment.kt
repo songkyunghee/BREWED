@@ -19,6 +19,7 @@ import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.CouponListAdapter
 import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.UserService
+import kotlin.math.log
 
 
 class CouponFragment : Fragment() {
@@ -97,7 +98,8 @@ class CouponFragment : Fragment() {
 
 
                         couponListAdapter.clickListener = object : CouponListAdapter.OnItemClickListener {
-                            override fun onClick(view: View, position: Int, cId: Int) {
+                            override fun onClick(view: View, position: Int, cId: Int, mode: Boolean) {
+                                Log.d("coupon", "onClick: $mode")
                                 couponListAdapter.notifyDataSetChanged()
                                 couponId = cId
                                 if (couponListAdapter.selectCheck[position] == 1) {
@@ -107,8 +109,20 @@ class CouponFragment : Fragment() {
                                             R.color.brewed_green
                                         )
                                     )
-                                } else if(couponListAdapter.checkMode == 1 && couponListAdapter.selectCheck[position] == 1) {
-                                    
+                                }
+                                if(mode) {
+                                        var size = 0
+                                        for(i in 0 until couponListAdapter.selectCheck.size) {
+                                            if(couponListAdapter.selectCheck[i] == 1) {
+                                                size++
+                                            }
+                                        }
+                                    if(size == 0)
+                                        binding.btnCouponApply.background.setTint(ContextCompat.getColor(
+                                            mainActivity,
+                                            R.color.coffee_dark_gray
+                                        ))
+                                    binding.btnCouponApply.isEnabled = false
                                 }
                             }
 
