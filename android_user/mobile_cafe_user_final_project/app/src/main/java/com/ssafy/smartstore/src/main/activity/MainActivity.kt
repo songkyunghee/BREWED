@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         val transaction = supportFragmentManager.beginTransaction()
         when(index){
             //장바구니
-            1 -> transaction.replace(R.id.frame_layout_main, ShoppingListFragment())
+            1 -> transaction.replace(R.id.frame_layout_main, ShoppingListFragment.newInstance(key, value))
                 .addToBackStack(null)
             //주문 상세 보기
             2 -> transaction.replace(R.id.frame_layout_main, OrderDetailFragment.newInstance(key, value))
@@ -149,6 +149,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                     .replace(R.id.frame_layout_main, OrderFragment())
                     .commit()
                 hideBottomNav(false)
+            }
+            7 -> {
+               transaction.replace(R.id.frame_layout_main, CouponFragment())
+                   .addToBackStack(null)
             }
         }
         transaction.commit()
@@ -173,7 +177,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
     private fun setNdef(){}
 
-    private fun setBeacon(){
+    private fun setBeacon() {
         beaconManager = BeaconManager.getInstanceForApplication(this)
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
         bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager

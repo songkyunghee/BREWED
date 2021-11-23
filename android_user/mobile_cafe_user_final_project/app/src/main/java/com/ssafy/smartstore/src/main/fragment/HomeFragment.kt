@@ -279,20 +279,15 @@ class HomeFragment : Fragment(){
             imgCoffe.add(binding.stamp9s)
             imgCoffe.add(binding.stamp10s)
 
-
-
-            var stamps = stamp.toInt()
+            stamps = stamp.toInt()
             Log.d(TAG, "stamp initData: $stamps")
 
-            while( stamps > 9 ){
-                stamps -= 10
-            }
+            if(stamps > 10)
+                stamps = stamps % 10
 
-            Log.d(TAG, "onSuccess: $stamps")
-            for (i in 0 until stamps) {
+            for(i in 0 until stamps) {
                 imgCoffe[i].setImageResource(R.drawable.stamp_check)
             }
-
         }
 
         override fun onError(t: Throwable) {

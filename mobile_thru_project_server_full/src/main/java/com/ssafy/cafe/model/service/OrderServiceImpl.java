@@ -12,6 +12,7 @@ import com.ssafy.cafe.model.dao.OrderDao;
 import com.ssafy.cafe.model.dao.OrderDetailDao;
 import com.ssafy.cafe.model.dao.StampDao;
 import com.ssafy.cafe.model.dao.UserDao;
+import com.ssafy.cafe.model.dto.Coupon;
 import com.ssafy.cafe.model.dto.Order;
 import com.ssafy.cafe.model.dto.OrderDetail;
 import com.ssafy.cafe.model.dto.Stamp;
@@ -51,15 +52,18 @@ public class OrderServiceImpl implements OrderService {
         // 스템프 정보 저장
 //        Stamp stamp = Stamp.builder().userId(order.getUserId()).quantity(quantitySum).orderId(order.getId()).build();
         Stamp stamp = new Stamp(order.getUserId(), order.getId(), quantitySum);
-        sDao.insert(stamp);
-
-        // 사용자 정보 업데이트
-//        User user = User.builder().id(order.getUserId()).stamps(stamp.getQuantity()).build();
-        User user = new User();
-        user.setId(order.getUserId());
-        user.setStamps(stamp.getQuantity());
-        uDao.updateStamp(user);
-
+        
+        User user = uDao.select(stamp.getUserId());
+		int n = user.getStamps() + stamp.getQuantity();
+		int couponCnt = n / 10;
+		int stampCnt = n % 10;
+		for(int i = 0; i < couponCnt; i++) {
+			sDao.insertCoupon(new Coupon(0, 2000, stamp.getUserId()));
+		}
+	
+		sDao.insert(stamp);
+		//sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), stampCnt));
+		uDao.updateUserStamp(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
     }
 
     @Override
