@@ -7,22 +7,25 @@ public class Product {
     private String type;
     private Integer price;
     private String img;
+    private Integer salesvolume;
     
-    public Product(Integer id, String koname, String name, String type, Integer price, String img) {
+    public Product(Integer id, String koname, String name, String type, Integer price, String img, Integer salesvolume) {
         this.id = id;
         this.koname = koname;
         this.name = name;
         this.type = type;
         this.price = price;
         this.img = img;
+        this.salesvolume = salesvolume;
     }
     
-    public Product(String koname, String name, String type, Integer price, String img) {
+    public Product(String koname, String name, String type, Integer price, String img, Integer salesvolume) {
     	this.koname = koname;
         this.name = name;
         this.type = type;
         this.price = price;
         this.img = img;
+        this.salesvolume = salesvolume;
     }
     public Product() {}
     
@@ -73,6 +76,14 @@ public class Product {
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public Integer getSalesvolume() {
+		return salesvolume;
+	}
+
+	public void setSalesvolume(Integer salesvolume) {
+		this.salesvolume = salesvolume;
 	}
 
 	@Override

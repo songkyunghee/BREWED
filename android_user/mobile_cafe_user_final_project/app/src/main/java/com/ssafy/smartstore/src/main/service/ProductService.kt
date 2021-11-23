@@ -8,6 +8,7 @@ import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.src.main.response.MenuDetailWithCommentResponse
 import com.ssafy.smartstore.util.RetrofitCallback
 import com.ssafy.smartstore.util.RetrofitUtil
+import com.ssafy.smartstore.util.RetrofitUtil.Companion.productService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +24,7 @@ class ProductService {
                 val res = response.body()
                 if(response.code() == 200){
                     if (res != null) {
-                       responseLiveData.value = res
+                        responseLiveData.value = res
                     }
                 } else {
                     Log.d(TAG, "onResponse: Error Code ${response.code()}")
@@ -35,6 +36,46 @@ class ProductService {
             }
         })
         return responseLiveData
+    }
+
+    fun getHotProductList(): LiveData<List<Product>>  {
+        val responseLiveData: MutableLiveData<List<Product>> = MutableLiveData()
+        val menuInfoRequest: Call<MutableList<Product>> = RetrofitUtil.productService.getHotProductList()
+        menuInfoRequest.enqueue(object : Callback<MutableList<Product>> {
+            override fun onResponse(call: Call<MutableList<Product>>, response: Response<MutableList<Product>>) {
+                val res = response.body()
+                if(response.code() == 200){
+                    if (res != null) {
+                        responseLiveData.value = res
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+                Log.d(TAG, t.message ?: "통신오류")
+            }
+        })
+        return responseLiveData
+    }
+    
+    fun updateSalesProduct(product: Product) {
+        
+        productService.updateSalesProduct(product).enqueue(object: Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if (response.code() == 200) {
+                    Log.d(TAG, "onResponse: 판매량 갱신 완료")
+                } else {
+                    Log.d(TAG, "onResponse: 판매량 갱신 실패 오류코드 : ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message} 통신오류")
+            }
+
+        })
     }
 
     fun getProductWithComments(productId: Int) : LiveData<MutableList<MenuDetailWithCommentResponse>> {

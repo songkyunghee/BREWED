@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.cafe.model.dto.Product;
@@ -30,5 +32,18 @@ public class ProductRestController {
             + "이 기능은 상품의 comment를 조회할 때 사용된다.", response = List.class)
     public List<Map<String, Object>> getProductWithComments(@PathVariable Integer productId){
         return pService.selectWithComment(productId);
+    }
+    
+    @GetMapping("/hot")
+    @ApiOperation(value="판매량 순으로 상품의 목록을 반환한다.", response = List.class)
+    public List<Product> getHotProductList() {
+    	return pService.getHotProductList();
+    }
+    
+    @PutMapping
+    @ApiOperation(value="판매량을 갱신한다.")
+    public Boolean update(@RequestBody Product product) {
+    	pService.updateProductSales(product);
+    	return true;
     }
 }

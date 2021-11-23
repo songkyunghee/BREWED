@@ -279,10 +279,13 @@ class ShoppingListFragment : Fragment(){
             if(prodCntList[i] != 0){
                 Log.d(TAG, "prodList[i].id: ${prodList[i].id}")
                 details.add(OrderDetail(prodList[i].id, prodCntList[i]))
+                ProductService().updateSalesProduct(Product(prodList[i].id,"","","",0,"",prodCntList[i]))
             }
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
         Log.d(TAG, "completedOrder: $order")
+
+        OrderService().makeOrder(order)
 
         if(isCoupon) { // 쿠폰을 적용하고 주문했을때
             val userStampWithCouponList = UserService().getUserStampWithCoupon(User(userId))
@@ -298,7 +301,6 @@ class ShoppingListFragment : Fragment(){
         ApplicationClass.shoppingSharedPreference.deleteList()
 
         UserService().selectAdminToken("1", AdminTokenCallback())
-        //val userStampWithCouponList = UserService().getUserStampWithCoupon(User(userId))
         Log.d(TAG, "completedOrder: here come??")
         mainActivity.openFragment(6)
 

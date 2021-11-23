@@ -28,4 +28,14 @@ public class ProductServiceImpl implements ProductService{
         return pDao.selectWithComment(productId);
     }
 
+	@Override
+	public List<Product> getHotProductList() {
+		return pDao.selectHot();
+	}
+
+	@Override
+	public int updateProductSales(Product product) {
+		return pDao.updateProductSales(product);
+	}
+
 }

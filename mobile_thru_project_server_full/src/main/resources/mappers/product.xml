@@ -9,13 +9,15 @@
 		name,
 		type,
 		price,
-		img)
+		img,
+		salesvolume)
 		VALUES
 		(#{koname},
 		#{name},
 		#{type},
 		#{price},
-		#{img})
+		#{img},
+		#{salesvolume})
 	</insert>
 
 	<update id="update" parameterType="Product">
@@ -38,6 +40,21 @@
 		t_product
 		WHERE id = #{id}
 	</select>
+	
+	<select id="selectHot" resultType="Product">
+		SELECT * FROM
+		t_product
+		ORDER BY salesvolume DESC
+	</select>
+	
+	<update id="updateProductSales" parameterType="Product">
+		UPDATE t_product
+		SET
+		salesvolume = (salesvolume + #{salesvolume})
+		WHERE id = #{id}
+	</update>
+	
+	
 	<select id="selectAll" resultType="Product">
 		SELECT * FROM t_product order by id asc
 	</select>
