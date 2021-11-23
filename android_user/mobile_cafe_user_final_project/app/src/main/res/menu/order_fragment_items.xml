@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_about"
-        android:title="문의하기"
+        android:id="@+id/action_hot"
+        android:title="인기순"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_setting"
-        android:title="설정"
+        android:id="@+id/action_default"
+        android:title="기본"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_cart"
+        android:title="장바구니"
         app:showAsAction="ifRoom|withText" />
 </menu>
