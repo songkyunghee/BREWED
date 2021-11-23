@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
+    android:backgroundTint="@color/white"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
     android:layout_margin="5dp"
@@ -21,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="30sp"
+        android:textColor="@color/coffee_dark_gray"
         android:fontFamily="@font/eland_choice_b"
         android:text="2,000원"/>
 

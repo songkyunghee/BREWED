@@ -78,6 +78,8 @@ class ShoppingListFragment : Fragment(){
         arguments?.let {
             couponId = it.getInt("couponId")
         }
+
+        Log.d(TAG, "onCreate: ShoppingListFragment")
     }
 
     override fun onCreateView(
@@ -99,6 +101,7 @@ class ShoppingListFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: ShoppingListFragment")
         userId = getUserData()
 
         var i = Intent(requireContext(), MainActivity::class.java)
@@ -111,12 +114,15 @@ class ShoppingListFragment : Fragment(){
 
         //장바구니에서 리스트 가져옴
         shoppingList = ApplicationClass.shoppingSharedPreference.getList()
+        Log.d(TAG, "onViewCreated: ShoppingListFragment size ${shoppingList.size}")
 
         val productList = ProductService().getProductList()
         productList.observe(
             viewLifecycleOwner,
             { productList ->
                 setShoppingListScreen(productList)
+
+                Log.d(TAG, "onViewCreated: ${productList.size}")
             }
         )
 
@@ -157,6 +163,7 @@ class ShoppingListFragment : Fragment(){
     }
 
     private fun setShoppingListScreen(productList: List<Product>) {
+        prodList.clear()
         for(i in 1..12){
             var product = productList[i-1]
             if(shoppingList[i] != 0){
@@ -172,6 +179,8 @@ class ShoppingListFragment : Fragment(){
     fun setViewListener(){
         textShoppingCount.text = ("총 "+shoppingCount.toString()+"개")
         textShoppingMoney.text = makeComma(shoppingMoney)
+
+        Log.d(TAG, "setViewListener: ${prodList.size}")
         //어댑터에 in
         shoppingListAdapter = ShoppingListAdapter(requireContext(), prodList, prodCntList)
 

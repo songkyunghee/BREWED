@@ -5,20 +5,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/coffee_light_gray"
+
     >
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    <RelativeLayout
+        android:id="@+id/imgNoCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/nocoupon"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/coffee_dark_gray"
+            android:layout_gravity="bottom"/>
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_weight="1"
+        android:visibility="visible"
+        android:background="@color/coffee_light_gray"
         >
     </androidx.recyclerview.widget.RecyclerView>
+
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/btnCouponApply"
@@ -26,6 +51,7 @@
         android:layout_height="60dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/coffee_dark_gray"
+        android:visibility="visible"
         android:text="적용하기"
         android:layout_gravity="bottom"/>
 </LinearLayout>
