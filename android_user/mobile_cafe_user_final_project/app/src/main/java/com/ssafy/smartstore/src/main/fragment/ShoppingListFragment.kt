@@ -25,6 +25,7 @@ import com.ssafy.smartstore.config.ApplicationClass.Companion.storeId
 import com.ssafy.smartstore.src.main.dto.Order
 import com.ssafy.smartstore.src.main.dto.OrderDetail
 import com.ssafy.smartstore.src.main.dto.Product
+import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.PushService
@@ -47,6 +48,8 @@ class ShoppingListFragment : Fragment(){
     private lateinit var btnTakeout : Button
     private lateinit var btnOrder : Button
     private var isShop : Boolean = true
+    private var isCoupon: Boolean = false
+    private lateinit var userId: String
 
     private var prodList:MutableList<Product> = mutableListOf()
     private var prodCntList:MutableList<Int> = mutableListOf()
@@ -87,6 +90,7 @@ class ShoppingListFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userId = getUserData()
 
         var i = Intent(requireContext(), MainActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -130,6 +134,11 @@ class ShoppingListFragment : Fragment(){
                 }
             }
         }
+    }
+
+    private fun getUserData():String{
+        var user = ApplicationClass.sharedPreferencesUtil.getUser()
+        return user.id
     }
 
     private fun setShoppingListScreen(productList: List<Product>) {
@@ -267,6 +276,7 @@ class ShoppingListFragment : Fragment(){
         ApplicationClass.shoppingSharedPreference.deleteList()
 
         UserService().selectAdminToken("1", AdminTokenCallback())
+        //val userStampWithCouponList = UserService().getUserStampWithCoupon(User(userId))
         Log.d(TAG, "completedOrder: here come??")
         mainActivity.openFragment(6)
 
