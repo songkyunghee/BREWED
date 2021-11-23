@@ -29,6 +29,7 @@ class CouponFragment : Fragment() {
     private lateinit var userId: String
     private var couponId = -1
     var couponSize = 0
+    var isEnable = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +110,7 @@ class CouponFragment : Fragment() {
                                             R.color.brewed_green
                                         )
                                     )
+                                    binding.btnCouponApply.isEnabled = true
                                 }
                                 if(mode) {
                                         var size = 0
@@ -128,10 +130,12 @@ class CouponFragment : Fragment() {
 
                         }
 
-                        // 쿠폰 적용하기를 눌렀을때
-                        binding.btnCouponApply.setOnClickListener {
-                            mainActivity.openFragment(1, "couponId", couponId)
-                        }
+                            // 쿠폰 적용하기를 눌렀을때
+                            binding.btnCouponApply.setOnClickListener {
+                                if(couponListAdapter.checkMode == 1) {
+                                    mainActivity.openFragment(9, "couponId", couponId)
+                                }
+                            }
 
                     }
                 }
