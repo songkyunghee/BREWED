@@ -27,7 +27,6 @@ VALUES
     stamps = #{stamps}
 	WHERE id = #{id}
 	</update>
-	
 
 	
 	<delete id="delete" parameterType="string">
@@ -44,5 +43,10 @@ VALUES
 	
 	<select id="selectUserToken" resultType="string">
 		SELECT token from t_user
+	</select>
+	
+	<select id="selectUserNoti" resultType="map" parameterType="string">
+		SELECT * from t_noti
+		WHERE id = #{userId}}
 	</select>
 </mapper>

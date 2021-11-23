@@ -71,7 +71,7 @@ class FirebaseMsgService : FirebaseMessagingService() {
                     .setAutoCancel(true)
                     .setContentIntent(mainPendingIntent)
 
-                Log.d(TAG, "onMessageReceived: $messageTitle")
+                Log.d(TAG, "onMessageReceived: $messageTitle  $messageContent")
 
                 NotificationManagerCompat.from(this).apply {
                     notify(101, builder.build())
