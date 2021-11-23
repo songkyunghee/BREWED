@@ -60,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
 			sDao.insertCoupon(new Coupon(0, 2000, stamp.getUserId()));
 		}
 	
-		sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), stampCnt));
-		uDao.updateUserStamp(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
+		//sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), stampCnt));
+		//uDao.updateUserStamp(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
     }
 
     @Override
