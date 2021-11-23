@@ -52,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
         // 스템프 정보 저장
 //        Stamp stamp = Stamp.builder().userId(order.getUserId()).quantity(quantitySum).orderId(order.getId()).build();
         Stamp stamp = new Stamp(order.getUserId(), order.getId(), quantitySum);
+        
         User user = uDao.select(stamp.getUserId());
 		int n = user.getStamps() + stamp.getQuantity();
 		int couponCnt = n / 10;
@@ -60,8 +61,9 @@ public class OrderServiceImpl implements OrderService {
 			sDao.insertCoupon(new Coupon(0, 2000, stamp.getUserId()));
 		}
 	
+		sDao.insert(stamp);
 		//sDao.updateStamp(new Stamp(0, stamp.getUserId(), stamp.getOrderId(), stampCnt));
-		//uDao.updateUserStamp(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
+		uDao.updateUserStamp(new User(user.getId(), user.getName(), user.getPass(), stampCnt, user.getToken()));
     }
 
     @Override
