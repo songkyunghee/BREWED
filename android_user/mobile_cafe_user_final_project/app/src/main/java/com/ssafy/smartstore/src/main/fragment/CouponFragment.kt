@@ -107,6 +107,8 @@ class CouponFragment : Fragment() {
                                             R.color.brewed_green
                                         )
                                     )
+                                } else if(couponListAdapter.checkMode == 1 && couponListAdapter.selectCheck[position] == 1) {
+                                    
                                 }
                             }
 

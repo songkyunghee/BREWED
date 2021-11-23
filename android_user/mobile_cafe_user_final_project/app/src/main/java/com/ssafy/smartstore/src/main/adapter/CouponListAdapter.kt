@@ -1,6 +1,7 @@
 package com.ssafy.smartstore.src.main.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,11 +70,13 @@ class CouponListAdapter(val context: Context, var list: MutableList<StampWithCou
                     checkPosition = position
                     clickListener.onClick(it, position, list[position].cId)
 
+
                 } else if(checkMode == 1 && selectCheck[position] == 0) {
                     selectCheck[position] = 1
                     selectCheck[checkPosition] = 0
                     checkPosition = position
                     clickListener.onClick(it, position, list[position].cId)
+
 
                 }
                 else if(checkMode == 1 && selectCheck[position] == 1) {
@@ -82,6 +85,7 @@ class CouponListAdapter(val context: Context, var list: MutableList<StampWithCou
                     }
                     selectCheck[position] = 0
                     clickListener.onClick(it, position, list[position].cId)
+
                 }
 
             }
