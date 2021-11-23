@@ -279,10 +279,13 @@ class HomeFragment : Fragment(){
             imgCoffe.add(binding.stamp9s)
             imgCoffe.add(binding.stamp10s)
 
-
+            stamps = stamp.toInt()
             Log.d(TAG, "stamp initData: $stamps")
 
-            for(i in 0 until stamp.toInt()) {
+            if(stamps > 10)
+                stamps = stamps % 10
+
+            for(i in 0 until stamps) {
                 imgCoffe[i].setImageResource(R.drawable.stamp_check)
             }
         }
