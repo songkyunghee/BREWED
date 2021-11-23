@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssafy.smartstore">
+
+    <queries>
+        <package android:name="com.kakao.talk"/>
+    </queries>
+
     <!-- Beacon 사용을 위한 위치 데이터 허용 -->
     <application
         android:name=".config.ApplicationClass"
@@ -26,6 +31,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="kakaolink"
+                    android:scheme="kakao469a7a1af0b6f9a1317fef19d2f78c46"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>

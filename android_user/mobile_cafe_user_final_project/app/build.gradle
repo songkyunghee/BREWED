@@ -93,4 +93,11 @@ dependencies {
 
     // CardView
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation "com.kakao.sdk:v2-talk:2.4.2" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link:2.4.2" // 메시지(카카오링크)
+
+    // Kakao API
+    implementation "com.kakao.sdk:v2-talk-rx:2.4.2" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link-rx:2.4.2" // 메시지(카카오링크)
 }
