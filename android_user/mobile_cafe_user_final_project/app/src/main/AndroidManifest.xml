@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssafy.smartstore">
 
-    <queries>
-        <package android:name="com.kakao.talk"/>
-    </queries>
-
-    <!-- Beacon 사용을 위한 위치 데이터 허용 -->
     <application
         android:name=".config.ApplicationClass"
         android:allowBackup="true"
@@ -16,32 +11,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartstoreUI"
         android:usesCleartextTraffic="true">
-
-        <service android:name=".src.main.service.FirebaseMsgService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <activity android:name=".src.main.activity.QRActivity"></activity>
-        <activity
-            android:name=".src.main.activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="">
+        <activity android:name=".src.main.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity android:name=".src.main.activity.QRActivity" />
+
+        <activity
+            android:name=".src.main.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
                 <data
                     android:host="kakaolink"
-                    android:scheme="kakao469a7a1af0b6f9a1317fef19d2f78c46"/>
-                <category android:name="android.intent.category.LAUNCHER" />
+                    android:scheme="kakao469a7a1af0b6f9a1317fef19d2f78c46" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -55,16 +51,25 @@
             android:name=".src.main.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <service android:name=".src.main.service.FirebaseMsgService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
+
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
     <uses-feature
         android:name="android.hardware.nfc"
-        android:required="true" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- NFC 사용을 위한 허용 -->
+        android:required="true" /> <!-- NFC 사용을 위한 허용 -->
     <uses-permission android:name="android.permission.NFC" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 서버와의 통신을 위한 Internet 허용 -->
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

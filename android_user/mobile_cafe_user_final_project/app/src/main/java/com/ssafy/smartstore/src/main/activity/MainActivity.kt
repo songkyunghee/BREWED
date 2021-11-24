@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             6 -> {
                 bottomNavigation.selectedItemId = R.id.navigation_page_2
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout_main, OrderFragment())
+                    .replace(R.id.frame_layout_main, OrderFragment.newInstance(key, value))
                     .commit()
                 hideBottomNav(false)
             }

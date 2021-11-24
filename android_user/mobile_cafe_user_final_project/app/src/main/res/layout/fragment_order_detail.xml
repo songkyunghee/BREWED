@@ -14,7 +14,8 @@
         android:textSize="30dp"
         android:layout_marginBottom="30dp"
         android:textColor="@color/brewed_green"
-        style="@style/Text.Title"/>
+        android:fontFamily="@font/nanum_barun_gothic_bold"
+        android:includeFontPadding="false"/>
 
     <TextView
         android:id="@+id/tvOrderStatus"

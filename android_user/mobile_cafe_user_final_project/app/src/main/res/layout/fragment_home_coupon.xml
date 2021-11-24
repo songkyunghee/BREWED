@@ -46,8 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="총 보유쿠폰 0개"
+                android:textSize="17sp"
                 android:layout_margin="8dp"
-                android:fontFamily="@font/eland_choice_b"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/nanum_barun_gothic_bold"
                 />
 
             <androidx.recyclerview.widget.RecyclerView

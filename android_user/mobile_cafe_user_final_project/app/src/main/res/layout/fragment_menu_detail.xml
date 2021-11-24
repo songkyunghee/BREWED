@@ -147,6 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:text="친구에게 공유하기"
+            android:fontFamily="@font/nanum_barun_gothic_light"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
@@ -167,6 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="한줄평"
+            android:fontFamily="@font/nanum_barun_gothic_light"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toTopOf="@+id/imageView4" />
