@@ -54,6 +54,8 @@
             android:text="날짜 선택"
             android:textColor="@color/black"
             android:textSize="20dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/nanum_barun_gothic"
             android:layout_marginRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
