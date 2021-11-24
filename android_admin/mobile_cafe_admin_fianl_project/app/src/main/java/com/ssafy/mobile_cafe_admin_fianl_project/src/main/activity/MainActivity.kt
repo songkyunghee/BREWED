@@ -1,5 +1,6 @@
 package com.ssafy.mobile_cafe_admin_fianl_project.src.main.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -62,11 +63,17 @@ class MainActivity : AppCompatActivity() {
         moveFragment(index, key, value)
     }
 
+    fun openFragment(index: Int) {
+        moveFragment(index, "", 0)
+    }
+
     private fun moveFragment(index: Int, key: String, value: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         when(index) {
             1 -> transaction.replace(R.id.frame_layout_main, OrderDetailFragment.newInstance(key, value))
                 .addToBackStack(null)
+            2->
+                logout()
         }
         transaction.commit()
     }
@@ -74,6 +81,18 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNav(state : Boolean){
         if(state) bottomNavigation.visibility =  View.GONE
         else bottomNavigation.visibility = View.VISIBLE
+    }
+
+    fun logout(){
+        //preference 지우기
+        sharedPreferencesUtil.deleteAdmin()
+
+        //화면이동
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(intent)
     }
 
 }
