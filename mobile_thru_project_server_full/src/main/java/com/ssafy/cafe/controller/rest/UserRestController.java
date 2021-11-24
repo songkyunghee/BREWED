@@ -121,6 +121,7 @@ public class UserRestController {
     @ApiOperation(value="{productId}에 해당하는 user의 정보를 반환한다.", response = Map.class)
     public List<String> selectWithCommentUserName(@PathVariable int productId) {
     	return uService.selectWithCommentUserName(productId);
+    }
     	
     @PostMapping("/noti")
     @Transactional

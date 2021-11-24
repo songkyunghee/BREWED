@@ -62,7 +62,7 @@ class MypageFragment : Fragment(){
         }
 
         binding.btnAlarmMyPage.setOnClickListener{
-            mainActivity.openFragment(10)
+            mainActivity.openFragment(11)
         }
 
         binding.btnCouponMyPage.setOnClickListener{
