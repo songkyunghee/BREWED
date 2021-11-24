@@ -16,7 +16,8 @@
     <color name="coffee_light_white">#FFFFFF</color>
     <color name="coffee_point_red">#9d0200</color>
     <color name="coffee_menu_back">#F0E3DB</color>
-    <color name="coffee_deep_blue">#000016</color>    <color name="coffee_blue">#3333cc</color>
+    <color name="coffee_deep_blue">#000016</color>
+    <color name="coffee_blue">#3333cc</color>
     <color name="coffee_yellow">#ddc83d</color>
     <color name="coffee_orange">#FBAD38</color>
     <color name="coffee_dark_gray">#92969C</color>

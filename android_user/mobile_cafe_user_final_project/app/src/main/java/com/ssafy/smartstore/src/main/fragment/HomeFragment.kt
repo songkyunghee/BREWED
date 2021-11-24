@@ -123,7 +123,7 @@ class HomeFragment : Fragment(){
         }
 
         binding.btnAlarm.setOnClickListener{
-            mainActivity.openFragment(10)
+            mainActivity.openFragment(11)
         }
 
         var orderList = OrderService().getAllOrderList()

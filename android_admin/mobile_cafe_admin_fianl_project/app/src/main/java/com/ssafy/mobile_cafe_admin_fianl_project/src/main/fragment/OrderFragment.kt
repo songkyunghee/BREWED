@@ -78,90 +78,105 @@ class OrderFragment : Fragment() {
 
 
         Log.d(TAG, "initData: ${notComOrderList.value}")
-        notComOrderList.observe(
-            viewLifecycleOwner,
-            { notComOrderList ->
-                size = notComOrderList.size
-                Log.d(TAG, "initData: $size")
-                if (size == 0){
-                    binding.noOrderLayout.visibility = View.VISIBLE
-                    binding.recyclerViewOrder.visibility = View.GONE
-                } else {
-                    binding.noOrderLayout.visibility = View.GONE
-                    binding.recyclerViewOrder.visibility = View.VISIBLE
-                }
+        if (viewLifecycleOwner != null) {
+            notComOrderList.observe(
+                viewLifecycleOwner,
+                { notComOrderList ->
+                    size = notComOrderList.size
+                    Log.d(TAG, "initData: $size")
+                    if (size == 0) {
+                        binding.noOrderLayout.visibility = View.VISIBLE
+                        binding.recyclerViewOrder.visibility = View.GONE
+                    } else {
+                        binding.noOrderLayout.visibility = View.GONE
+                        binding.recyclerViewOrder.visibility = View.VISIBLE
+                    }
 
-                notComOrderList.let {
+                    notComOrderList.let {
 
-                    orderListAdapter.notComOrderList = notComOrderList
-                    orderListAdapter.notifyDataSetChanged()
-                }
+                        orderListAdapter.notComOrderList = notComOrderList
+                        orderListAdapter.notifyDataSetChanged()
+                    }
 
-                binding.recyclerViewOrder.apply {
-                    val linearLayoutManager = LinearLayoutManager(context)
-                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                    layoutManager = linearLayoutManager
-                    adapter = orderListAdapter
+                    binding.recyclerViewOrder.apply {
+                        val linearLayoutManager = LinearLayoutManager(context)
+                        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                        layoutManager = linearLayoutManager
+                        adapter = orderListAdapter
 
-                    adapter!!.stateRestorationPolicy =
-                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-                }
+                        adapter!!.stateRestorationPolicy =
+                            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                    }
 
-                orderListAdapter.clickListener = object : OrderListAdapter.OnItemClickListener {
-                    override fun onOrderTakeClick(view: View, position: Int, orderID: Int) {
-                        var o = orderListAdapter.notComOrderList[position]
+                    orderListAdapter.clickListener = object : OrderListAdapter.OnItemClickListener {
+                        override fun onOrderTakeClick(view: View, position: Int, orderID: Int) {
+                            var o = orderListAdapter.notComOrderList[position]
 
                             Log.d(TAG, "onOrderTakeClick: position = $position  $o")
                             var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "M")
                             OrderService().update(order)
 
-                            PushService().sendMessageTo(o.token, "Brewed Coffee", "Brewed Coffee에서 주문을 접수했습니다.")
+                            PushService().sendMessageTo(
+                                o.token,
+                                "Brewed Coffee",
+                                "Brewed Coffee에서 주문을 접수했습니다."
+                            )
 
                             orderListAdapter.process = "M"
-                    }
+                        }
 
-                    override fun onOrderMakeClick(view: View, position: Int, orderID: Int) {
-                        var o = orderListAdapter.notComOrderList[position]
+                        override fun onOrderMakeClick(view: View, position: Int, orderID: Int) {
+                            var o = orderListAdapter.notComOrderList[position]
                             Log.d(TAG, "onOrderTakeClick: position = $position $o")
                             var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "P")
                             OrderService().update(order)
-                            PushService().sendMessageTo(o.token, "Brewed Coffee", "메뉴가 나왔습니다. 픽업해주세요.")
-                    }
+                            PushService().sendMessageTo(
+                                o.token,
+                                "Brewed Coffee",
+                                "메뉴가 나왔습니다. 픽업해주세요."
+                            )
+                        }
 
-                    override fun onOrderComClick(view: View, position: Int, orderID: Int) {
-                        var builder = AlertDialog.Builder(mainActivity)
-                        builder.setTitle("")
-                        builder.setMessage("픽업 완료 처리를 하시겠습니까?")
+                        override fun onOrderComClick(view: View, position: Int, orderID: Int) {
+                            var builder = AlertDialog.Builder(mainActivity)
+                            builder.setTitle("")
+                            builder.setMessage("픽업 완료 처리를 하시겠습니까?")
 
-                        var listener = object : DialogInterface.OnClickListener{
-                            override fun onClick(dialog: DialogInterface?, w: Int) {
-                                when(w) {
-                                    DialogInterface.BUTTON_POSITIVE -> {
-                                        var o = orderListAdapter.notComOrderList[position]
-                                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
-                                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
-                                        OrderService().update(order,UpdateCallback())
-                                        PushService().sendMessageTo(o.token, "pickup", "pickup body")
-                                    }
-                                    DialogInterface.BUTTON_NEGATIVE -> {
+                            var listener = object : DialogInterface.OnClickListener {
+                                override fun onClick(dialog: DialogInterface?, w: Int) {
+                                    when (w) {
+                                        DialogInterface.BUTTON_POSITIVE -> {
+                                            var o = orderListAdapter.notComOrderList[position]
+                                            Log.d(TAG, "onOrderTakeClick: position = $position $o")
+                                            var order =
+                                                Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
+                                            OrderService().update(order, UpdateCallback())
+                                            PushService().sendMessageTo(
+                                                o.token,
+                                                "pickup",
+                                                "pickup body"
+                                            )
+                                        }
+                                        DialogInterface.BUTTON_NEGATIVE -> {
 
+                                        }
                                     }
                                 }
-                            }
 
-                        }
-                        builder.setPositiveButton("확인", listener)
-                        builder.setNegativeButton("취소", listener)
-                        builder.show()
+                            }
+                            builder.setPositiveButton("확인", listener)
+                            builder.setNegativeButton("취소", listener)
+                            builder.show()
 
 //                        var o = orderListAdapter.notComOrderList[position]
 //                        Log.d(TAG, "onOrderTakeClick: position = $position $o")
 //                        var order = Order(o.o_id, o.user_id, o.s_id, o.order_table, "Y")
 //                        OrderService().update(order)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
 
 
     }
