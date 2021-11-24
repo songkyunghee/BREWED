@@ -31,7 +31,8 @@
         android:textColor="@color/black"
         android:textSize="18dp"
         android:layout_weight="1"
-        android:fontFamily="@font/eland_choice_b"/>
+        android:includeFontPadding="false"
+        android:fontFamily="@font/nanum_barun_gothic_bold"/>
 
         <TextView
             android:id="@+id/textDateContent"
@@ -41,8 +42,9 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
             android:textSize="15dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/nanum_barun_gothic_light"
             android:layout_weight="1"
-            android:fontFamily="@font/eland_choice_l"
             style="@style/Text.Regular"/>
 
     </LinearLayout>

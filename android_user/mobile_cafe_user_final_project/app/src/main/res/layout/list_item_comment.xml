@@ -77,7 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/nanum_barun_gothic"
                 android:text="김싸피"
+                android:includeFontPadding="false"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

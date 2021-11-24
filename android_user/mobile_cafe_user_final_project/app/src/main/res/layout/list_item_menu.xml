@@ -61,7 +61,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:text="Americano"
-        android:textSize="12sp"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/nanum_barun_gothic_light"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/menuImage"
         app:layout_constraintTop_toBottomOf="@+id/odlistTvName" />
 
@@ -72,6 +74,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="4,000원"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/nanum_barun_gothic_light"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/menuImage"
         app:layout_constraintTop_toBottomOf="@+id/textmenuEnname" />

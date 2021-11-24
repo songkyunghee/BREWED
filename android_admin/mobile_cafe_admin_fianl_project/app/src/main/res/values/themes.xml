@@ -43,6 +43,6 @@
     </style>
 
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
-        <item name="android:headerBackground">@color/white</item>
+        <item name="android:headerBackground">@color/brewed_green</item>
     </style>
 </resources>
