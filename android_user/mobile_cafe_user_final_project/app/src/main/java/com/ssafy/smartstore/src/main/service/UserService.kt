@@ -141,13 +141,14 @@ class UserService {
     fun getUserStampWithCoupon(user:User) : LiveData<MutableList<StampWithCouponResponse>> {
         val responseLiveData : MutableLiveData<MutableList<StampWithCouponResponse>> = MutableLiveData()
         val menuInfoRequest: Call<MutableList<StampWithCouponResponse>> = RetrofitUtil.userService.getInfo(user)
-
+        Log.d(TAG, "사용자 쿠폰 스탬프 받아오는 중 ${user.id}")
         menuInfoRequest.enqueue(object : Callback<MutableList<StampWithCouponResponse>> {
             override fun onResponse(call: Call<MutableList<StampWithCouponResponse>>, response: Response<MutableList<StampWithCouponResponse>>) {
                 val res = response.body()
                 if(response.code() == 200){
                     if (res != null) {
                         responseLiveData.value = res
+                        Log.d(TAG, "사용자 쿠폰 스탬프 받아오는 중 데이터: ${res}")
                     }
                 } else {
                     Log.d(TAG, "onResponse: Error Code ${response.code()}")

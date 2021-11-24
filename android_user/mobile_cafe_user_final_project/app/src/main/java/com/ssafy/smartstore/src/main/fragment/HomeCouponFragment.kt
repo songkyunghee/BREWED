@@ -75,6 +75,7 @@ class HomeCouponFragment : Fragment() {
             viewLifecycleOwner,
             {   userStampWithCouponList ->
                 userStampWithCouponList.let {
+                    Log.d("couponFragment", "userStampWithCouponList : ${userStampWithCouponList.size}")
                     couponSize = userStampWithCouponList.size
                     if (couponSize == 0) {
                         binding.imgNoCoupon.visibility = View.VISIBLE
