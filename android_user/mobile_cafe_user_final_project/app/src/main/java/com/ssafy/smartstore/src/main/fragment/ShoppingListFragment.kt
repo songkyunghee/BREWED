@@ -26,13 +26,13 @@ import com.ssafy.smartstore.src.main.dto.Order
 import com.ssafy.smartstore.src.main.dto.OrderDetail
 import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.src.main.dto.User
+import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
 import com.ssafy.smartstore.src.main.service.OrderService
 import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.PushService
 import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.CommonUtils.makeComma
 import com.ssafy.smartstore.util.RetrofitCallback
-import retrofit2.Retrofit
 import kotlin.collections.ArrayList
 
 //장바구니 Fragment
@@ -52,7 +52,9 @@ class ShoppingListFragment : Fragment(){
     private var isCoupon: Boolean = false
     private lateinit var userId: String
     private var couponId = -1
+    private var couponNum = 0
 
+    private var userCouponList: MutableList<StampWithCouponResponse> = mutableListOf()
     private var prodList:MutableList<Product> = mutableListOf()
     private var prodCntList:MutableList<Int> = mutableListOf()
     private lateinit var shoppingList:MutableList<Int>
@@ -135,6 +137,17 @@ class ShoppingListFragment : Fragment(){
             { productList ->
                 setShoppingListScreen(productList)
 
+            }
+        )
+
+        val list = UserService().getUserStampWithCoupon(User(userId))
+
+        list.observe(
+            viewLifecycleOwner,
+            { list ->
+                userCouponList = list
+                couponNum = list.size
+                Log.d(TAG, "사용자의 쿠폰 개수 completedOrder: ${couponNum}")
             }
         )
 
@@ -320,17 +333,8 @@ class ShoppingListFragment : Fragment(){
             }
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
-        Log.d(TAG, "completedOrder: $order")
 
         OrderService().makeOrder(order)
-
-        if(isCoupon) { // 쿠폰을 적용하고 주문했을때
-            val userStampWithCouponList = UserService().getUserStampWithCoupon(User(userId))
-
-        } else {
-            OrderService().makeOrder(order)
-        }
-
 
         prodList.clear()
         prodCntList.clear()
@@ -342,7 +346,7 @@ class ShoppingListFragment : Fragment(){
             UserService().deleteCoupon(couponId, deleteCouponCallback())
         }
         Log.d(TAG, "completedOrder: here come??")
-        mainActivity.openFragment(6)
+        mainActivity.openFragment(6, "preCouponNum", couponNum)
 
 
     }

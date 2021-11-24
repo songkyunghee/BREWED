@@ -1,23 +1,28 @@
 package com.ssafy.smartstore.src.main.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
-import androidx.appcompat.widget.Toolbar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.config.ApplicationClass
 import com.ssafy.smartstore.src.main.activity.MainActivity
 import com.ssafy.smartstore.src.main.adapter.MenuAdapter
 import com.ssafy.smartstore.databinding.FragmentOrderBinding
 import com.ssafy.smartstore.src.main.dto.Product
+import com.ssafy.smartstore.src.main.dto.User
 import com.ssafy.smartstore.src.main.service.ProductService
-import com.ssafy.smartstore.util.RetrofitCallback
+import com.ssafy.smartstore.src.main.service.UserService
+import kotlinx.coroutines.delay
+import org.w3c.dom.Text
 
 // 하단 주문 탭
 private const val TAG = "OrderFragment_싸피"
@@ -26,14 +31,32 @@ class OrderFragment : Fragment(){
     private lateinit var mainActivity: MainActivity
     private lateinit var prodList:List<Product>
     private lateinit var binding: FragmentOrderBinding
+    private lateinit var userId: String
+    private var preCouponNum = -1
+    private var nowCouponNum = -1
 
     // mode == 0 :: 기본 정렬
     // mode == 1 :: 인기순 정렬
     var mode = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        userId = getUserData()
+        arguments?.let {
+            preCouponNum = it.getInt("preCouponNum")
+        }
+
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+    }
+
+    private fun getUserData():String{
+        var user = ApplicationClass.sharedPreferencesUtil.getUser()
+        return user.id
     }
 
     override fun onCreateView(
@@ -50,6 +73,11 @@ class OrderFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         mainActivity.hideBottomNav(false)
+
+
+
+
+
 
         initToolbar()
         initData()
@@ -100,7 +128,6 @@ class OrderFragment : Fragment(){
 
         if (mode == 0) {
             val productList = ProductService().getProductList()
-            Log.d(TAG, "initData: ${productList}")
             productList.observe(
                 viewLifecycleOwner,
                 { productList ->
@@ -147,6 +174,52 @@ class OrderFragment : Fragment(){
                 }
             )
         }
+
+        Log.d(TAG, "onCreate: OrderFragment 전 쿠폰 개수 $preCouponNum")
+
+        val list = UserService().getUserStampWithCoupon(User(userId))
+
+        list.observe(
+            viewLifecycleOwner,
+            { list ->
+
+                nowCouponNum = list.size
+                Log.d(TAG, "onCreate: OrderFragment 현재 쿠폰 개수 ${nowCouponNum}")
+
+                if(preCouponNum != -1) {
+                    if(preCouponNum < nowCouponNum) {
+
+                        val mDialogView =
+                            LayoutInflater.from(requireContext()).inflate(R.layout.coupon_dialog, null)
+                        mDialogView.findViewById<TextView>(R.id.textCouponDialogMsg).text = "쿠폰이 ${nowCouponNum - preCouponNum}개 생겼습니다. 짝짝짝!"
+
+                        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                            .setView(mDialogView)
+                            .setTitle("")
+
+                        if(!mainActivity.isFinishing){
+                            val mAlertDialog = mBuilder.show()
+                            mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                            mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener {
+                                mAlertDialog.dismiss()
+                            }
+                        }
+                        preCouponNum = -1
+                    }
+                }
+
+            }
+        )
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(key:String, value:Int) =
+            OrderFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(key, value)
+                }
+            }
     }
 
 }

@@ -134,5 +134,9 @@ class OrderComFragment : Fragment() {
             DatePickerDialog(requireContext(), R.style.MyDatePickerDialogTheme, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
+        binding.logout.setOnClickListener {
+            mainActivity.openFragment(2)
+        }
+
     }
 }
