@@ -28,6 +28,9 @@ class OrderService{
                     if (res != null) {
                         result =  res
                         Log.d(TAG, "onResponse: success $res")
+                        // 조회하는 것을 호출...
+
+
                     }
                 }
             }

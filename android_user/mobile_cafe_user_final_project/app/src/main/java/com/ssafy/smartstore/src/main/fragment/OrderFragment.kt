@@ -10,6 +10,8 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.R
@@ -19,9 +21,10 @@ import com.ssafy.smartstore.src.main.adapter.MenuAdapter
 import com.ssafy.smartstore.databinding.FragmentOrderBinding
 import com.ssafy.smartstore.src.main.dto.Product
 import com.ssafy.smartstore.src.main.dto.User
+import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
 import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.UserService
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import org.w3c.dom.Text
 
 // 하단 주문 탭
@@ -33,7 +36,9 @@ class OrderFragment : Fragment(){
     private lateinit var binding: FragmentOrderBinding
     private lateinit var userId: String
     private var preCouponNum = -1
-    private var nowCouponNum = -1
+
+
+    private lateinit var list: LiveData<MutableList<StampWithCouponResponse>>
 
     // mode == 0 :: 기본 정렬
     // mode == 1 :: 인기순 정렬
@@ -66,6 +71,12 @@ class OrderFragment : Fragment(){
     ): View? {
         binding = FragmentOrderBinding.inflate(inflater, container, false)
         mode = 0 // create... 기본값으로 초기화
+
+//        CoroutineScope(Dispatchers.IO).launch {
+//            Log.d(TAG, "onCreateView: ")
+//            list = UserService().getUserStampWithCoupon(User(userId))
+//        }
+
         return binding.root
     }
 
@@ -175,16 +186,14 @@ class OrderFragment : Fragment(){
             )
         }
 
-        Log.d(TAG, "onCreate: OrderFragment 전 쿠폰 개수 $preCouponNum")
+        Log.d(TAG, "TEST1::onCreate: OrderFragment 전 쿠폰 개수 $preCouponNum")
 
-        val list = UserService().getUserStampWithCoupon(User(userId))
-
-        list.observe(
+        (UserService().getUserStampWithCoupon(User(userId))).observe(
             viewLifecycleOwner,
-            { list ->
+            {
 
-                nowCouponNum = list.size
-                Log.d(TAG, "onCreate: OrderFragment 현재 쿠폰 개수 ${nowCouponNum}")
+                var nowCouponNum = it.size
+                Log.d(TAG, "TEST1::onCreate: OrderFragment 현재 쿠폰 개수 ${nowCouponNum}")
 
                 if(preCouponNum != -1) {
                     if(preCouponNum < nowCouponNum) {
