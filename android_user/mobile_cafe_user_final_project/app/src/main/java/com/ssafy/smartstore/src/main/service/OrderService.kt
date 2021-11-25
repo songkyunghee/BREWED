@@ -1,13 +1,17 @@
 package com.ssafy.smartstore.src.main.service
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.ssafy.smartstore.src.main.dto.*
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.response.OrderDetailResponse
 import com.ssafy.smartstore.src.main.response.OrderListResponse
 import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
+import com.ssafy.smartstore.util.MainViewModel
 import com.ssafy.smartstore.util.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,8 +20,10 @@ import retrofit2.Response
 private const val TAG = "OrderService_싸피"
 class OrderService{
 
+
     // makeOrder
-    fun makeOrder(body: Order): Int{
+    fun makeOrder(body: Order, owner: ViewModelStoreOwner): Int{
+        val mainViewModel = ViewModelProvider(owner).get(MainViewModel::class.java)
         val menuInfoRequest: Call<MutableList<StampWithCouponResponse>> = RetrofitUtil.userService.getInfo(User(body.userId))
         var nowCouponNum = -1
         Log.d(TAG, "makeOrder: $body")
@@ -39,6 +45,7 @@ class OrderService{
                                 if(response.code() == 200){
                                     if (res != null) {
                                         nowCouponNum = res.size
+                                        mainViewModel.setNowCouponNum(res.size)
                                         Log.d(TAG, "TEST2::사용자 쿠폰 스탬프 받아오는 중 데이터: ${res.size}")
                                         Log.d(TAG, "TEST2::onResponse: ------------")
                                     }
