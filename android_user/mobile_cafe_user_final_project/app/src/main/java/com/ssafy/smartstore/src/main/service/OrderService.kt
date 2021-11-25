@@ -7,6 +7,7 @@ import com.ssafy.smartstore.src.main.dto.*
 import com.ssafy.smartstore.src.main.response.LatestOrderResponse
 import com.ssafy.smartstore.src.main.response.OrderDetailResponse
 import com.ssafy.smartstore.src.main.response.OrderListResponse
+import com.ssafy.smartstore.src.main.response.StampWithCouponResponse
 import com.ssafy.smartstore.util.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,19 +18,39 @@ class OrderService{
 
     // makeOrder
     fun makeOrder(body: Order): Int{
+        val menuInfoRequest: Call<MutableList<StampWithCouponResponse>> = RetrofitUtil.userService.getInfo(User(body.userId))
+        var nowCouponNum = -1
         Log.d(TAG, "makeOrder: $body")
         var result:Int = 0
         RetrofitUtil.orderService.makeOrder(body).enqueue(object:Callback<Int>{
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 val res = response.body()
-                Log.d(TAG, "onResponse: $res")
-                Log.d(TAG, "onResponse: ${response.code()}")
+                Log.d(TAG, "TEST2:: onResponse: $res")
+                Log.d(TAG, "TEST2:: onResponse: ${response.code()}")
                 if(response.isSuccessful){
                     if (res != null) {
                         result =  res
-                        Log.d(TAG, "onResponse: success $res")
-                        // 조회하는 것을 호출...
+                        Log.d(TAG, "TEST2:: onResponse: success $res")
 
+                        // 조회하는 것을 호출...
+                        menuInfoRequest.enqueue(object : Callback<MutableList<StampWithCouponResponse>> {
+                            override fun onResponse(call: Call<MutableList<StampWithCouponResponse>>, response: Response<MutableList<StampWithCouponResponse>>) {
+                                val res = response.body()
+                                if(response.code() == 200){
+                                    if (res != null) {
+                                        nowCouponNum = res.size
+                                        Log.d(TAG, "TEST2::사용자 쿠폰 스탬프 받아오는 중 데이터: ${res.size}")
+                                        Log.d(TAG, "TEST2::onResponse: ------------")
+                                    }
+                                } else {
+                                    Log.d(TAG, "TEST2::onResponse: Error Code ${response.code()}")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<MutableList<StampWithCouponResponse>>, t: Throwable) {
+                                Log.d(TAG, t.message ?: "TEST2::사용자 정보 받아오는 중 통신오류")
+                            }
+                        })
 
                     }
                 }
@@ -39,7 +60,9 @@ class OrderService{
                 Log.d(TAG, t.message ?: "통신오류")
             }
         })
-        return result
+
+        Log.d(TAG, "TEST2:: makeOrder: $nowCouponNum")
+        return nowCouponNum
     }
 
     // 주문 상세 내역 가져오는 API

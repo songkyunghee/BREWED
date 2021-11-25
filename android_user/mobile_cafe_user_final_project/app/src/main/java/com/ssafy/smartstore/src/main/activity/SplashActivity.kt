@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.bumptech.glide.Glide
 import com.ssafy.smartstore.R
 
 class SplashActivity : AppCompatActivity() {
@@ -12,6 +13,10 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        Glide.with(this)
+            .load(R.raw.splashgif)
+            .into(findViewById(R.id.splash_icon))
 
         Handler().postDelayed({
             startActivity(Intent(this,LoginActivity::class.java))
