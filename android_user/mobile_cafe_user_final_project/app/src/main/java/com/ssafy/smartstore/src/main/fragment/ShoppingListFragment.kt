@@ -147,7 +147,7 @@ class ShoppingListFragment : Fragment(){
             { list ->
                 userCouponList = list
                 couponNum = list.size
-                Log.d(TAG, "사용자의 쿠폰 개수 completedOrder: ${couponNum}")
+                Log.d(TAG, "TEST2:: 사용자의 전 쿠폰 개수 completedOrder: ${couponNum}")
             }
         )
 
@@ -334,7 +334,7 @@ class ShoppingListFragment : Fragment(){
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
 
-        OrderService().makeOrder(order)
+        val nowCouponNum = OrderService().makeOrder(order)
 
         prodList.clear()
         prodCntList.clear()
@@ -345,8 +345,14 @@ class ShoppingListFragment : Fragment(){
         if(couponId != 0) {
             UserService().deleteCoupon(couponId, deleteCouponCallback())
         }
-        Log.d(TAG, "completedOrder: here come??")
-        mainActivity.openFragment(6, "preCouponNum", couponNum)
+        Log.d(TAG, "TEST2:: 사용자의 전 쿠폰 개수 $couponNum")
+        Log.d(TAG, "TEST2:: 사용자의 현재 쿠폰 개수 $nowCouponNum ")
+        if(couponNum < nowCouponNum) {
+            mainActivity.openFragment(6, "isShow", 1)
+        } else {
+            mainActivity.openFragment(6)
+        }
+
 
 
     }
