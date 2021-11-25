@@ -27,15 +27,15 @@ public class MobileThrowProjectApplication {
 	   @Bean
 	    public Docket postsApi() {
 	       final ApiInfo apiInfo = new ApiInfoBuilder()
-	               .title("SSAFY Cafe Rest API")
-	               .description("<h3>SSAFY Cafe에서 제공되는 Rest api의 문서 제공</h3>")
+	               .title("Brewed Coffee Rest API")
+	               .description("<h3>Brewed Coffee에서 제공되는 Rest api의 문서 제공</h3>")
 	               .contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
 	               .license("MIT License")
 	               .version("1.0")
 	               .build();
 	       
 	        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-	                .groupName("ssafyVueBookWS")
+	                .groupName("BrewedCoffee")
 	                .apiInfo(apiInfo)
 	                .select()
 	                .apis(RequestHandlerSelectors.basePackage("com.ssafy.cafe.controller.rest"))

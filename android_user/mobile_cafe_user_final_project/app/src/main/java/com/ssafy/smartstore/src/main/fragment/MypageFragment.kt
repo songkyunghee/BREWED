@@ -92,35 +92,38 @@ class MypageFragment : Fragment(){
 
         val userLastOrderList = OrderService().getLastMonthOrder(id)
 
-        userLastOrderList.observe(
-            viewLifecycleOwner,
-            { userLastOrderList ->
-                userLastOrderList.let {
-                    orderAdapter = OrderAdapter(mainActivity, userLastOrderList)
-                    orderAdapter.notifyDataSetChanged()
-                }
-
-                orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener{
-                    override fun onClick(view: View, position: Int, orderid:Int) {
-                        mainActivity.openFragment(2, "orderId", orderid)
+        if (viewLifecycleOwner != null) {
+            userLastOrderList.observe(
+                viewLifecycleOwner,
+                { userLastOrderList ->
+                    userLastOrderList.let {
+                        orderAdapter = OrderAdapter(mainActivity, userLastOrderList)
+                        orderAdapter.notifyDataSetChanged()
                     }
-                })
 
-                binding.recyclerViewOrder.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = orderAdapter
-                    //원래의 목록위치로 돌아오게함
-                    adapter!!.stateRestorationPolicy =
-                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                    orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener {
+                        override fun onClick(view: View, position: Int, orderid: Int) {
+                            mainActivity.openFragment(2, "orderId", orderid)
+                        }
+                    })
+
+                    binding.recyclerViewOrder.apply {
+                        layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        adapter = orderAdapter
+                        //원래의 목록위치로 돌아오게함
+                        adapter!!.stateRestorationPolicy =
+                            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                    }
+
+
+                    binding.logout.setOnClickListener {
+                        mainActivity.openFragment(5)
+                    }
+
                 }
-
-
-                binding.logout.setOnClickListener {
-                    mainActivity.openFragment(5)
-                }
-
-            }
-        )
+            )
+        }
 
     }
 

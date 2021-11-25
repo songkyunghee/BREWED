@@ -370,7 +370,7 @@ class ShoppingListFragment : Fragment(){
         }
 
         override fun onSuccess(code: Int, responseData: String) {
-            Toast.makeText(context,"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(),"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
             PushService().sendMessageTo(responseData,"Brewed Coffee","주문이 접수되었습니다.\n주문을 확인해주세요.")
         }
 
