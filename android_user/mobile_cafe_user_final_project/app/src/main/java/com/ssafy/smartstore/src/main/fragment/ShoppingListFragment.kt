@@ -56,7 +56,6 @@ class ShoppingListFragment : Fragment(){
     private lateinit var userId: String
     private var couponId = -1
     private var couponNum = 0
-    private var nowCouponNum = 0
 
     private var userCouponList: MutableList<StampWithCouponResponse> = mutableListOf()
     private var prodList:MutableList<Product> = mutableListOf()
@@ -340,8 +339,7 @@ class ShoppingListFragment : Fragment(){
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
 
-        OrderService().makeOrder(order, mainActivity)
-        //nowCouponNum = mainViewModel.nowCouponNum
+        OrderService().makeOrder(order)
 
         prodList.clear()
         prodCntList.clear()
@@ -352,22 +350,8 @@ class ShoppingListFragment : Fragment(){
         if(couponId != 0) {
             UserService().deleteCoupon(couponId, deleteCouponCallback())
         }
-        Log.d(TAG, "TEST2:: 사용자의 전 쿠폰 개수 $couponNum")
-        Log.d(TAG, "TEST2:: 사용자의 현재 쿠폰 개수 $nowCouponNum ")
 
-        mainViewModel.nowCouponNum.observe(mainActivity, Observer { nowCouponNum ->
-            Log.d(TAG, "TEST2 completedOrder: 옵저버")
-            if(nowCouponNum != 0) {
-                Log.d(TAG, "TEST2 completedOrder: 옵저버 안 $nowCouponNum")
-                if (couponNum < nowCouponNum) {
-                    mainActivity.openFragment(6, "isShow", 1)
-                } else {
-                    mainActivity.openFragment(6)
-                }
-
-            }
-        })
-
+        mainActivity.openFragment(6, "preCouponNum", couponNum)
     }
     inner class deleteCouponCallback : RetrofitCallback<Boolean> {
         override fun onSuccess(code: Int, responseData: Boolean) {

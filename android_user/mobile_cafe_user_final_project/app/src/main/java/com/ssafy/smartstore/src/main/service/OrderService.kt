@@ -19,58 +19,32 @@ import retrofit2.Response
 
 private const val TAG = "OrderService_싸피"
 class OrderService{
+        // makeOrder
+        fun makeOrder(body: Order): Int{
+            Log.d(TAG, "makeOrder: $body")
+            var result:Int = 0
+            RetrofitUtil.orderService.makeOrder(body).enqueue(object:Callback<Int>{
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    val res = response.body()
+                    Log.d(TAG, "onResponse: $res")
+                    Log.d(TAG, "onResponse: ${response.code()}")
+                    if(response.isSuccessful){
+                        if (res != null) {
+                            result =  res
+                            Log.d(TAG, "onResponse: success $res")
+                            // 조회하는 것을 호출...
 
 
-    // makeOrder
-    fun makeOrder(body: Order, owner: ViewModelStoreOwner): Int{
-        val mainViewModel = ViewModelProvider(owner).get(MainViewModel::class.java)
-        val menuInfoRequest: Call<MutableList<StampWithCouponResponse>> = RetrofitUtil.userService.getInfo(User(body.userId))
-        var nowCouponNum = -1
-        Log.d(TAG, "makeOrder: $body")
-        var result:Int = 0
-        RetrofitUtil.orderService.makeOrder(body).enqueue(object:Callback<Int>{
-            override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                val res = response.body()
-                Log.d(TAG, "TEST2:: onResponse: $res")
-                Log.d(TAG, "TEST2:: onResponse: ${response.code()}")
-                if(response.isSuccessful){
-                    if (res != null) {
-                        result =  res
-                        Log.d(TAG, "TEST2:: onResponse: success $res")
-
-                        // 조회하는 것을 호출...
-                        menuInfoRequest.enqueue(object : Callback<MutableList<StampWithCouponResponse>> {
-                            override fun onResponse(call: Call<MutableList<StampWithCouponResponse>>, response: Response<MutableList<StampWithCouponResponse>>) {
-                                val res = response.body()
-                                if(response.code() == 200){
-                                    if (res != null) {
-                                        nowCouponNum = res.size
-                                        mainViewModel.setNowCouponNum(res.size)
-                                        Log.d(TAG, "TEST2::사용자 쿠폰 스탬프 받아오는 중 데이터: ${res.size}")
-                                        Log.d(TAG, "TEST2::onResponse: ------------")
-                                    }
-                                } else {
-                                    Log.d(TAG, "TEST2::onResponse: Error Code ${response.code()}")
-                                }
-                            }
-
-                            override fun onFailure(call: Call<MutableList<StampWithCouponResponse>>, t: Throwable) {
-                                Log.d(TAG, t.message ?: "TEST2::사용자 정보 받아오는 중 통신오류")
-                            }
-                        })
-
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<Int>, t: Throwable) {
-                Log.d(TAG, t.message ?: "통신오류")
-            }
-        })
-
-        Log.d(TAG, "TEST2:: makeOrder: $nowCouponNum")
-        return nowCouponNum
-    }
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    Log.d(TAG, t.message ?: "통신오류")
+                }
+            })
+            return result
+        }
 
     // 주문 상세 내역 가져오는 API
     fun getOrderDetails(orderId: Int): LiveData<List<OrderDetailResponse>> {
