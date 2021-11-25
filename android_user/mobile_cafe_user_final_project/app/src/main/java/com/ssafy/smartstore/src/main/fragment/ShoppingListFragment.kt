@@ -15,6 +15,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.R
@@ -32,6 +34,7 @@ import com.ssafy.smartstore.src.main.service.ProductService
 import com.ssafy.smartstore.src.main.service.PushService
 import com.ssafy.smartstore.src.main.service.UserService
 import com.ssafy.smartstore.util.CommonUtils.makeComma
+import com.ssafy.smartstore.util.MainViewModel
 import com.ssafy.smartstore.util.RetrofitCallback
 import kotlin.collections.ArrayList
 
@@ -53,11 +56,13 @@ class ShoppingListFragment : Fragment(){
     private lateinit var userId: String
     private var couponId = -1
     private var couponNum = 0
+    private var nowCouponNum = 0
 
     private var userCouponList: MutableList<StampWithCouponResponse> = mutableListOf()
     private var prodList:MutableList<Product> = mutableListOf()
     private var prodCntList:MutableList<Int> = mutableListOf()
     private lateinit var shoppingList:MutableList<Int>
+    private lateinit var mainViewModel: MainViewModel
 
     private lateinit var textShoppingCount : TextView
     private lateinit var textShoppingMoney : TextView
@@ -109,6 +114,7 @@ class ShoppingListFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainActivity.hideBottomNav(true)
+        mainViewModel = ViewModelProvider(mainActivity).get(MainViewModel::class.java)
         userId = getUserData()
         shoppingCount = 0
         shoppingMoney = 0
@@ -147,7 +153,7 @@ class ShoppingListFragment : Fragment(){
             { list ->
                 userCouponList = list
                 couponNum = list.size
-                Log.d(TAG, "사용자의 쿠폰 개수 completedOrder: ${couponNum}")
+                Log.d(TAG, "TEST2:: 사용자의 전 쿠폰 개수 completedOrder: ${couponNum}")
             }
         )
 
@@ -334,7 +340,8 @@ class ShoppingListFragment : Fragment(){
         }
         val order = Order(ApplicationClass.sharedPreferencesUtil.getUser().id, 1, order_table,  "N", details)
 
-        OrderService().makeOrder(order)
+        OrderService().makeOrder(order, mainActivity)
+        //nowCouponNum = mainViewModel.nowCouponNum
 
         prodList.clear()
         prodCntList.clear()
@@ -345,9 +352,21 @@ class ShoppingListFragment : Fragment(){
         if(couponId != 0) {
             UserService().deleteCoupon(couponId, deleteCouponCallback())
         }
-        Log.d(TAG, "completedOrder: here come??")
-        mainActivity.openFragment(6, "preCouponNum", couponNum)
+        Log.d(TAG, "TEST2:: 사용자의 전 쿠폰 개수 $couponNum")
+        Log.d(TAG, "TEST2:: 사용자의 현재 쿠폰 개수 $nowCouponNum ")
 
+        mainViewModel.nowCouponNum.observe(mainActivity, Observer { nowCouponNum ->
+            Log.d(TAG, "TEST2 completedOrder: 옵저버")
+            if(nowCouponNum != 0) {
+                Log.d(TAG, "TEST2 completedOrder: 옵저버 안 $nowCouponNum")
+                if (couponNum < nowCouponNum) {
+                    mainActivity.openFragment(6, "isShow", 1)
+                } else {
+                    mainActivity.openFragment(6)
+                }
+
+            }
+        })
 
     }
     inner class deleteCouponCallback : RetrofitCallback<Boolean> {
@@ -370,7 +389,7 @@ class ShoppingListFragment : Fragment(){
         }
 
         override fun onSuccess(code: Int, responseData: String) {
-            Toast.makeText(context,"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(),"주문이 완료되었습니다.",Toast.LENGTH_SHORT).show()
             PushService().sendMessageTo(responseData,"Brewed Coffee","주문이 접수되었습니다.\n주문을 확인해주세요.")
         }
 
