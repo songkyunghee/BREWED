@@ -144,7 +144,7 @@ class HomeFragment : Fragment(){
 
     private fun initListener() {
         binding.imgNoOrderCart.setOnClickListener {
-            mainActivity.openFragment(6)
+            mainActivity.openFragment(6, "preCouponNum", -1)
         }
 
         binding.imgFirstInfo.setOnClickListener {
