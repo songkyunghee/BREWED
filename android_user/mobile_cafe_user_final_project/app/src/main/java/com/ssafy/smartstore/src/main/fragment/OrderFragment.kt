@@ -35,7 +35,7 @@ class OrderFragment : Fragment(){
     private lateinit var prodList:List<Product>
     private lateinit var binding: FragmentOrderBinding
     private lateinit var userId: String
-    private var isShowDialog = 0
+    private var preCouponNum = -1
 
 
     private lateinit var list: LiveData<MutableList<StampWithCouponResponse>>
@@ -49,7 +49,7 @@ class OrderFragment : Fragment(){
 
         userId = getUserData()
         arguments?.let {
-            isShowDialog = it.getInt("isShow")
+            preCouponNum = it.getInt("preCouponNum")
         }
 
     }
@@ -72,10 +72,10 @@ class OrderFragment : Fragment(){
         binding = FragmentOrderBinding.inflate(inflater, container, false)
         mode = 0 // create... 기본값으로 초기화
 
-//        CoroutineScope(Dispatchers.IO).launch {
-//            Log.d(TAG, "onCreateView: ")
-//            list = UserService().getUserStampWithCoupon(User(userId))
-//        }
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "onCreateView: ")
+            list = UserService().getUserStampWithCoupon(User(userId))
+        }
 
         return binding.root
     }
@@ -185,61 +185,43 @@ class OrderFragment : Fragment(){
                 }
             )
         }
-        Log.d(TAG, "TEST2:: orderFragment에서 isShowDialog 값은 = $isShowDialog")
 
-        if(isShowDialog == 1) {
+        Log.d(TAG, "TEST1::onCreate: OrderFragment 전 쿠폰 개수 $preCouponNum")
 
-            val mDialogView =
-                LayoutInflater.from(requireContext()).inflate(R.layout.coupon_dialog, null)
-            mDialogView.findViewById<TextView>(R.id.textCouponDialogMsg).text = "쿠폰이 생겼습니다. 짝짝짝!"
+        val list = UserService().getUserStampWithCoupon(User(userId))
+        list.observe(
+            viewLifecycleOwner,
+            {
 
-            val mBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setView(mDialogView)
-                .setTitle("")
+                var nowCouponNum = it.size
+                Log.d(TAG, "TEST1::onCreate: OrderFragment 현재 쿠폰 개수 ${nowCouponNum}")
 
-            if(!mainActivity.isFinishing){
-                val mAlertDialog = mBuilder.show()
-                mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener {
-                    mAlertDialog.dismiss()
+                if (preCouponNum != -1) {
+                    if (preCouponNum < nowCouponNum) {
+
+                        val mDialogView =
+                            LayoutInflater.from(requireContext())
+                                .inflate(R.layout.coupon_dialog, null)
+                        mDialogView.findViewById<TextView>(R.id.textCouponDialogMsg).text =
+                            "쿠폰이 ${nowCouponNum - preCouponNum}개 생겼습니다. 짝짝짝!"
+
+                        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                            .setView(mDialogView)
+                            .setTitle("")
+
+                        if (!mainActivity.isFinishing) {
+                            val mAlertDialog = mBuilder.show()
+                            mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                            mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener {
+                                mAlertDialog.dismiss()
+                            }
+                        }
+                        preCouponNum = -1
+                    }
                 }
-            }
-            isShowDialog = 0
-        }
 
-//        Log.d(TAG, "TEST1::onCreate: OrderFragment 전 쿠폰 개수 $preCouponNum")
-//
-//        (UserService().getUserStampWithCoupon(User(userId))).observe(
-//            viewLifecycleOwner,
-//            {
-//
-//                var nowCouponNum = it.size
-//                Log.d(TAG, "TEST1::onCreate: OrderFragment 현재 쿠폰 개수 ${nowCouponNum}")
-//
-//                if(preCouponNum != -1) {
-//                    if(preCouponNum < nowCouponNum) {
-//
-//                        val mDialogView =
-//                            LayoutInflater.from(requireContext()).inflate(R.layout.coupon_dialog, null)
-//                        mDialogView.findViewById<TextView>(R.id.textCouponDialogMsg).text = "쿠폰이 ${nowCouponNum - preCouponNum}개 생겼습니다. 짝짝짝!"
-//
-//                        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-//                            .setView(mDialogView)
-//                            .setTitle("")
-//
-//                        if(!mainActivity.isFinishing){
-//                            val mAlertDialog = mBuilder.show()
-//                            mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//                            mDialogView.findViewById<TextView>(R.id.dialog_btn).setOnClickListener {
-//                                mAlertDialog.dismiss()
-//                            }
-//                        }
-//                        preCouponNum = -1
-//                    }
-//                }
-//
-//            }
-//        )
+            }
+        )
     }
 
     companion object {
