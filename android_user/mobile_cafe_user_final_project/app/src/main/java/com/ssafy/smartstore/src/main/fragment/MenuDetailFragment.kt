@@ -89,6 +89,7 @@ class MenuDetailFragment : Fragment() {
         mainActivity.hideBottomNav(true)
         initData()
         initListener()
+        selectImg()
     }
 
     //MutableLiveData<List<MenuDetailWithCommentResponse>>
