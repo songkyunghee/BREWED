@@ -92,7 +92,7 @@ class MypageFragment : Fragment(){
 
         val userLastOrderList = OrderService().getLastMonthOrder(id)
 
-        if(viewLifecycleOwner != null) {
+        if (viewLifecycleOwner != null) {
             userLastOrderList.observe(
                 viewLifecycleOwner,
                 { userLastOrderList ->
@@ -101,14 +101,15 @@ class MypageFragment : Fragment(){
                         orderAdapter.notifyDataSetChanged()
                     }
 
-                    orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener{
-                        override fun onClick(view: View, position: Int, orderid:Int) {
+                    orderAdapter.setItemClickListener(object : OrderAdapter.ItemClickListener {
+                        override fun onClick(view: View, position: Int, orderid: Int) {
                             mainActivity.openFragment(2, "orderId", orderid)
                         }
                     })
 
                     binding.recyclerViewOrder.apply {
-                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                         adapter = orderAdapter
                         //원래의 목록위치로 돌아오게함
                         adapter!!.stateRestorationPolicy =
@@ -122,9 +123,7 @@ class MypageFragment : Fragment(){
 
                 }
             )
-
         }
-
 
     }
 
