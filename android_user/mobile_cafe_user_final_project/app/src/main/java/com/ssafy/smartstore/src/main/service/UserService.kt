@@ -148,15 +148,16 @@ class UserService {
                 if(response.code() == 200){
                     if (res != null) {
                         responseLiveData.value = res
-                        Log.d(TAG, "사용자 쿠폰 스탬프 받아오는 중 데이터: ${res}")
+                        Log.d(TAG, "TEST1::사용자 쿠폰 스탬프 받아오는 중 데이터: ${res.size}")
+                        Log.d(TAG, "TEST1::onResponse: ------------")
                     }
                 } else {
-                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+                    Log.d(TAG, "TEST1::onResponse: Error Code ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<MutableList<StampWithCouponResponse>>, t: Throwable) {
-                Log.d(TAG, t.message ?: "사용자 정보 받아오는 중 통신오류")
+                Log.d(TAG, t.message ?: "TEST1::사용자 정보 받아오는 중 통신오류")
             }
         })
         return responseLiveData
